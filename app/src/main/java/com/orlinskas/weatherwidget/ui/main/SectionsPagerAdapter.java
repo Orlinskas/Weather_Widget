@@ -28,12 +28,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return WidgetFragment.newInstance(position + 1);
+                return new WidgetFragment();
             case 1:
-                return ExperimentalFragment.newInstance(position + 1);
+                return new ExperimentalFragment();
             case 2:
-                return SettingsFragment.newInstance(position + 1);
-                default: return WidgetFragment.newInstance(position + 1);
+                return new SettingsFragment();
+                default: return new WidgetFragment();
         }
     }
 

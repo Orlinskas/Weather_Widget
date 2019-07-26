@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.orlinskas.weatherwidget.R;
-import com.orlinskas.weatherwidget.post.CityDataPostGenerator;
 import com.orlinskas.weatherwidget.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,8 +31,5 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-        CityDataPostGenerator cityDataPostGenerator = new CityDataPostGenerator();
-        cityDataPostGenerator.generate();
     }
 }
