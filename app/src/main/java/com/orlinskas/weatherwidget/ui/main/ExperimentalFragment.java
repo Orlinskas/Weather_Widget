@@ -1,5 +1,7 @@
 package com.orlinskas.weatherwidget.ui.main;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.post.CityDataPostGenerator;
 
 public class ExperimentalFragment extends Fragment {
     private Button button;
@@ -27,6 +30,9 @@ public class ExperimentalFragment extends Fragment {
 
         writeStartMessage();
 
+        GeneratorTask generatorTask = new GeneratorTask();
+        generatorTask.execute();
+
         return root;
     }
 
@@ -34,5 +40,37 @@ public class ExperimentalFragment extends Fragment {
         consoleScreen.setText("- findView -- done");
         consoleBottomLine.setText("Start generate...");
         progressBar.setIndeterminate(true);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class GeneratorTask extends AsyncTask<Void, Integer, Integer> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setIndeterminate(true);
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            try {
+                CityDataPostGenerator generator = new CityDataPostGenerator();
+                generator.generate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                consoleBottomLine.setText(e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            progressBar.setIndeterminate(false);
+        }
     }
 }

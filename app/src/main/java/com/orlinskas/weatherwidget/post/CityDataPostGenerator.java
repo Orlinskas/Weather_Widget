@@ -27,11 +27,15 @@ public class CityDataPostGenerator {
         JSONSteamReader steamReader = new JSONSteamReader();
         JSONLineParser lineParser = new JSONLineParser();
 
-        inputStream = steam.create(R.raw.city_list_min);
-        json = steamReader.read(inputStream);
-        cities = lineParser.parse(json);
+        try {
+            inputStream = steam.create(R.raw.city_list_min);
+            json = steamReader.read(inputStream);
+            cities = lineParser.parse(json);
 
-        writeToDatabase(cities);
+            writeToDatabase(cities);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void writeToDatabase(ArrayList<City> cities) {
@@ -40,7 +44,6 @@ public class CityDataPostGenerator {
 
         for(City city : cities) {
             adapter.insert(city, CitiesDatabase.TABLE_CITY);
-            //Log.e("generateProcessing", "insert #" + cities.indexOf(city));
         }
 
         adapter.closeWithTransaction();
