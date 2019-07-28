@@ -10,15 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.orlinskas.weatherwidget.City;
-import com.orlinskas.weatherwidget.Country;
 import com.orlinskas.weatherwidget.R;
-import com.orlinskas.weatherwidget.data.CitiesDatabase;
-import com.orlinskas.weatherwidget.data.CitiesDatabaseAdapter;
-import com.orlinskas.weatherwidget.data.CountryDatabaseAdapter;
-
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class ExperimentalFragment extends Fragment {
     private Button button;
@@ -34,7 +26,6 @@ public class ExperimentalFragment extends Fragment {
         consoleBottomLine = root.findViewById(R.id.fragment_city_data_generator_tv_console_bottom);
 
         writeStartMessage();
-
         return root;
     }
 

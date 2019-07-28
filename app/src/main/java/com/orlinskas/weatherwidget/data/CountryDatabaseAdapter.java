@@ -15,7 +15,7 @@ public class CountryDatabaseAdapter {
     private SQLiteDatabase database;
     private static final String DATABASE_NAME = "Country.db";
     private static String DATABASE_PATH;
-    private static final String TABLE_COUNTRY = "CountriesTable";
+    private static final String TABLE_COUNTRY = "CountryTable";
     private Context context;
 
     public CountryDatabaseAdapter(Context context) {

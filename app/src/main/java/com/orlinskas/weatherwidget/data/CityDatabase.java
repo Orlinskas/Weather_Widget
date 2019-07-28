@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class CitiesDatabase extends SQLiteOpenHelper {
+public class CityDatabase extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "Cities.db";
     private static String DATABASE_PATH;
@@ -23,7 +23,7 @@ public class CitiesDatabase extends SQLiteOpenHelper {
     static final String COLUMN_COORD_LAT = "lat";
     private Context context;
 
-    CitiesDatabase(Context context) {
+    CityDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
         DATABASE_PATH = context.getFilesDir().getPath() + DATABASE_NAME;
