@@ -15,6 +15,7 @@ public class CitiesDatabaseAdapter {
     private SQLiteDatabase database;
     private static final String DATABASE_NAME = "Cities.db";
     private static String DATABASE_PATH;
+    private static final String TABLE_CITY = "CitiesTable";
     private Context context;
 
     public CitiesDatabaseAdapter(Context context) {
@@ -39,18 +40,18 @@ public class CitiesDatabaseAdapter {
         citiesDatabase.close();
     }
 
-    public void insert(City city, String tableName) {
+    public void insert(City city) {
         ContentValues cv = new ContentValues();
         cv.put(CitiesDatabase.COLUMN_CITY_ID, city.getId());
         cv.put(CitiesDatabase.COLUMN_CITY_NAME, city.getName());
         cv.put(CitiesDatabase.COLUMN_COUNTRY_CODE, city.getCountryCode());
         cv.put(CitiesDatabase.COLUMN_COORD_LON, city.getCoordLon());
         cv.put(CitiesDatabase.COLUMN_COORD_LAT, city.getCoordLat());
-        database.insert(tableName, null, cv);
+        database.insert(TABLE_CITY, null, cv);
     }
 
-    public ArrayList<City> getCities(String tableName) {
-        Cursor cursor = getAllEntries(tableName);
+    public ArrayList<City> getCities() {
+        Cursor cursor = getAllEntries();
         ArrayList<City> cities = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
@@ -69,18 +70,18 @@ public class CitiesDatabaseAdapter {
         return cities;
     }
 
-    private Cursor getAllEntries(String tableName){
+    private Cursor getAllEntries(){
         String[] columns = new String[] {CitiesDatabase.COLUMN_CITY_ID, CitiesDatabase.COLUMN_CITY_NAME,
                 CitiesDatabase.COLUMN_COUNTRY_CODE, CitiesDatabase.COLUMN_COORD_LON,
                 CitiesDatabase.COLUMN_COORD_LAT};
-        return  database.query(tableName, columns, null, null, null, null, null);
+        return  database.query(TABLE_CITY, columns, null, null, null, null, null);
     }
 
-    public long getCount(String tableName){
-        return DatabaseUtils.queryNumEntries(database, tableName);
+    public long getCount(){
+        return DatabaseUtils.queryNumEntries(database, TABLE_CITY);
     }
 
-    public void removeAll(String tableName) {
-        database.delete(tableName, null, null);
+    public void removeAll() {
+        database.delete(TABLE_CITY, null, null);
     }
 }

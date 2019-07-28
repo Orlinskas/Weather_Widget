@@ -8,8 +8,8 @@ public class WeatherDatabase extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "Forecasts.db";
 
-    public static String TABLE_WEATHER = "WeatherTable";
-    public static String TABLE_WEATHER_TEST = "WeatherTableTest";
+    private static String TABLE_WEATHER = "WeatherTable";
+    private static String TABLE_WEATHER_TEST = "WeatherTableTest";
 
     private static final String COLUMN_ID = "_id";
     static final String COLUMN_CITY_ID = "cityID";

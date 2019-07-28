@@ -7,7 +7,6 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.orlinskas.weatherwidget.WeatherForecast;
-import com.orlinskas.weatherwidget.data.WeatherDatabase;
 
 import java.util.ArrayList;
 

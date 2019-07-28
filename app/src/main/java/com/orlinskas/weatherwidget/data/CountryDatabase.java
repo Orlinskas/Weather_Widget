@@ -11,19 +11,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class CitiesDatabase extends SQLiteOpenHelper {
+public class CountryDatabase extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "Cities.db";
+    private static final String DATABASE_NAME = "Country.db";
     private static String DATABASE_PATH;
 
-    static final String COLUMN_CITY_ID = "cityID";
-    static final String COLUMN_CITY_NAME = "cityName";
     static final String COLUMN_COUNTRY_CODE = "countryCode";
-    static final String COLUMN_COORD_LON = "lon";
-    static final String COLUMN_COORD_LAT = "lat";
+    static final String COLUMN_COUNTRY_NAME = "cityName";
     private Context context;
 
-    CitiesDatabase(Context context) {
+    CountryDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
         DATABASE_PATH = context.getFilesDir().getPath() + DATABASE_NAME;
@@ -62,7 +59,7 @@ public class CitiesDatabase extends SQLiteOpenHelper {
             }
         }
         catch(IOException ex){
-            Log.d("CitiesDataBase", ex.getMessage());
+            Log.d("CountriesDataBase", ex.getMessage());
         }
     }
 }

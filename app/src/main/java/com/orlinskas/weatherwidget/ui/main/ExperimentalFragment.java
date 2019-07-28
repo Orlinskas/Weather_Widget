@@ -1,7 +1,5 @@
 package com.orlinskas.weatherwidget.ui.main;
 
-import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -13,17 +11,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.orlinskas.weatherwidget.City;
+import com.orlinskas.weatherwidget.Country;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.data.CitiesDatabase;
 import com.orlinskas.weatherwidget.data.CitiesDatabaseAdapter;
-import com.orlinskas.weatherwidget.json.JSONInputSteamCreator;
-import com.orlinskas.weatherwidget.json.JSONLineParser;
-import com.orlinskas.weatherwidget.json.JSONSteamReader;
-import com.orlinskas.weatherwidget.post.CityDataJsonParser;
-import com.orlinskas.weatherwidget.post.CityDataRepositoryWriter;
+import com.orlinskas.weatherwidget.data.CountryDatabaseAdapter;
 
 import java.util.ArrayList;
-
+import java.util.HashSet;
 
 public class ExperimentalFragment extends Fragment {
     private Button button;
@@ -39,14 +34,6 @@ public class ExperimentalFragment extends Fragment {
         consoleBottomLine = root.findViewById(R.id.fragment_city_data_generator_tv_console_bottom);
 
         writeStartMessage();
-
-        long test = 0;
-
-        CitiesDatabaseAdapter adapter = new CitiesDatabaseAdapter(getContext());
-        adapter.createDatabase();
-        adapter.openWithTransaction();
-        test = adapter.getCount(CitiesDatabase.TABLE_CITY);
-        adapter.closeWithTransaction();
 
         return root;
     }
