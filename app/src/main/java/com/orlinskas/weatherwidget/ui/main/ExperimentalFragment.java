@@ -12,8 +12,16 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.R;
-import com.orlinskas.weatherwidget.post.CityDataPostGenerator;
+import com.orlinskas.weatherwidget.json.JSONInputSteamCreator;
+import com.orlinskas.weatherwidget.json.JSONLineParser;
+import com.orlinskas.weatherwidget.json.JSONSteamReader;
+import com.orlinskas.weatherwidget.post.CityDataJsonParser;
+import com.orlinskas.weatherwidget.post.CityDataRepositoryWriter;
+
+import java.util.ArrayList;
+
 
 public class ExperimentalFragment extends Fragment {
     private Button button;
@@ -30,15 +38,15 @@ public class ExperimentalFragment extends Fragment {
 
         writeStartMessage();
 
-        GeneratorTask generatorTask = new GeneratorTask();
-        generatorTask.execute();
+        //GeneratorTask generatorTask = new GeneratorTask();
+        //generatorTask.execute();
 
         return root;
     }
 
     private void writeStartMessage() {
         consoleScreen.setText("- findView -- done");
-        consoleBottomLine.setText("Start generate...");
+        consoleBottomLine.setText("Start parseJSONFile...");
         progressBar.setIndeterminate(true);
     }
 
@@ -53,8 +61,13 @@ public class ExperimentalFragment extends Fragment {
         @Override
         protected Integer doInBackground(Void... voids) {
             try {
-                CityDataPostGenerator generator = new CityDataPostGenerator();
-                generator.generate();
+                ArrayList<City> cities;
+                CityDataJsonParser dataJsonParser = new CityDataJsonParser();
+                CityDataRepositoryWriter writer = new CityDataRepositoryWriter();
+
+                cities = dataJsonParser.parseJSONFile(R.raw.list_4);
+                writer.write(cities);
+
             } catch (Exception e) {
                 e.printStackTrace();
                 consoleBottomLine.setText(e.getMessage());
