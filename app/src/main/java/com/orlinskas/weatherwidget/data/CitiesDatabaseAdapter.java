@@ -13,13 +13,23 @@ import java.util.ArrayList;
 public class CitiesDatabaseAdapter {
     private CitiesDatabase citiesDatabase;
     private SQLiteDatabase database;
+    private static final String DATABASE_NAME = "Cities.db";
+    private static String DATABASE_PATH;
+    private Context context;
 
     public CitiesDatabaseAdapter(Context context) {
         citiesDatabase = new CitiesDatabase(context);
+        DATABASE_PATH = context.getFilesDir().getPath() + DATABASE_NAME;
+        this.context = context;
+    }
+
+    public void createDatabase() {
+        CitiesDatabase citiesDatabase = new CitiesDatabase(context);
+        citiesDatabase.create_db();
     }
 
     public void openWithTransaction(){
-        database = citiesDatabase.getWritableDatabase();
+        database = SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READWRITE);
         database.beginTransaction();
     }
 

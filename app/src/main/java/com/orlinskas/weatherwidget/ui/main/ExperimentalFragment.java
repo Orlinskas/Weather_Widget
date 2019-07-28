@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.data.CitiesDatabase;
+import com.orlinskas.weatherwidget.data.CitiesDatabaseAdapter;
 import com.orlinskas.weatherwidget.json.JSONInputSteamCreator;
 import com.orlinskas.weatherwidget.json.JSONLineParser;
 import com.orlinskas.weatherwidget.json.JSONSteamReader;
@@ -38,8 +40,13 @@ public class ExperimentalFragment extends Fragment {
 
         writeStartMessage();
 
-        //GeneratorTask generatorTask = new GeneratorTask();
-        //generatorTask.execute();
+        long test = 0;
+
+        CitiesDatabaseAdapter adapter = new CitiesDatabaseAdapter(getContext());
+        adapter.createDatabase();
+        adapter.openWithTransaction();
+        test = adapter.getCount(CitiesDatabase.TABLE_CITY);
+        adapter.closeWithTransaction();
 
         return root;
     }
@@ -48,42 +55,5 @@ public class ExperimentalFragment extends Fragment {
         consoleScreen.setText("- findView -- done");
         consoleBottomLine.setText("Start parseJSONFile...");
         progressBar.setIndeterminate(true);
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private class GeneratorTask extends AsyncTask<Void, Integer, Integer> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setIndeterminate(true);
-        }
-
-        @Override
-        protected Integer doInBackground(Void... voids) {
-            try {
-                ArrayList<City> cities;
-                CityDataJsonParser dataJsonParser = new CityDataJsonParser();
-                CityDataRepositoryWriter writer = new CityDataRepositoryWriter();
-
-                cities = dataJsonParser.parseJSONFile(R.raw.list_4);
-                writer.write(cities);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                consoleBottomLine.setText(e.getMessage());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            super.onPostExecute(integer);
-            progressBar.setIndeterminate(false);
-        }
     }
 }
