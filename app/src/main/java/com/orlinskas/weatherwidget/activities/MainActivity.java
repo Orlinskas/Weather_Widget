@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.orlinskas.weatherwidget.FirstRunner;
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.preferences.FirstRunVerifier;
 import com.orlinskas.weatherwidget.ui.main.SectionsPagerAdapter;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Заполните таблицу", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void processFirstRun(Context applicationContext) {
+        ToastBuilder.create(applicationContext, "Открытие базы данных...");
         FirstRunVerifier firstRunVerifier = new FirstRunVerifier(applicationContext);
 
         if(!firstRunVerifier.check()) {
@@ -46,5 +48,8 @@ public class MainActivity extends AppCompatActivity {
             firstRunner.doFirstRun();
             firstRunVerifier.setFirstRun(true);
         }
+        ToastBuilder.create(applicationContext, "Готово!");
     }
+
+
 }

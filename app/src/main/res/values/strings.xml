@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">WeatherWidget</string>
     <string name="tab_text_1">Виджет</string>
-    <string name="tab_text_2">Погода</string>
-    <string name="tab_text_3">Настройки</string>
-    <string name="fragment_city_data_generator_tv_head">Процес генерации</string>
-    <string name="fragment_city_data_generator_btn_start">Старт</string>
+    <string name="tab_text_2">Создать</string>
+    <string name="fragment_city_data_generator_tv_head">Создание виджета</string>
+    <string name="fragment_city_data_generator_btn_start">Создать</string>
+    <string name="city">Город:</string>
+    <string name="alert_image">alert_image</string>
+    <string name="country">Страна:</string>
 </resources>
