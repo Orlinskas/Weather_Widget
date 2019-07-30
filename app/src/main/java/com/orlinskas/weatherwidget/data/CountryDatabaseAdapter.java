@@ -5,12 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class CountryDatabaseAdapter {
     private CountryDatabase countryDatabase;
-    private static final String DATABASE_NAME = "Country.db";
     private static String DATABASE_PATH;
 
     public CountryDatabaseAdapter(Context context) {
         countryDatabase = new CountryDatabase(context);
-        DATABASE_PATH = context.getFilesDir().getPath() + DATABASE_NAME;
+        DATABASE_PATH = context.getFilesDir().getPath() + CountryDatabase.DATABASE_NAME;
     }
 
     public void createDatabase() {

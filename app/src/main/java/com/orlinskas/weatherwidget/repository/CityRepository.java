@@ -62,7 +62,7 @@ public class CityRepository implements Repository<City> {
         database.beginTransaction();
 
         try {
-            final Cursor cursor = database.rawQuery(sqlSpecification.toSqlQuery(),new String[]{});
+            final Cursor cursor = database.rawQuery(sqlSpecification.toSqlQuery(), new String[]{});
 
             if (cursor.moveToFirst()) {
                 do {

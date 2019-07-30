@@ -56,7 +56,7 @@ public class CountryRepository implements Repository<Country> {
         database.beginTransaction();
 
         try {
-            final Cursor cursor = database.rawQuery(sqlSpecification.toSqlQuery(),new String[]{});
+            final Cursor cursor = database.rawQuery(sqlSpecification.toSqlQuery(), new String[]{});
 
             if (cursor.moveToFirst()) {
                 do {

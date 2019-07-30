@@ -13,7 +13,7 @@ import java.io.OutputStream;
 
 public class CountryDatabase extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "Country.db";
+    static final String DATABASE_NAME = "Country.db";
     private static String DATABASE_PATH;
 
     public static final String TABLE_COUNTRY = "CountryTable";

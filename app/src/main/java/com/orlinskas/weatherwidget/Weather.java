@@ -2,7 +2,7 @@ package com.orlinskas.weatherwidget;
 
 import java.util.Objects;
 
-public class WeatherForecast {
+public class Weather {
     private int cityID;
     private String cityName;
     private String countryCode;
@@ -20,10 +20,10 @@ public class WeatherForecast {
     private int rainVolume;
     private int snowVolume;
 
-    public WeatherForecast(int cityID, String cityName, String countryCode, String timeOfDataForecast,
-                           String forecastDate, int currentTemperature, int pressure, int humidityPercent,
-                           int weatherID, String weatherGroup, String weatherGroupDescription, String weatherIconID,
-                           int cloudinessPercent, double windSpeed, int rainVolume, int snowVolume) {
+    public Weather(int cityID, String cityName, String countryCode, String timeOfDataForecast,
+                   String forecastDate, int currentTemperature, int pressure, int humidityPercent,
+                   int weatherID, String weatherGroup, String weatherGroupDescription, String weatherIconID,
+                   int cloudinessPercent, double windSpeed, int rainVolume, int snowVolume) {
         this.cityID = cityID;
         this.cityName = cityName;
         this.countryCode = countryCode;
@@ -45,8 +45,8 @@ public class WeatherForecast {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof WeatherForecast)) return false;
-        WeatherForecast that = (WeatherForecast) o;
+        if (!(o instanceof Weather)) return false;
+        Weather that = (Weather) o;
         return getCityID() == that.getCityID() &&
                 getCurrentTemperature() == that.getCurrentTemperature() &&
                 getPressure() == that.getPressure() &&
