@@ -16,11 +16,12 @@ public class CityDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Cities.db";
     private static String DATABASE_PATH;
 
-    static final String COLUMN_CITY_ID = "cityID";
-    static final String COLUMN_CITY_NAME = "cityName";
-    static final String COLUMN_COUNTRY_CODE = "countryCode";
-    static final String COLUMN_COORD_LON = "lon";
-    static final String COLUMN_COORD_LAT = "lat";
+    public static final String TABLE_CITY = "CitiesTable";
+    public static final String COLUMN_CITY_ID = "cityID";
+    public static final String COLUMN_CITY_NAME = "cityName";
+    public static final String COLUMN_COUNTRY_CODE = "countryCode";
+    public static final String COLUMN_COORD_LON = "lon";
+    public static final String COLUMN_COORD_LAT = "lat";
     private Context context;
 
     CityDatabase(Context context) {

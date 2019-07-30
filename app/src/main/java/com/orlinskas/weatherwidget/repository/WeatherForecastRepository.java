@@ -1,9 +1,9 @@
 package com.orlinskas.weatherwidget.repository;
 
 import com.orlinskas.weatherwidget.WeatherForecast;
-import com.orlinskas.weatherwidget.specification.Specification;
+import com.orlinskas.weatherwidget.specification.SqlSpecification;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class WeatherForecastRepository implements Repository<WeatherForecast> {
     @Override
@@ -22,7 +22,8 @@ public class WeatherForecastRepository implements Repository<WeatherForecast> {
     }
 
     @Override
-    public List<WeatherForecast> query(Specification specification) {
+    public ArrayList<WeatherForecast> query(SqlSpecification sqlSpecification) {
         return null;
     }
+
 }

@@ -1,8 +1,8 @@
 package com.orlinskas.weatherwidget.repository;
 
-import com.orlinskas.weatherwidget.specification.Specification;
+import com.orlinskas.weatherwidget.specification.SqlSpecification;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface Repository<T> {
 
@@ -12,6 +12,5 @@ public interface Repository<T> {
 
         void remove(T object);
 
-        List<T> query(Specification specification);
-
+        ArrayList<T> query(SqlSpecification sqlSpecification);
 }

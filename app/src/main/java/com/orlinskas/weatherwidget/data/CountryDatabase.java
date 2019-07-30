@@ -16,8 +16,9 @@ public class CountryDatabase extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Country.db";
     private static String DATABASE_PATH;
 
-    static final String COLUMN_COUNTRY_CODE = "countryCode";
-    static final String COLUMN_COUNTRY_NAME = "cityName";
+    public static final String TABLE_COUNTRY = "CountryTable";
+    public static final String COLUMN_COUNTRY_CODE = "countryCode";
+    public static final String COLUMN_COUNTRY_NAME = "cityName";
     private Context context;
 
     CountryDatabase(Context context) {

@@ -1,28 +1,15 @@
 package com.orlinskas.weatherwidget.specification;
 
-import com.orlinskas.weatherwidget.Country;
+import static com.orlinskas.weatherwidget.data.CountryDatabase.COLUMN_COUNTRY_CODE;
+import static com.orlinskas.weatherwidget.data.CountryDatabase.TABLE_COUNTRY;
 
-public class CountrySpecification implements Specification<Country>, SqlSpecification {
-    private String countryName;
-    private String countryCode;
-
-    public CountrySpecification(String countryName, String countryCode) {
-        this.countryName = countryName;
-        this.countryCode = countryCode;
-    }
-
-    @Override
-    public boolean specified(Country object) {
-        return object.equals(new Country(countryCode, countryName));
-    }
-
+public class CountrySpecification implements SqlSpecification {
     @Override
     public String toSqlQuery() {
         return String.format(
-                "SELECT * FROM %1$s WHERE `%2$s` = %3$d';"//,
-                //NewsTable.TABLE_NAME,
-                //NewsTable.Fields.ID,
-                //id
+                "SELECT DISTINCT * FROM %1$s GROUP BY %2$s;",
+                TABLE_COUNTRY,
+                COLUMN_COUNTRY_CODE
         );
     }
 }
