@@ -20,16 +20,25 @@ public class City {
         this.coordLat = coordLat;
     }
 
+    //@Override
+    //public boolean equals(Object o) {
+    //    if (this == o) return true;
+    //    if (!(o instanceof City)) return false;
+    //    City city = (City) o;
+    //    return getId() == city.getId() &&
+    //            Double.compare(city.getCoordLon(), getCoordLon()) == 0 &&
+    //            Double.compare(city.getCoordLat(), getCoordLat()) == 0 &&
+    //            Objects.equals(getName(), city.getName()) &&
+    //            Objects.equals(getCountryCode(), city.getCountryCode());
+    //}
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof City)) return false;
         City city = (City) o;
-        return getId() == city.getId() &&
-                Double.compare(city.getCoordLon(), getCoordLon()) == 0 &&
-                Double.compare(city.getCoordLat(), getCoordLat()) == 0 &&
-                Objects.equals(getName(), city.getName()) &&
-                Objects.equals(getCountryCode(), city.getCountryCode());
+        return getId() == city.getId();
     }
 
     @Override

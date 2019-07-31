@@ -10,7 +10,7 @@ public interface Repository<T> {
 
         void update(T object);
 
-        void remove(T object);
+        void remote(T object);
 
         ArrayList<T> query(SqlSpecification sqlSpecification);
 }

@@ -9,6 +9,7 @@ public class Preferences {
     public static final String SETTINGS = "settings";
     public static final String JSON_LINE = "jsonLine";
     public static final String APP_STATUS = "appStatus";
+    public static final String APP_TEST = "test";
 
     public static Preferences getInstance(Context context, String preferencesName) {
         if (preferences == null) {

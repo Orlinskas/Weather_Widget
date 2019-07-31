@@ -57,7 +57,7 @@ public class WeatherRepository implements Repository<Weather> {
     }
 
     @Override
-    public void remove(Weather object) {
+    public void remote(Weather object) {
     }
 
     @Override

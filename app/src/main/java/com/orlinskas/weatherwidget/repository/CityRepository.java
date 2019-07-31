@@ -52,7 +52,14 @@ public class CityRepository implements Repository<City> {
     }
 
     @Override
-    public void remove(City object) {
+    public void remote(City object) {
+        String sql = String.format(
+                "DELETE FROM %1$s WHERE %2$s = '%3$s';",
+                TABLE_CITY,
+                COLUMN_CITY_ID,
+                object.getId()
+        );
+        database.execSQL(sql);
 
     }
 

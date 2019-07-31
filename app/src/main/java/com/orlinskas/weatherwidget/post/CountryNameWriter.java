@@ -1,6 +1,6 @@
 package com.orlinskas.weatherwidget.post;
 
-public class CoutryNameWriter {
+public class CountryNameWriter {
     public String findNameWith(String countryCode) {
         switch (countryCode){
             case "AF":

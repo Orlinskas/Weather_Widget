@@ -26,20 +26,11 @@ public class CountryRepository implements Repository<Country> {
 
     @Override
     public void add(Country object) {
-        database.beginTransaction();
-        try {
             ContentValues cv = new ContentValues();
             cv.put(COLUMN_COUNTRY_CODE, object.getCode());
             cv.put(COLUMN_COUNTRY_NAME, object.getName());
 
             database.insert(TABLE_COUNTRY, null, cv);
-            database.setTransactionSuccessful();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            database.endTransaction();
-            database.close();
-        }
     }
 
     @Override
@@ -47,7 +38,14 @@ public class CountryRepository implements Repository<Country> {
     }
 
     @Override
-    public void remove(Country object) {
+    public void remote(Country object) {
+            String sql = String.format(
+                    "DELETE FROM %1$s WHERE %2$s = '%3$s';",
+                    TABLE_COUNTRY,
+                    COLUMN_COUNTRY_CODE,
+                    object.getCode()
+            );
+            database.execSQL(sql);
     }
 
     @Override
@@ -75,7 +73,6 @@ public class CountryRepository implements Repository<Country> {
 
         } finally {
             database.endTransaction();
-            database.close();
         }
         return countries;
     }
