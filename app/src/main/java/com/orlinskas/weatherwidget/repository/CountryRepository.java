@@ -18,19 +18,23 @@ import static com.orlinskas.weatherwidget.data.CountryDatabase.COLUMN_COUNTRY_NA
 
 public class CountryRepository implements Repository<Country> {
     private SQLiteDatabase database;
+    private CountryDatabaseAdapter countryDatabaseAdapter;
 
     public CountryRepository(Context context) {
-        CountryDatabaseAdapter countryDatabaseAdapter = new CountryDatabaseAdapter(context);
-        database = countryDatabaseAdapter.getDatabase();
+        countryDatabaseAdapter = new CountryDatabaseAdapter(context);
     }
 
     @Override
     public void add(Country object) {
+        database = countryDatabaseAdapter.getDatabase();
+        try {
             ContentValues cv = new ContentValues();
             cv.put(COLUMN_COUNTRY_CODE, object.getCode());
             cv.put(COLUMN_COUNTRY_NAME, object.getName());
-
             database.insert(TABLE_COUNTRY, null, cv);
+        } finally {
+            database.close();
+        }
     }
 
     @Override
@@ -39,6 +43,8 @@ public class CountryRepository implements Repository<Country> {
 
     @Override
     public void remote(Country object) {
+        database = countryDatabaseAdapter.getDatabase();
+        try {
             String sql = String.format(
                     "DELETE FROM %1$s WHERE %2$s = '%3$s';",
                     TABLE_COUNTRY,
@@ -46,11 +52,15 @@ public class CountryRepository implements Repository<Country> {
                     object.getCode()
             );
             database.execSQL(sql);
+        } finally {
+            database.close();
+        }
     }
 
     @Override
     public ArrayList<Country> query(SqlSpecification sqlSpecification) {
         final ArrayList<Country> countries = new ArrayList<>();
+        database = countryDatabaseAdapter.getDatabase();
         database.beginTransaction();
 
         try {
@@ -73,6 +83,7 @@ public class CountryRepository implements Repository<Country> {
 
         } finally {
             database.endTransaction();
+            database.close();
         }
         return countries;
     }

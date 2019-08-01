@@ -20,15 +20,15 @@ import static com.orlinskas.weatherwidget.data.CityDatabase.TABLE_CITY;
 
 public class CityRepository implements Repository<City> {
     private SQLiteDatabase database;
+    private CityDatabaseAdapter cityDatabaseAdapter;
 
     public CityRepository(Context context) {
-        CityDatabaseAdapter cityDatabaseAdapter = new CityDatabaseAdapter(context);
-        database = cityDatabaseAdapter.getDatabase();
+        cityDatabaseAdapter = new CityDatabaseAdapter(context);
     }
 
     @Override
     public void add(City object) {
-        database.beginTransaction();
+        database = cityDatabaseAdapter.getDatabase();
         try {
             ContentValues cv = new ContentValues();
             cv.put(COLUMN_CITY_ID, object.getId());
@@ -37,37 +37,36 @@ public class CityRepository implements Repository<City> {
             cv.put(COLUMN_COORD_LON, object.getCoordLon());
             cv.put(COLUMN_COORD_LAT, object.getCoordLat());
             database.insert(TABLE_CITY, null, cv);
-            database.setTransactionSuccessful();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            database.endTransaction();
+        }finally {
             database.close();
         }
     }
 
     @Override
     public void update(City object) {
-
     }
 
     @Override
     public void remote(City object) {
-        String sql = String.format(
-                "DELETE FROM %1$s WHERE %2$s = '%3$s';",
-                TABLE_CITY,
-                COLUMN_CITY_ID,
-                object.getId()
-        );
-        database.execSQL(sql);
-
+        database = cityDatabaseAdapter.getDatabase();
+        try {
+            String sql = String.format(
+                    "DELETE FROM %1$s WHERE %2$s = '%3$s';",
+                    TABLE_CITY,
+                    COLUMN_CITY_ID,
+                    object.getId()
+            );
+            database.execSQL(sql);
+        } finally {
+            database.close();
+        }
     }
 
     @Override
     public ArrayList<City> query(SqlSpecification sqlSpecification) {
         final ArrayList<City> cities = new ArrayList<>();
+        database = cityDatabaseAdapter.getDatabase();
         database.beginTransaction();
-
         try {
             final Cursor cursor = database.rawQuery(sqlSpecification.toSqlQuery(), new String[]{});
 
@@ -85,12 +84,10 @@ public class CityRepository implements Repository<City> {
             }
             cursor.close();
             database.setTransactionSuccessful();
-
         } finally {
             database.endTransaction();
             database.close();
         }
         return cities;
     }
-
 }

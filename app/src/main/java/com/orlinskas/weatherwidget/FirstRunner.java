@@ -20,10 +20,12 @@ public class FirstRunner {
     private void createCountryDatabase() {
         CountryDatabaseAdapter countryDatabaseAdapter = new CountryDatabaseAdapter(context);
         countryDatabaseAdapter.createDatabase();
+        countryDatabaseAdapter.getDatabase().close();
     }
 
     private void createCityDatabase() {
         CityDatabaseAdapter cityDatabaseAdapter = new CityDatabaseAdapter(context);
         cityDatabaseAdapter.createDatabase();
+        cityDatabaseAdapter.getDatabase().close();
     }
 }

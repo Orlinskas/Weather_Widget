@@ -4,14 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 public class WeatherDatabaseAdapter {
-    private static String DATABASE_PATH;
+    private WeatherDatabase weatherDatabase;
 
     public WeatherDatabaseAdapter(Context context) {
-        WeatherDatabase weatherDatabase = new WeatherDatabase(context);
-        DATABASE_PATH = context.getFilesDir().getPath() + WeatherDatabase.DATABASE_NAME;
+        weatherDatabase = new WeatherDatabase(context);
     }
 
     public SQLiteDatabase getDatabase(){
-        return SQLiteDatabase.openDatabase(DATABASE_PATH, null, SQLiteDatabase.OPEN_READWRITE);
+        return weatherDatabase.getWritableDatabase();
     }
 }

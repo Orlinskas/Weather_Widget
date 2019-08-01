@@ -15,15 +15,16 @@ import static com.orlinskas.weatherwidget.data.WeatherDatabase.*;
 
 public class WeatherRepository implements Repository<Weather> {
     private SQLiteDatabase database;
+    private WeatherDatabaseAdapter weatherDatabaseAdapter;
 
     public WeatherRepository(Context context) {
-        WeatherDatabaseAdapter weatherDatabaseAdapter = new WeatherDatabaseAdapter(context);
-        database = weatherDatabaseAdapter.getDatabase();
+        weatherDatabaseAdapter = new WeatherDatabaseAdapter(context);
     }
 
     @Override
     public void add(Weather object) {
-        database.beginTransaction();
+        database = weatherDatabaseAdapter.getDatabase();
+
         try {
             ContentValues cv = new ContentValues();
             cv.put(COLUMN_CITY_ID, object.getCityID());
@@ -42,12 +43,11 @@ public class WeatherRepository implements Repository<Weather> {
             cv.put(COLUMN_WIND_SPEED, object.getWindSpeed());
             cv.put(COLUMN_RAIN_VOLUME, object.getRainVolume());
             cv.put(COLUMN_SNOW_VOLUME, object.getSnowVolume());
+
             database.insert(TABLE_WEATHER, null, cv);
-            database.setTransactionSuccessful();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            database.endTransaction();
             database.close();
         }
     }
@@ -63,6 +63,7 @@ public class WeatherRepository implements Repository<Weather> {
     @Override
     public ArrayList<Weather> query(SqlSpecification sqlSpecification) {
         final ArrayList<Weather> weathers = new ArrayList<>();
+        database = weatherDatabaseAdapter.getDatabase();
         database.beginTransaction();
 
         try {

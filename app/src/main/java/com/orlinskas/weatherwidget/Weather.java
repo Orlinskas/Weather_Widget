@@ -20,6 +20,10 @@ public class Weather {
     private int rainVolume;
     private int snowVolume;
 
+    public Weather(String timeOfDataForecast) {
+        this.timeOfDataForecast = timeOfDataForecast;
+    }
+
     public Weather(int cityID, String cityName, String countryCode, String timeOfDataForecast,
                    String forecastDate, int currentTemperature, int pressure, int humidityPercent,
                    int weatherID, String weatherGroup, String weatherGroupDescription, String weatherIconID,
