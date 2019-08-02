@@ -4,7 +4,7 @@ import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.date.DateHelper;
 
 public class RequestBuilder {
-    public static final String OPEN_WEATHER = "openWeather";
+    public static final String OPEN_WEATHER = "OpenWeather";
     private final static String OPENWEATHERMAP_COM = "http://api.openweathermap.org/";
     private final static String OPENWEATHERMAP_FORECAST_5day = "data/2.5/forecast";
     private final static String OPENWEATHERMAP_API_KEY = "a39b0e16bbd652220c6c82560e6814a6";
@@ -26,11 +26,11 @@ public class RequestBuilder {
     private String unitsType;
     private String apiKey;
 
-    public Request build(String requestType, City city) {
-        switch (requestType) {
+    public Request build(String source, City city) {
+        switch (source) {
             case OPEN_WEATHER:
                 return buildOpenWeather(city);
-                default:return new Request();
+            default:return new Request();
         }
     }
 

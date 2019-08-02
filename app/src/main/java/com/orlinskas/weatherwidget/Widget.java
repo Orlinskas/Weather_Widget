@@ -15,7 +15,7 @@ public class Widget implements Serializable {
     public Widget(int id, City city) {
         this.id = id;
         this.city = city;
-        this.request = new RequestBuilder().build(source,city);
+        this.request = new RequestBuilder().build(source, city);
     }
 
     @Override
