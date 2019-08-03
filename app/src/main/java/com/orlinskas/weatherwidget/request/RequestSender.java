@@ -9,7 +9,8 @@ import java.util.Scanner;
 public class RequestSender {
     public String send(Request request) {
     HttpURLConnection httpURLConnection = null;
-    URL url = RequestURLGenerator.generate(request);
+    RequestURLGenerator urlGenerator = new RequestURLGenerator();
+    URL url = urlGenerator.generate(request);
 
     try {
         httpURLConnection = (HttpURLConnection) url.openConnection();

@@ -1,21 +1,20 @@
 package com.orlinskas.weatherwidget;
 
 import com.orlinskas.weatherwidget.request.Request;
-import com.orlinskas.weatherwidget.request.RequestBuilder;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 public class Widget implements Serializable {
     private int id;
-    private String source = RequestBuilder.OPEN_WEATHER;
+    private String source = "OpenWeather";
     private City city;
     private Request request;
 
-    public Widget(int id, City city) {
+    public Widget(int id, City city, Request request) {
         this.id = id;
         this.city = city;
-        this.request = new RequestBuilder().build(source, city);
+        this.request = request;
     }
 
     @Override

@@ -1,12 +1,16 @@
 package com.orlinskas.weatherwidget.request;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import com.orlinskas.weatherwidget.City;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+@RunWith(AndroidJUnit4.class)
 public class RequestBuilderTest {
     private City city;
     private Request request;
@@ -15,7 +19,7 @@ public class RequestBuilderTest {
     public void setUp() {
         city = new City(1, "test","AA",1.0,1.0);
         RequestBuilder requestBuilder = new RequestBuilder();
-        request = requestBuilder.build(RequestBuilder.OPEN_WEATHER, city);
+        request = requestBuilder.build(city);
     }
 
     @Test

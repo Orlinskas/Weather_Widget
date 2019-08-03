@@ -9,10 +9,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.FirstRunner;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.preferences.FirstRunVerifier;
+import com.orlinskas.weatherwidget.request.Request;
+import com.orlinskas.weatherwidget.request.RequestBuilder;
+import com.orlinskas.weatherwidget.request.RequestURLGenerator;
 import com.orlinskas.weatherwidget.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
