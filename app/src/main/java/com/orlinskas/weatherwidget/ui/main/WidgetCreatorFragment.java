@@ -17,7 +17,7 @@ public class WidgetCreatorFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_city_data_generator, container, false);
+        View root = inflater.inflate(R.layout.fragment_widget_creator, container, false);
         countrySpn = root.findViewById(R.id.fragment_city_data_generator_spn_country);
         citySpn = root.findViewById(R.id.fragment_city_data_generator_spn_city);
         alertCountry = root.findViewById(R.id.fragment_city_data_generator_iv_alert_country);

@@ -16,7 +16,7 @@ public class WeatherRepositoryWriter {
 
     public void write(ArrayList<Weather> weathers) {
         WeatherRepository weatherRepository = new WeatherRepository(context);
-        
+
         for(Weather weather : weathers) {
             weatherRepository.add(weather);
         }

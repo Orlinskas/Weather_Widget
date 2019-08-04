@@ -7,4 +7,5 @@
     <string name="city">Город:</string>
     <string name="alert_image">alert_image</string>
     <string name="country">Страна:</string>
+    <string name="fragment_country_list_et">Начните вводить страну...</string>
 </resources>
