@@ -17,7 +17,7 @@ public class RequestBuilderTest {
 
     @Before
     public void setUp() {
-        city = new City(1, "test","AA",1.0,1.0);
+        city = new City(706483, "test","AA",1.0,1.0);
         RequestBuilder requestBuilder = new RequestBuilder();
         request = requestBuilder.build(city);
     }

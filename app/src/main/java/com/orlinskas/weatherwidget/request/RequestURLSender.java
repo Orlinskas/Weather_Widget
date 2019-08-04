@@ -6,11 +6,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class RequestSender {
-    public String send(Request request) {
+public class RequestURLSender {
+    public String send(URL url) {
     HttpURLConnection httpURLConnection = null;
-    RequestURLGenerator urlGenerator = new RequestURLGenerator();
-    URL url = urlGenerator.generate(request);
 
     try {
         httpURLConnection = (HttpURLConnection) url.openConnection();
