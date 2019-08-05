@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_country_list_rl"
+    android:id="@+id/fragment_city_list_rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <TextView
-        android:id="@+id/fragment_country_list_tv"
+        android:id="@+id/fragment_city_list_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_country_list_tv" />
+        android:text="@string/fragment_city_list_tv" />
 
     <ListView
-        android:id="@+id/fragment_country_list_lv"
+        android:id="@+id/fragment_city_list_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/fragment_country_list_et"
-        android:layout_below="@+id/fragment_country_list_tv"
+        android:layout_above="@+id/fragment_city_list_et"
+        android:layout_below="@+id/fragment_city_list_tv"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp" />
 
     <EditText
-        android:id="@+id/fragment_country_list_et"
+        android:id="@+id/fragment_city_list_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="5dp"
         android:inputType="text"
-        android:text="@string/fragment_country_list_et"
+        android:text="@string/fragment_city_list_et"
         tools:ignore="Autofill,LabelFor" />
 </RelativeLayout>

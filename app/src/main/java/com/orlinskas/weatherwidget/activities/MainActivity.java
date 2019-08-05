@@ -44,15 +44,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void processFirstRun(Context applicationContext) {
-        ToastBuilder.create(applicationContext, "Открытие базы данных...");
         FirstRunVerifier firstRunVerifier = new FirstRunVerifier(applicationContext);
 
         if(!firstRunVerifier.check()) {
+            ToastBuilder.create(applicationContext, "Открытие базы данных...");
+
             FirstRunner firstRunner = new FirstRunner(applicationContext);
             firstRunner.doFirstRun();
+
             firstRunVerifier.setFirstRun(true);
+
+            ToastBuilder.create(applicationContext, "Готово!");
         }
-        ToastBuilder.create(applicationContext, "Готово!");
     }
 
 

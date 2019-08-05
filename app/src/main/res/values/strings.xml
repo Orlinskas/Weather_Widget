@@ -8,4 +8,13 @@
     <string name="alert_image">alert_image</string>
     <string name="country">Страна:</string>
     <string name="fragment_country_list_et">Начните вводить страну...</string>
+    <string name="fragment_city_list_et">Начните вводить город...</string>
+    <string name="fragment_city_list_tv">Город</string>
+    <string name="fragment_country_list_tv">Страна</string>
+    <string name="fragment_city_data_generator_spn_country">открыть список стран</string>
+    <string name="fragment_city_data_generator_spn_city">открыть список городов</string>
+    <string name="fragment_city_data_generator_tv_country_name">нужно выбрать</string>
+    <string-array name="spinner">
+        <item>выбрать…</item>
+    </string-array>
 </resources>
