@@ -15,7 +15,7 @@ public class CityListActivity extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_city_list, container, false);
+        View root = inflater.inflate(R.layout.activity_city_list, container, false);
 
 
 
