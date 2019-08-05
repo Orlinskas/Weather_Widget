@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main;
+package com.orlinskas.weatherwidget.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,14 +10,15 @@ import android.widget.ListView;
 
 import com.orlinskas.weatherwidget.R;
 
-public class CountryListFragment extends Fragment {
+public class CityListActivity extends Fragment {
     private ListView listView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_widget_creator, container, false);
+        View root = inflater.inflate(R.layout.fragment_city_list, container, false);
 
-        
+
+
 
         return root;
     }

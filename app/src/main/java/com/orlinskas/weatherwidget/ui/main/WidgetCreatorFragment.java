@@ -6,22 +6,28 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.orlinskas.weatherwidget.ActivityOpener;
 import com.orlinskas.weatherwidget.R;
-
-import java.util.Objects;
+import com.orlinskas.weatherwidget.activities.CityListActivity;
+import com.orlinskas.weatherwidget.activities.CountryListActivity;
 
 public class WidgetCreatorFragment extends Fragment {
     Button countryListBtn, cityListBtn;
     ImageView alertCountry, alertCity;
     TextView countryName, cityName;
 
+
+    String COUNTRY_LIST_TAG = "country list";
+    String CITY_LIST_TAG = "city list";
+    CityListActivity cityListActivity = new CityListActivity();
+
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_widget_creator, container, false);
         countryListBtn = root.findViewById(R.id.fragment_city_data_generator_btn_country);
         cityListBtn = root.findViewById(R.id.fragment_city_data_generator_btn_city);
@@ -30,10 +36,11 @@ public class WidgetCreatorFragment extends Fragment {
         countryName = root.findViewById(R.id.fragment_city_data_generator_tv_country_name);
         cityName = root.findViewById(R.id.fragment_city_data_generator_tv_city_name);
 
+
         countryListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ActivityOpener.openActivity(getContext(), CountryListActivity.class);
             }
         });
 
