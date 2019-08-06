@@ -15,7 +15,6 @@ import static com.orlinskas.weatherwidget.data.CountryDatabase.TABLE_COUNTRY;
 import static com.orlinskas.weatherwidget.data.CountryDatabase.COLUMN_COUNTRY_CODE;
 import static com.orlinskas.weatherwidget.data.CountryDatabase.COLUMN_COUNTRY_NAME;
 
-
 public class CountryRepository implements Repository<Country> {
     private SQLiteDatabase database;
     private CountryDatabaseAdapter countryDatabaseAdapter;

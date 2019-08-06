@@ -2,14 +2,19 @@ package com.orlinskas.weatherwidget.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,15 +26,17 @@ import java.util.ArrayList;
 
 public class CountryListActivity extends AppCompatActivity {
     private ListView listView;
+    private ArrayList<Country> countries;
+    private EditText searchCountryField;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_list);
 
-        listView = findViewById(R.id.fragment_country_list_lv);
+        listView = findViewById(R.id.activity_country_list_lv);
+        searchCountryField = findViewById(R.id.activity_country_list_et);
 
-        ArrayList<Country> countries;
         CountryListPresenter presenter = new CountryListPresenter(getApplicationContext());
         countries = presenter.present();
 
@@ -38,6 +45,29 @@ public class CountryListActivity extends AppCompatActivity {
 
         listView.setAdapter(adapter);
 
+        searchCountryField.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    scrollListTo(searchCountryField.getText().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
     private class CountryListAdapter extends ArrayAdapter<Country> {
@@ -62,7 +92,42 @@ public class CountryListActivity extends AppCompatActivity {
             countryName.setText(name);
             countryCode.setText(code);
 
+            if (position%2 == 0) {
+                try {
+                    row.setBackgroundColor(getResources().getColor(R.color.colorRowHigh));
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            else{
+                row.setBackgroundColor(getResources().getColor(R.color.colorRowLight));
+            }
+
             return row;
         }
+    }
+
+    private void scrollListTo(String desiredCountryNamePart) {
+        int position = 0;
+
+        for(Country country : countries) {
+
+            String currentCountryNamePart = null;
+            try {
+                currentCountryNamePart = country.getName().substring(0, desiredCountryNamePart.length());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (currentCountryNamePart != null ) {
+                if(currentCountryNamePart.equals(desiredCountryNamePart)) {
+                    listView.smoothScrollToPosition(position);
+                    break;
+                }
+            }
+
+            position++;
+        }
+
     }
 }

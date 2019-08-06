@@ -7,6 +7,7 @@ import java.util.Objects;
 
 public class Widget implements Serializable {
     private int id;
+    private double id2;
     private String source = "OpenWeather";
     private City city;
     private Request request;

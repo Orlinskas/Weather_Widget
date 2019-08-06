@@ -20,12 +20,6 @@ public class WidgetCreatorFragment extends Fragment {
     ImageView alertCountry, alertCity;
     TextView countryName, cityName;
 
-
-    String COUNTRY_LIST_TAG = "country list";
-    String CITY_LIST_TAG = "city list";
-    CityListActivity cityListActivity = new CityListActivity();
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_widget_creator, container, false);
@@ -35,7 +29,6 @@ public class WidgetCreatorFragment extends Fragment {
         alertCity = root.findViewById(R.id.fragment_city_data_generator_iv_alert_city);
         countryName = root.findViewById(R.id.fragment_city_data_generator_tv_country_name);
         cityName = root.findViewById(R.id.fragment_city_data_generator_tv_city_name);
-
 
         countryListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,8 +41,10 @@ public class WidgetCreatorFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+
             }
         });
+
         return root;
     }
 }

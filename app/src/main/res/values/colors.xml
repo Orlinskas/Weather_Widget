@@ -7,4 +7,7 @@
     <color name="colorGreyPlatinum">#D7D9C9</color>
     <color name="colorGraniteGrey">#626868</color>
     <color name="colorRichBlack">#02090c</color>
+    <color name="colorRowHigh">#CCC9D7D9</color>
+    <color name="colorRowLight">#CCD8E5E7</color>
+
 </resources>
