@@ -1,8 +1,9 @@
 package com.orlinskas.weatherwidget;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class City {
+public class City implements Serializable {
     private int id;
     private String name;
     private String countryCode;

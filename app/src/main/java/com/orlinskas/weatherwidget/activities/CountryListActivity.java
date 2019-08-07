@@ -2,6 +2,7 @@ package com.orlinskas.weatherwidget.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -37,12 +38,9 @@ public class CountryListActivity extends AppCompatActivity {
         listView = findViewById(R.id.activity_country_list_lv);
         searchCountryField = findViewById(R.id.activity_country_list_et);
 
-        CountryListPresenter presenter = new CountryListPresenter(getApplicationContext());
-        countries = presenter.present();
+        findCountries();
 
-        ArrayAdapter<Country> adapter = new CountryListAdapter(getApplicationContext(),
-                R.layout.country_row, countries);
-
+        ArrayAdapter<Country> adapter = new CountryListAdapter(getApplicationContext(), R.layout.country_row, countries);
         listView.setAdapter(adapter);
 
         searchCountryField.addTextChangedListener(new TextWatcher(){
@@ -61,13 +59,24 @@ public class CountryListActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                openCityListActivity(position);
             }
         });
+    }
+
+    private void findCountries() {
+        CountryListPresenter presenter = new CountryListPresenter(getApplicationContext());
+        countries = presenter.present();
+    }
+
+    private void openCityListActivity(int positionCountryItemInList) {
+        Country country = countries.get(positionCountryItemInList);
+        Intent intent = new Intent(getApplicationContext(), CityListActivity.class);
+        intent.putExtra("country", country);
+        startActivity(intent);
     }
 
     private class CountryListAdapter extends ArrayAdapter<Country> {
@@ -83,7 +92,7 @@ public class CountryListActivity extends AppCompatActivity {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
             @SuppressLint("ViewHolder") View row = inflater.inflate(R.layout.country_row, parent, false);
-            TextView countryName = row.findViewById(R.id.county_row_tv_name);
+            TextView countryName = row.findViewById(R.id.country_row_tv_name);
             TextView countryCode = row.findViewById(R.id.county_row_tv_code);
 
             String name = countries.get(position).getName();

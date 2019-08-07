@@ -39,6 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.CountryListActivity" />
+        <activity android:name=".activities.CityListActivity" />
 
     </application>
 
