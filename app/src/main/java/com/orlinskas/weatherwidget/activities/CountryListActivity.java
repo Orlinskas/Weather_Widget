@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.orlinskas.weatherwidget.Country;
@@ -29,6 +31,8 @@ public class CountryListActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayList<Country> countries;
     private EditText searchCountryField;
+    private ProgressBar progressBar;
+    private LoadTask loadTask = new LoadTask();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,12 +41,12 @@ public class CountryListActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.activity_country_list_lv);
         searchCountryField = findViewById(R.id.activity_country_list_et);
+        progressBar = findViewById(R.id.activity_country_list_pb);
+    }
 
-        findCountries();
-
-        ArrayAdapter<Country> adapter = new CountryListAdapter(getApplicationContext(), R.layout.country_row, countries);
-        listView.setAdapter(adapter);
-
+    @Override
+    protected void onStart() {
+        super.onStart();
         searchCountryField.addTextChangedListener(new TextWatcher(){
             @Override
             public void afterTextChanged(Editable s) {
@@ -62,9 +66,40 @@ public class CountryListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setBackgroundColor(getResources().getColor(R.color.colorBackground));
                 openCityListActivity(position);
             }
         });
+        loadTask.execute();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class LoadTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showLoadingAndHideUI();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            findCountries();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            ArrayAdapter<Country> adapter = new CountryListAdapter(getApplicationContext(), R.layout.country_row, countries);
+            listView.setAdapter(adapter);
+            hideLoadingAndShowUI();
+        }
+    }
+
+    private void showLoadingAndHideUI() {
+        progressBar.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.INVISIBLE);
+        searchCountryField.setVisibility(View.INVISIBLE);
     }
 
     private void findCountries() {
@@ -72,11 +107,10 @@ public class CountryListActivity extends AppCompatActivity {
         countries = presenter.present();
     }
 
-    private void openCityListActivity(int positionCountryItemInList) {
-        Country country = countries.get(positionCountryItemInList);
-        Intent intent = new Intent(getApplicationContext(), CityListActivity.class);
-        intent.putExtra("country", country);
-        startActivity(intent);
+    private void hideLoadingAndShowUI() {
+        progressBar.setVisibility(View.INVISIBLE);
+        listView.setVisibility(View.VISIBLE);
+        searchCountryField.setVisibility(View.VISIBLE);
     }
 
     private class CountryListAdapter extends ArrayAdapter<Country> {
@@ -138,5 +172,12 @@ public class CountryListActivity extends AppCompatActivity {
             position++;
         }
 
+    }
+
+    private void openCityListActivity(int positionCountryItemInList) {
+        Country country = countries.get(positionCountryItemInList);
+        Intent intent = new Intent(getApplicationContext(), CityListActivity.class);
+        intent.putExtra("country", country);
+        startActivity(intent);
     }
 }

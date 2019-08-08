@@ -2,6 +2,7 @@ package com.orlinskas.weatherwidget.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,12 +16,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.Country;
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.ToastBuilder;
+import com.orlinskas.weatherwidget.Widget;
+import com.orlinskas.weatherwidget.math.Random;
 import com.orlinskas.weatherwidget.presenters.CityListPresenter;
+import com.orlinskas.weatherwidget.request.Request;
+import com.orlinskas.weatherwidget.request.RequestBuilder;
 
 import java.util.ArrayList;
 
@@ -28,6 +35,10 @@ public class CityListActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayList<City> cities;
     private EditText searchCityField;
+    private TextView headText;
+    private ProgressBar progressBar;
+    private Country country;
+    private LoadTask loadTask = new LoadTask();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,12 +47,15 @@ public class CityListActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.activity_city_list_lv);
         searchCityField = findViewById(R.id.activity_city_list_et);
+        progressBar = findViewById(R.id.activity_city_list_pb);
+        headText = findViewById(R.id.activity_city_list_tv);
 
-        findCities();
+        country = (Country) getIntent().getSerializableExtra("country");
+    }
 
-        ArrayAdapter<City> adapter = new CityListActivity.CityListAdapter(getApplicationContext(), R.layout.city_row, cities);
-        listView.setAdapter(adapter);
-
+    @Override
+    protected void onStart() {
+        super.onStart();
         searchCityField.addTextChangedListener(new TextWatcher(){
             @Override
             public void afterTextChanged(Editable s) {
@@ -61,15 +75,56 @@ public class CityListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                view.setBackgroundColor(getResources().getColor(R.color.colorBackground));
+                City city = cities.get(position);
+                createWidget(city);
             }
         });
+        loadTask.execute();
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class LoadTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showLoadingAndHideUI();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            findCities();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            ArrayAdapter<City> adapter = new CityListAdapter(getApplicationContext(), R.layout.city_row, cities);
+            listView.setAdapter(adapter);
+            hideLoadingAndShowUI();
+        }
+    }
+
+    private void showLoadingAndHideUI() {
+        String message = "Загрузка городов для - " + country.getName();
+        headText.setText(message);
+        progressBar.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.INVISIBLE);
+        searchCityField.setVisibility(View.INVISIBLE);
     }
 
     private void findCities() {
-        Country country = (Country) getIntent().getSerializableExtra("country");
         CityListPresenter presenter = new CityListPresenter(getApplicationContext());
         cities = presenter.present(country);
+    }
+
+    private void hideLoadingAndShowUI() {
+        headText.setText("Город");
+        progressBar.setVisibility(View.INVISIBLE);
+        listView.setVisibility(View.VISIBLE);
+        searchCityField.setVisibility(View.VISIBLE);
+        ToastBuilder.create(getApplicationContext(), "Доступно - " + cities.size() + " городов.");
     }
 
     private class CityListAdapter extends ArrayAdapter<City> {
@@ -124,5 +179,12 @@ public class CityListActivity extends AppCompatActivity {
             position++;
         }
 
+    }
+
+    private void createWidget(City city) {
+        RequestBuilder builder = new RequestBuilder();
+        Request request = builder.build(city);
+
+        Widget widget = new Widget(Random.getID(), city, request);
     }
 }

@@ -17,7 +17,7 @@
         android:layout_toStartOf="@+id/county_row_tv_code"
         android:text="TextView"
         android:textAlignment="viewStart"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorTextBlack"
         android:textSize="18sp"
         android:textStyle="italic"
         android:maxLines="1"/>
@@ -33,7 +33,7 @@
         android:layout_marginBottom="5dp"
         android:text="TextView"
         android:textAlignment="viewEnd"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorTextBlack"
         android:textSize="18sp"
         android:textStyle="bold" />
 </RelativeLayout>

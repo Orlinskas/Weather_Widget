@@ -5,13 +5,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_city_list_rl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/activity_city_list_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_city_list_tv" />
+        android:textColor="@color/colorTextBlack"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="@string/fragment_city_list_tv"
+        android:layout_marginStart="10dp"
+        />
 
     <ListView
         android:id="@+id/activity_city_list_lv"
@@ -20,7 +26,8 @@
         android:layout_above="@+id/activity_city_list_et"
         android:layout_below="@+id/activity_city_list_tv"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="5dp"
+        android:background="@color/colorBackground"/>
 
     <EditText
         android:id="@+id/activity_city_list_et"
@@ -28,7 +35,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="5dp"
-        android:inputType="textCapWords"
         android:hint="@string/fragment_city_list_et"
-        tools:ignore="Autofill,LabelFor" />
+        android:inputType="textCapWords"
+        android:textColor="@color/colorTextBlack"
+        android:shadowColor="@color/colorTextBlack"
+        android:textColorHint="@color/colorTextBlack"
+        android:background="@color/colorTextBlack"
+        tools:ignore="Autofill,LabelFor"/>
+
+    <ProgressBar
+        android:id="@+id/activity_city_list_pb"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:visibility="invisible"/>
 </RelativeLayout>
