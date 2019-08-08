@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.Country;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.presenters.CountryListPresenter;
@@ -33,6 +34,8 @@ public class CountryListActivity extends AppCompatActivity {
     private EditText searchCountryField;
     private ProgressBar progressBar;
     private LoadTask loadTask = new LoadTask();
+    private Country country;
+    private City city;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,7 +70,8 @@ public class CountryListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setBackgroundColor(getResources().getColor(R.color.colorBackground));
-                openCityListActivity(position);
+                country = countries.get(position);
+                openCityListActivity();
             }
         });
         loadTask.execute();
@@ -174,10 +178,23 @@ public class CountryListActivity extends AppCompatActivity {
 
     }
 
-    private void openCityListActivity(int positionCountryItemInList) {
-        Country country = countries.get(positionCountryItemInList);
+    private void openCityListActivity() {
         Intent intent = new Intent(getApplicationContext(), CityListActivity.class);
         intent.putExtra("country", country);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            city = (City) data.getSerializableExtra("city");
+        }
+
+        Intent intent = new Intent();
+        intent.putExtra("city", city);
+        intent.putExtra("country", country);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

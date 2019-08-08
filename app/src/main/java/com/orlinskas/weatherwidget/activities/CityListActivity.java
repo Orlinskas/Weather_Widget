@@ -2,6 +2,7 @@ package com.orlinskas.weatherwidget.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,11 +24,7 @@ import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.Country;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
-import com.orlinskas.weatherwidget.Widget;
-import com.orlinskas.weatherwidget.math.Random;
 import com.orlinskas.weatherwidget.presenters.CityListPresenter;
-import com.orlinskas.weatherwidget.request.Request;
-import com.orlinskas.weatherwidget.request.RequestBuilder;
 
 import java.util.ArrayList;
 
@@ -77,7 +74,7 @@ public class CityListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setBackgroundColor(getResources().getColor(R.color.colorBackground));
                 City city = cities.get(position);
-                createWidget(city);
+                resumeMainWidgetCreator(city);
             }
         });
         loadTask.execute();
@@ -181,10 +178,10 @@ public class CityListActivity extends AppCompatActivity {
 
     }
 
-    private void createWidget(City city) {
-        RequestBuilder builder = new RequestBuilder();
-        Request request = builder.build(city);
-
-        Widget widget = new Widget(Random.getID(), city, request);
+    private void resumeMainWidgetCreator(City city) {
+        Intent intent = new Intent();
+        intent.putExtra("city", city);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
