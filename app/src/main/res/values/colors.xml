@@ -2,13 +2,17 @@
 <resources>
     <color name="colorPrimary">#363540</color>
 
-    <color name="colorAccent">#789EBF</color>
+    <color name="colorAccent">#65839D</color>
+    <color name="colorAccentDuo">#634D64</color>
+    <color name="colorAccentTrio">#2A234B</color>
 
     <color name="colorBackground">#262626</color>
-    <color name="colorText">#FFFFFF</color>
-    <color name="colorTextBlack">#888888</color>
 
-    <color name="colorRowHigh">#CBDEEC</color>
-    <color name="colorRowLight">#DBF0FF</color>
+    <color name="colorText">#F6F3F3</color>
+    <color name="colorTextBlack">#ACABAB</color>
+    <color name="colorTextButton">#D0CCCC</color>
+
+    <color name="colorRowHigh">#2F2E36</color>
+    <color name="colorRowLight">#34333D</color>
 
 </resources>

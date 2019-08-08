@@ -36,22 +36,25 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/activity_country_list_et"
         android:layout_below="@+id/activity_country_list_tv"
+        android:layout_margin="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@color/colorBackground"/>
+        android:background="@color/colorPrimary" />
 
     <EditText
         android:id="@+id/activity_country_list_et"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/colorPrimary"
         android:hint="@string/fragment_country_list_et"
         android:inputType="textCapWords"
-        android:textColor="@color/colorTextBlack"
-        android:shadowColor="@color/colorTextBlack"
-        android:textColorHint="@color/colorTextBlack"
-        android:background="@color/colorTextBlack"
+        android:shadowColor="@color/colorBackground"
+        android:textColor="@color/colorText"
+        android:textColorHint="@color/colorText"
         tools:ignore="Autofill,LabelFor" />
 
     <ProgressBar

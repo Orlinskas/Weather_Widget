@@ -2,7 +2,7 @@
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_city_data_generator_sv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +11,9 @@
     <RelativeLayout
         android:id="@+id/fragment_city_data_generator_rl"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/fragment_city_data_generator_tv_head"
@@ -23,7 +25,17 @@
             android:text="@string/fragment_city_data_generator_tv_head"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorTextBlack" />
+            android:textColor="@color/colorText"
+            tools:ignore="RelativeOverlap" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp" />
 
         <TextView
             android:id="@+id/fragment_city_data_generator_tv_country"
@@ -48,39 +60,28 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/fragment_city_data_generator_iv_alert_country"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_tv_head"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="5dp"
-            android:visibility="invisible"
-            app:srcCompat="@drawable/ic_alert"
-            android:contentDescription="@string/alert_image" />
-
         <Button
             android:id="@+id/fragment_city_data_generator_btn_country"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@+id/fragment_city_data_generator_tv_country_name"
+            android:layout_below="@+id/fragment_city_data_generator_tv_city_name"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
-            android:layout_marginBottom="15dp"
+            android:background="@drawable/secondary_button"
             android:text="@string/fragment_city_data_generator_spn_country"
-            />
+            android:textColor="@color/colorTextButton"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/fragment_city_data_generator_tv_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_btn_country"
+            android:layout_below="@+id/fragment_city_data_generator_tv_country_name"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:text="@string/city"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorTextBlack"
             android:textSize="18sp" />
 
         <TextView
@@ -95,27 +96,19 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/fragment_city_data_generator_iv_alert_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_btn_country"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="5dp"
-            android:visibility="invisible"
-            app:srcCompat="@drawable/ic_alert"
-            android:contentDescription="@string/alert_image"/>
-
         <Button
             android:id="@+id/fragment_city_data_generator_btn_city"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@+id/fragment_city_data_generator_tv_city_name"
+            android:layout_below="@+id/fragment_city_data_generator_btn_country"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
-            android:text="@string/fragment_city_data_generator_spn_city" />
+            android:background="@drawable/secondary_button"
+            android:textColor="@color/colorTextButton"
+            android:textSize="12sp"
+            android:text="@string/fragment_city_data_generator_spn_city"
+            />
 
         <Button
             android:id="@+id/fragment_city_data_generator_btn_start"
@@ -124,11 +117,13 @@
             android:layout_below="@+id/fragment_city_data_generator_btn_city"
             android:layout_alignParentBottom="false"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@color/colorAccent"
-            android:text="@string/fragment_city_data_generator_btn_start" />
+            android:background="@drawable/main_button"
+            android:text="@string/fragment_city_data_generator_btn_start"
+            android:textColor="@color/colorTextButton"
+            android:textSize="18sp" />
     </RelativeLayout>
 </ScrollView>
 
