@@ -42,6 +42,7 @@
         </activity>
         <activity android:name=".activities.CountryListActivity" />
         <activity android:name=".activities.CityListActivity" />
+        <activity android:name=".activities.WidgetCreatorActivity" />
 
     </application>
 

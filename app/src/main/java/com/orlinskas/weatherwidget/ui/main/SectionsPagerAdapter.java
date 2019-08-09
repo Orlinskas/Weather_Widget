@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.activities.WidgetCreatorActivity;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -16,7 +17,7 @@ import com.orlinskas.weatherwidget.R;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -29,8 +30,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 return new WidgetFragment();
-            case 1:
-                return new WidgetCreatorFragment();
                 default: return new WidgetFragment();
         }
     }

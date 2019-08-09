@@ -3,12 +3,12 @@ package com.orlinskas.weatherwidget.activities;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.orlinskas.weatherwidget.ActivityOpener;
 import com.orlinskas.weatherwidget.FirstRunner;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Заполните таблицу", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                ActivityOpener.openActivity(getApplicationContext(), WidgetCreatorActivity.class);
             }
         });
 
@@ -53,6 +52,4 @@ public class MainActivity extends AppCompatActivity {
             ToastBuilder.create(applicationContext, "Готово!");
         }
     }
-
-
 }

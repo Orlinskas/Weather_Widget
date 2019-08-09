@@ -1,14 +1,12 @@
-package com.orlinskas.weatherwidget.ui.main;
+package com.orlinskas.weatherwidget.activities;
 
 import android.content.Intent;
 
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -18,13 +16,8 @@ import com.orlinskas.weatherwidget.Country;
 import com.orlinskas.weatherwidget.R;
 
 import com.orlinskas.weatherwidget.ToastBuilder;
-import com.orlinskas.weatherwidget.activities.CountryListActivity;
 
-import java.util.Objects;
-
-import static android.content.Context.LOCATION_SERVICE;
-
-public class WidgetCreatorFragment extends Fragment {
+public class WidgetCreatorActivity extends AppCompatActivity {
     private Button findLocationBtn, openListBtn, createWidgetButton;
     private TextView countryName, cityName;
     private TextView indicatorGpsOn, indicatorNetworkOn, indicatorGpsOff, indicatorNetworkOff;
@@ -34,20 +27,21 @@ public class WidgetCreatorFragment extends Fragment {
     private LocationManager locationManager;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_widget_creator, container, false);
-        findLocationBtn = root.findViewById(R.id.fragment_city_data_generator_btn_gps);
-        openListBtn = root.findViewById(R.id.fragment_city_data_generator_btn_open_list);
-        countryName = root.findViewById(R.id.fragment_city_data_generator_tv_country_name);
-        cityName = root.findViewById(R.id.fragment_city_data_generator_tv_city_name);
-        progressBar = root.findViewById(R.id.fragment_city_data_generator_pb);
-        createWidgetButton = root.findViewById(R.id.fragment_city_data_generator_btn_start);
-        indicatorGpsOn = root.findViewById(R.id.fragment_city_data_generator_tv_gps_on);
-        indicatorGpsOff = root.findViewById(R.id.fragment_city_data_generator_tv_gps_off);
-        indicatorNetworkOn = root.findViewById(R.id.fragment_city_data_generator_tv_network_on);
-        indicatorNetworkOff = root.findViewById(R.id.fragment_city_data_generator_tv_network_off);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_widget_creator);
+        findLocationBtn = findViewById(R.id.fragment_city_data_generator_btn_gps);
+        openListBtn = findViewById(R.id.fragment_city_data_generator_btn_open_list);
+        countryName = findViewById(R.id.fragment_city_data_generator_tv_country_name);
+        cityName = findViewById(R.id.fragment_city_data_generator_tv_city_name);
+        progressBar = findViewById(R.id.fragment_city_data_generator_pb);
+        createWidgetButton = findViewById(R.id.fragment_city_data_generator_btn_start);
+        indicatorGpsOn = findViewById(R.id.fragment_city_data_generator_tv_gps_on);
+        indicatorGpsOff = findViewById(R.id.fragment_city_data_generator_tv_gps_off);
+        indicatorNetworkOn = findViewById(R.id.fragment_city_data_generator_tv_network_on);
+        indicatorNetworkOff = findViewById(R.id.fragment_city_data_generator_tv_network_off);
 
-        locationManager = (LocationManager) Objects.requireNonNull(getContext()).getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         checkNetwork();
         checkGPS();
@@ -55,14 +49,14 @@ public class WidgetCreatorFragment extends Fragment {
         findLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastBuilder.create(getContext(),"Еще не добавлено");
+                ToastBuilder.create(getApplicationContext(),"Еще не добавлено");
             }
         });
 
         openListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CountryListActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CountryListActivity.class);
                 startActivityForResult(intent, 1);
             }
         });
@@ -73,8 +67,8 @@ public class WidgetCreatorFragment extends Fragment {
                 createWidget();
             }
         });
+    }
 
-        return root;
         /* @Override
   protected void onResume() {
     super.onResume();
@@ -136,8 +130,10 @@ public class WidgetCreatorFragment extends Fragment {
       return "";
     return String.format(
         "Coordinates: lat = %1$.4f, lon = %2$.4f, time = %3$tF %3$tT",
-        location.getLatitude(), location.getLongitude(), new Date(
-            location.getTime()));
+        location.getLatitude(),
+        location.getLongitude(),
+        new Date(location.getTime())
+        );
   }
 
   private void checkEnabled() {
@@ -153,7 +149,6 @@ public class WidgetCreatorFragment extends Fragment {
     startActivity(new Intent(
         android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
   }; */
-    }
 
     @Override
     public void onResume() {
@@ -167,7 +162,6 @@ public class WidgetCreatorFragment extends Fragment {
         super.onPause();
         checkNetwork();
         checkGPS();
-
     }
 
     private void checkAndShowLocationData() {
