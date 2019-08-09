@@ -15,6 +15,9 @@
     <string name="fragment_city_data_generator_spn_city">выбрать из списка</string>
     <string name="fragment_city_data_generator_tv_country_name">нужно выбрать</string>
     <string name="fragment_country_list_tv_code">Код</string>
+    <string name="on">On</string>
+    <string name="network">Network</string>
+    <string name="gps">GPS</string>
     <string-array name="spinner">
         <item>выбрать…</item>
     </string-array>

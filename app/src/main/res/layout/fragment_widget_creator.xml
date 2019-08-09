@@ -15,28 +15,57 @@
         android:layout_margin="5dp"
         android:background="@color/colorPrimary">
 
+        <ProgressBar
+            android:id="@+id/fragment_city_data_generator_pb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible" />
+
         <TextView
             android:id="@+id/fragment_city_data_generator_tv_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="monospace"
             android:text="@string/fragment_city_data_generator_tv_head"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/colorText"
+            android:textStyle="bold"
             tools:ignore="RelativeOverlap" />
 
-        <ProgressBar
-            android:id="@+id/fragment_city_data_generator_pb"
-            style="?android:attr/progressBarStyle"
+        <TextView
+            android:id="@+id/fragment_city_data_generator_tv_network_on"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_city_data_generator_tv_head"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:visibility="invisible"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="5dp"
+            android:drawableEnd="@drawable/ic_green"
+            android:drawablePadding="5dp"
+            android:text="@string/network"
+            android:textColor="@color/colorTextBlack"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragment_city_data_generator_tv_network_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_city_data_generator_tv_head"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="5dp"
+            android:drawableEnd="@drawable/ic_red"
+            android:drawablePadding="5dp"
+            android:text="@string/network"
+            android:textColor="@color/colorTextBlack"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/fragment_city_data_generator_tv_country"
@@ -50,6 +79,34 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/fragment_city_data_generator_tv_gps_on"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_city_data_generator_tv_network_off"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:drawableEnd="@drawable/ic_green"
+            android:drawablePadding="5dp"
+            android:text="@string/gps"
+            android:textColor="@color/colorTextBlack"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fragment_city_data_generator_tv_gps_off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fragment_city_data_generator_tv_network_off"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:drawableEnd="@drawable/ic_red"
+            android:drawablePadding="5dp"
+            android:text="@string/gps"
+            android:textColor="@color/colorTextBlack"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/fragment_city_data_generator_tv_country_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,8 +114,8 @@
             android:layout_marginTop="5dp"
             android:text="@string/fragment_city_data_generator_tv_country_name"
             android:textAlignment="center"
-            android:textColor="@color/colorTextBlack"
-            android:textSize="16sp"
+            android:textColor="@color/colorText"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Button
@@ -93,8 +150,8 @@
             android:layout_marginTop="5dp"
             android:text="@string/fragment_city_data_generator_tv_country_name"
             android:textAlignment="center"
-            android:textColor="@color/colorTextBlack"
-            android:textSize="16sp"
+            android:textColor="@color/colorText"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Button
