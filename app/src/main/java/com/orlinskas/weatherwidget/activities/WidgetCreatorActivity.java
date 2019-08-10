@@ -1,10 +1,17 @@
 package com.orlinskas.weatherwidget.activities;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +21,8 @@ import android.widget.TextView;
 import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.Country;
 import com.orlinskas.weatherwidget.R;
-
 import com.orlinskas.weatherwidget.ToastBuilder;
+import com.orlinskas.weatherwidget.location.CityFinder;
 
 public class WidgetCreatorActivity extends AppCompatActivity {
     private Button findLocationBtn, openListBtn, createWidgetButton;
@@ -25,6 +32,8 @@ public class WidgetCreatorActivity extends AppCompatActivity {
     private Country country;
     private City city;
     private LocationManager locationManager;
+    private final int REQUEST_CODE_PERMISSION_FINE_LOCATION = 1001;
+    private final int REQUEST_CODE_PERMISSION_COARSE_LOCATION = 1002;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,13 +52,26 @@ public class WidgetCreatorActivity extends AppCompatActivity {
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        checkNetwork();
-        checkGPS();
+        checkGPSOn();
+        checkNetworkOn();
 
         findLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastBuilder.create(getApplicationContext(),"Еще не добавлено");
+                if (!checkPermissionGPSLocation()) {
+                    toAskPermissionGPSLocation();
+                }
+                if (!checkPermissionNetworkLocation()) {
+                    toAskPermissionNetworkLocation();
+                }
+
+                String provider = chooseAvailableProvider();
+
+                if (provider == null) {
+                    ToastBuilder.create(getApplicationContext(), "Разрешите доступ или включите GPS");
+                } else {
+                    findLocation(provider);
+                }
             }
         });
 
@@ -69,99 +91,134 @@ public class WidgetCreatorActivity extends AppCompatActivity {
         });
     }
 
-        /* @Override
-  protected void onResume() {
-    super.onResume();
-    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-        1000 * 10, 10, locationListener);
-    locationManager.requestLocationUpdates(
-        LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
-        locationListener);
-    checkEnabled();
-  }
+    private boolean checkGPSOn() {
+        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            setOnIndicatorGPS();
+            return true;
+        }
+        else {
+            setOffIndicatorGPS();
+            return false;
+        }
+    }
 
-  @Override
-  protected void onPause() {
-    super.onPause();
-    locationManager.removeUpdates(locationListener);
-  }
+    private void setOnIndicatorGPS() {
+        indicatorGpsOn.setVisibility(View.VISIBLE);
+        indicatorGpsOff.setVisibility(View.INVISIBLE);
+    }
 
-  private LocationListener locationListener = new LocationListener() {
+    private void setOffIndicatorGPS() {
+        indicatorGpsOff.setVisibility(View.VISIBLE);
+        indicatorGpsOn.setVisibility(View.INVISIBLE);
+    }
 
-    @Override
-    public void onLocationChanged(Location location) {
-      showLocation(location);
+    private boolean checkNetworkOn() {
+        if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+            setOnIndicatorNetwork();
+            return true;
+        }
+        else {
+            setOffIndicatorNetwork();
+            return false;
+        }
+
+    }
+
+    private void setOnIndicatorNetwork() {
+        indicatorNetworkOn.setVisibility(View.VISIBLE);
+        indicatorNetworkOff.setVisibility(View.INVISIBLE);
+    }
+
+    private void setOffIndicatorNetwork() {
+        indicatorNetworkOff.setVisibility(View.VISIBLE);
+        indicatorNetworkOn.setVisibility(View.INVISIBLE);
+
+    }
+
+    private boolean checkPermissionGPSLocation() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean checkPermissionNetworkLocation() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void toAskPermissionGPSLocation() {
+        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (permissionStatus != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_PERMISSION_FINE_LOCATION);
+        }
+    }
+
+    private void toAskPermissionNetworkLocation() {
+        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (permissionStatus != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},
+                    REQUEST_CODE_PERMISSION_COARSE_LOCATION);
+        }
+    }
+
+    private String chooseAvailableProvider() {
+        if(checkGPSOn() & checkPermissionGPSLocation()) {
+            return LocationManager.GPS_PROVIDER;
+        }
+        if (checkNetworkOn() & checkPermissionNetworkLocation()) {
+            return LocationManager.NETWORK_PROVIDER;
+        }
+        else {
+            return null;
+        }
+    }
+
+    private void findLocation(String provider) {
+        //все тут нормально с permission
+        @SuppressLint("MissingPermission")
+        Location location = locationManager.getLastKnownLocation(provider);
+        CityFinder cityFinder = new CityFinder(getApplicationContext(),location);
+        City city = cityFinder.find();
+    }
+
+    private void createWidget() {
+
     }
 
     @Override
-    public void onProviderDisabled(String provider) {
-      checkEnabled();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CODE_PERMISSION_FINE_LOCATION:
+                permissionGPS = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+            case REQUEST_CODE_PERMISSION_COARSE_LOCATION:
+                permissionNetwork = grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+        }
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
-      checkEnabled();
-      showLocation(locationManager.getLastKnownLocation(provider));
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            city = (City) data.getSerializableExtra("city");
+            country = (Country) data.getSerializableExtra("country");
+        }
+        checkAndShowLocationData();
     }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-      if (provider.equals(LocationManager.GPS_PROVIDER)) {
-        tvStatusGPS.setText("Status: " + String.valueOf(status));
-      } else if (provider.equals(LocationManager.NETWORK_PROVIDER)) {
-        tvStatusNet.setText("Status: " + String.valueOf(status));
-      }
-    }
-  };
-
-  private void showLocation(Location location) {
-    if (location == null)
-      return;
-    if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-      tvLocationGPS.setText(formatLocation(location));
-    } else if (location.getProvider().equals(
-        LocationManager.NETWORK_PROVIDER)) {
-      tvLocationNet.setText(formatLocation(location));
-    }
-  }
-
-  private String formatLocation(Location location) {
-    if (location == null)
-      return "";
-    return String.format(
-        "Coordinates: lat = %1$.4f, lon = %2$.4f, time = %3$tF %3$tT",
-        location.getLatitude(),
-        location.getLongitude(),
-        new Date(location.getTime())
-        );
-  }
-
-  private void checkEnabled() {
-    tvEnabledGPS.setText("Enabled: "
-        + locationManager
-            .isProviderEnabled(LocationManager.GPS_PROVIDER));
-    tvEnabledNet.setText("Enabled: "
-        + locationManager
-            .isProviderEnabled(LocationManager.NETWORK_PROVIDER));
-  }
-
-  public void onClickLocationSettings(View view) {
-    startActivity(new Intent(
-        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-  }; */
 
     @Override
     public void onResume() {
         super.onResume();
-        checkNetwork();
-        checkGPS();
+        checkNetworkOn();
+        checkGPSOn();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        checkNetwork();
-        checkGPS();
+        checkNetworkOn();
+        checkGPSOn();
     }
 
     private void checkAndShowLocationData() {
@@ -187,59 +244,5 @@ public class WidgetCreatorActivity extends AppCompatActivity {
 
     private void showCityName() {
         cityName.setText(city.getName());
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-            city = (City) data.getSerializableExtra("city");
-            country = (Country) data.getSerializableExtra("country");
-        }
-        checkAndShowLocationData();
-    }
-
-    private void createWidget() {
-
-    }
-
-    private void checkNetwork() {
-        if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
-                setOnIndicatorNetwork();
-            }
-        else {
-            setOffIndicatorNetwork();
-        }
-
-    }
-
-    private void checkGPS() {
-        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            setOnIndicatorGPS();
-        }
-        else {
-            setOffIndicatorGPS();
-        }
-    }
-
-    private void setOnIndicatorNetwork() {
-        indicatorNetworkOn.setVisibility(View.VISIBLE);
-        indicatorNetworkOff.setVisibility(View.INVISIBLE);
-    }
-
-    private void setOffIndicatorNetwork() {
-        indicatorNetworkOff.setVisibility(View.VISIBLE);
-        indicatorNetworkOn.setVisibility(View.INVISIBLE);
-
-    }
-
-    private void setOnIndicatorGPS() {
-        indicatorGpsOn.setVisibility(View.VISIBLE);
-        indicatorGpsOff.setVisibility(View.INVISIBLE);
-    }
-
-    private void setOffIndicatorGPS() {
-        indicatorGpsOff.setVisibility(View.VISIBLE);
-        indicatorGpsOn.setVisibility(View.INVISIBLE);
     }
 }
