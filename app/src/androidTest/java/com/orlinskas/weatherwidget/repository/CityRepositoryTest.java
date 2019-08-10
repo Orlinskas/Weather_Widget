@@ -4,7 +4,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.orlinskas.weatherwidget.City;
-import com.orlinskas.weatherwidget.specification.CitySpecification;
+import com.orlinskas.weatherwidget.specification.CitiesSpecification;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,14 +29,14 @@ public class CityRepositoryTest {
     @Test
     public void add() {
         repository.add(city);
-        cities = repository.query(new CitySpecification());
+        cities = repository.query(new CitiesSpecification());
         assertTrue(cities.contains(city));
         repository.remote(city);
     }
 
     @Test
     public void query() {
-        cities = repository.query(new CitySpecification());
+        cities = repository.query(new CitiesSpecification());
         assertTrue(cities.size() > 160000);
     }
 }

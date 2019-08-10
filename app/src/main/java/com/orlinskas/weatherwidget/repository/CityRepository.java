@@ -68,25 +68,29 @@ public class CityRepository implements Repository<City> {
         database = cityDatabaseAdapter.getDatabase();
         database.beginTransaction();
         try {
-            final Cursor cursor = database.rawQuery(sqlSpecification.toSqlQuery(), new String[]{});
+            try {
+                final Cursor cursor = database.rawQuery(sqlSpecification.toSqlQuery(), new String[]{});
 
-            if (cursor.moveToFirst()) {
-                do {
-                    int cityID = cursor.getInt(cursor.getColumnIndex(COLUMN_CITY_ID));
-                    String cityName = cursor.getString(cursor.getColumnIndex(COLUMN_CITY_NAME));
-                    String countryCode = cursor.getString(cursor.getColumnIndex(COLUMN_COUNTRY_CODE));
-                    double coordLon = cursor.getDouble(cursor.getColumnIndex(COLUMN_COORD_LON));
-                    double coordLat = cursor.getDouble(cursor.getColumnIndex(COLUMN_COORD_LAT));
+                if (cursor.moveToFirst()) {
+                    do {
+                        int cityID = cursor.getInt(cursor.getColumnIndex(COLUMN_CITY_ID));
+                        String cityName = cursor.getString(cursor.getColumnIndex(COLUMN_CITY_NAME));
+                        String countryCode = cursor.getString(cursor.getColumnIndex(COLUMN_COUNTRY_CODE));
+                        double coordLon = cursor.getDouble(cursor.getColumnIndex(COLUMN_COORD_LON));
+                        double coordLat = cursor.getDouble(cursor.getColumnIndex(COLUMN_COORD_LAT));
 
-                    cities.add(new City(cityID, cityName, countryCode, coordLon, coordLat));
+                        cities.add(new City(cityID, cityName, countryCode, coordLon, coordLat));
+                    }
+                    while (cursor.moveToNext());
                 }
-                while (cursor.moveToNext());
+                cursor.close();
+                database.setTransactionSuccessful();
+            } finally {
+                database.endTransaction();
+                database.close();
             }
-            cursor.close();
-            database.setTransactionSuccessful();
-        } finally {
-            database.endTransaction();
-            database.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return cities;
     }
