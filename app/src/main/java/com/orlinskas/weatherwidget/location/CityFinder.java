@@ -20,16 +20,25 @@ public class CityFinder {
     }
 
     public City find() {
-        double lat = location.getLatitude();
-        double lon = location.getLongitude();
-
-        return findCity(lat, lon);
-    }
-
-    private City findCity(double lat, double lon) {
         CityRepository repository = new CityRepository(context);
         ArrayList<City> cities = repository.query(new CitiesThisLocationSpecification(location));
 
-        return cities.get(1);
+        City nearCity = null;
+        double distanceToNearCity = 99999.0;
+
+        for (City city : cities) {
+            double latitudeDistance = Math.pow(location.getLatitude() - city.getCoordLat(), 2.0);
+            double longitudeDistance = Math.pow(location.getLongitude() - city.getCoordLon(), 2.0);
+
+            double currentCityDistanceToMe = latitudeDistance + longitudeDistance;
+
+            if (distanceToNearCity > currentCityDistanceToMe) {
+                nearCity = city;
+                distanceToNearCity = currentCityDistanceToMe;
+            }
+
+        }
+
+        return nearCity;
     }
 }
