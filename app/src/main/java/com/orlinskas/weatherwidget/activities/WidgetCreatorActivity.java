@@ -16,6 +16,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -44,26 +46,29 @@ public class WidgetCreatorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_widget_creator);
-        progressBar = findViewById(R.id.fragment_city_data_generator_pb);
-        searchLocationBtn = findViewById(R.id.fragment_city_data_generator_btn_gps);
-        openListLocationsBtn = findViewById(R.id.fragment_city_data_generator_btn_open_list);
-        createWidgetButton = findViewById(R.id.fragment_city_data_generator_btn_start);
+        setContentView(R.layout.activity_widget_creator);
+        progressBar = findViewById(R.id.activity_city_data_generator_pb);
+        searchLocationBtn = findViewById(R.id.activity_city_data_generator_btn_gps);
+        openListLocationsBtn = findViewById(R.id.activity_city_data_generator_btn_open_list);
+        createWidgetButton = findViewById(R.id.activity_city_data_generator_btn_start);
 
-        countryName = findViewById(R.id.fragment_city_data_generator_tv_country_name);
-        cityName = findViewById(R.id.fragment_city_data_generator_tv_city_name);
+        countryName = findViewById(R.id.activity_city_data_generator_tv_country_name);
+        cityName = findViewById(R.id.activity_city_data_generator_tv_city_name);
 
-        indicatorGpsOn = findViewById(R.id.fragment_city_data_generator_tv_gps_on);
-        indicatorGpsOff = findViewById(R.id.fragment_city_data_generator_tv_gps_off);
-        indicatorNetworkOn = findViewById(R.id.fragment_city_data_generator_tv_network_on);
-        indicatorNetworkOff = findViewById(R.id.fragment_city_data_generator_tv_network_off);
+        indicatorGpsOn = findViewById(R.id.activity_city_data_generator_tv_gps_on);
+        indicatorGpsOff = findViewById(R.id.activity_city_data_generator_tv_gps_off);
+        indicatorNetworkOn = findViewById(R.id.activity_city_data_generator_tv_network_on);
+        indicatorNetworkOff = findViewById(R.id.activity_city_data_generator_tv_network_off);
 
         checkGPSOn();
         checkNetworkOn();
 
+        final Animation buttonClickAnim = AnimationUtils.loadAnimation(this, R.anim.animation_button);
+
         searchLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(buttonClickAnim);
                 if(isSearchTaskRunning()){
                     ToastBuilder.create(getApplicationContext(), "Поиск уже начат, пожождите..");
                 }
@@ -76,9 +81,6 @@ public class WidgetCreatorActivity extends AppCompatActivity {
                     }
                     if (!permissionNetwork) {
                         toAskPermissionNetworkLocation();
-                    }
-                    if (!checkGPSOn() & !checkNetworkOn()){
-                        ToastBuilder.create(getApplicationContext(), "Включите GPS или интернет");
                     }
 
                     String provider = chooseAvailableProvider();
@@ -95,6 +97,7 @@ public class WidgetCreatorActivity extends AppCompatActivity {
         openListLocationsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(buttonClickAnim);
                 if(isSearchTaskRunning()){
                     stopSearchLocationTask();
                 }
@@ -106,6 +109,7 @@ public class WidgetCreatorActivity extends AppCompatActivity {
         createWidgetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.startAnimation(buttonClickAnim);
                 createWidget();
             }
         });
@@ -145,6 +149,9 @@ public class WidgetCreatorActivity extends AppCompatActivity {
         super.onPause();
         checkNetworkOn();
         checkGPSOn();
+        if(isSearchTaskRunning()) {
+            stopSearchLocationTask();
+        }
     }
 
     @Override
@@ -368,6 +375,26 @@ public class WidgetCreatorActivity extends AppCompatActivity {
 
 
     private void createWidget() {
+        if(isCorrectnessWidgetData()) {
+            ToastBuilder.create(getApplicationContext(), "Создаем виджет");
+        }
+    }
+
+    private boolean isCorrectnessWidgetData() {
+        if(country != null & city != null) {
+            if(country.getCode().equals(city.getCountryCode())) {
+                return true;
+            }
+            else {
+                ToastBuilder.create(getApplicationContext(), "Не корректное местоположение");
+                return false;
+            }
+        }
+        else {
+            ToastBuilder.create(getApplicationContext(), "Не указано местоположение");
+            return false;
+        }
 
     }
+
 }

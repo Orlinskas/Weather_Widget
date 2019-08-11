@@ -3,20 +3,20 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_city_data_generator_sv"
+    android:id="@+id/activity_city_data_generator_sv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
     <RelativeLayout
-        android:id="@+id/fragment_city_data_generator_rl"
+        android:id="@+id/activity_city_data_generator_rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@color/colorPrimary">
 
         <ProgressBar
-            android:id="@+id/fragment_city_data_generator_pb"
+            android:id="@+id/activity_city_data_generator_pb"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/fragment_city_data_generator_tv_head"
+            android:id="@+id/activity_city_data_generator_tv_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -38,10 +38,10 @@
             tools:ignore="RelativeOverlap" />
 
         <TextView
-            android:id="@+id/fragment_city_data_generator_tv_network_on"
+            android:id="@+id/activity_city_data_generator_tv_network_on"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_tv_head"
+            android:layout_below="@+id/activity_city_data_generator_tv_head"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="-10dp"
@@ -53,10 +53,10 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/fragment_city_data_generator_tv_network_off"
+            android:id="@+id/activity_city_data_generator_tv_network_off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_tv_head"
+            android:layout_below="@+id/activity_city_data_generator_tv_head"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="-10dp"
@@ -68,10 +68,10 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/fragment_city_data_generator_tv_country"
+            android:id="@+id/activity_city_data_generator_tv_country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_tv_head"
+            android:layout_below="@+id/activity_city_data_generator_tv_head"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:text="@string/country"
@@ -79,10 +79,10 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/fragment_city_data_generator_tv_gps_on"
+            android:id="@+id/activity_city_data_generator_tv_gps_on"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_tv_network_off"
+            android:layout_below="@+id/activity_city_data_generator_tv_network_off"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
@@ -93,10 +93,10 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/fragment_city_data_generator_tv_gps_off"
+            android:id="@+id/activity_city_data_generator_tv_gps_off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_tv_network_off"
+            android:layout_below="@+id/activity_city_data_generator_tv_network_off"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
@@ -107,10 +107,10 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/fragment_city_data_generator_tv_country_name"
+            android:id="@+id/activity_city_data_generator_tv_country_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_tv_country"
+            android:layout_below="@+id/activity_city_data_generator_tv_country"
             android:layout_marginTop="5dp"
             android:text="@string/fragment_city_data_generator_tv_country_name"
             android:textAlignment="center"
@@ -119,10 +119,10 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/fragment_city_data_generator_btn_gps"
+            android:id="@+id/activity_city_data_generator_btn_gps"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@+id/fragment_city_data_generator_tv_city_name"
+            android:layout_below="@+id/activity_city_data_generator_tv_city_name"
             android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
@@ -132,10 +132,10 @@
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/fragment_city_data_generator_tv_city"
+            android:id="@+id/activity_city_data_generator_tv_city"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_tv_country_name"
+            android:layout_below="@+id/activity_city_data_generator_tv_country_name"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:text="@string/city"
@@ -143,10 +143,10 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/fragment_city_data_generator_tv_city_name"
+            android:id="@+id/activity_city_data_generator_tv_city_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_tv_city"
+            android:layout_below="@+id/activity_city_data_generator_tv_city"
             android:layout_marginTop="5dp"
             android:text="@string/fragment_city_data_generator_tv_country_name"
             android:textAlignment="center"
@@ -155,10 +155,10 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/fragment_city_data_generator_btn_open_list"
+            android:id="@+id/activity_city_data_generator_btn_open_list"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_below="@+id/fragment_city_data_generator_btn_gps"
+            android:layout_below="@+id/activity_city_data_generator_btn_gps"
             android:layout_marginStart="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="40dp"
@@ -169,10 +169,10 @@
             />
 
         <Button
-            android:id="@+id/fragment_city_data_generator_btn_start"
+            android:id="@+id/activity_city_data_generator_btn_start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fragment_city_data_generator_btn_open_list"
+            android:layout_below="@+id/activity_city_data_generator_btn_open_list"
             android:layout_alignParentBottom="false"
             android:layout_marginStart="10dp"
             android:layout_marginTop="40dp"

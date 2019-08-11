@@ -36,9 +36,7 @@ public class CityFinder {
                 nearCity = city;
                 distanceToNearCity = currentCityDistanceToMe;
             }
-
         }
-
         return nearCity;
     }
 }

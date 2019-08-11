@@ -3,7 +3,9 @@
     <color name="colorPrimary">#363540</color>
 
     <color name="colorAccent">#65839D</color>
+    <color name="colorAccentLow">#3A444C</color>
     <color name="colorAccentDuo">#634D64</color>
+    <color name="colorAccentDuoLow">#2A212A</color>
     <color name="colorAccentTrio">#2A234B</color>
 
     <color name="colorBackground">#262626</color>
