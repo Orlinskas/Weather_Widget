@@ -36,6 +36,7 @@ public class CityListActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Country country;
     private LoadTask loadTask = new LoadTask();
+    private int listItemHeight;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -168,7 +169,11 @@ public class CityListActivity extends AppCompatActivity {
 
             if (currentCityNamePart != null ) {
                 if(currentCityNamePart.equals(desiredCityNamePart)) {
-                    listView.smoothScrollToPosition(position);
+                    try {
+                        listView.setSelection(position);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
             }

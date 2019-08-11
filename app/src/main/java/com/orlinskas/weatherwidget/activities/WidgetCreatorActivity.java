@@ -98,9 +98,6 @@ public class WidgetCreatorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 v.startAnimation(buttonClickAnim);
-                if(isSearchTaskRunning()){
-                    stopSearchLocationTask();
-                }
                 Intent intent = new Intent(getApplicationContext(), CountryListActivity.class);
                 startActivityForResult(intent, 1);
             }

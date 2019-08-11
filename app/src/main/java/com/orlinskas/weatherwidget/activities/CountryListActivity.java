@@ -168,7 +168,11 @@ public class CountryListActivity extends AppCompatActivity {
 
             if (currentCountryNamePart != null ) {
                 if(currentCountryNamePart.equals(desiredCountryNamePart)) {
-                    listView.smoothScrollToPosition(position);
+                    try {
+                        listView.setSelection(position);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
             }
