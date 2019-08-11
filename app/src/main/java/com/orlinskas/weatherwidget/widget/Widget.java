@@ -35,7 +35,7 @@ public class Widget implements Serializable {
         this.city = city;
     }
 
-    private City getCity() {
+    public City getCity() {
         return city;
     }
 
