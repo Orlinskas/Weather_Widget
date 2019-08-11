@@ -23,12 +23,12 @@ public class Widget implements Serializable {
         if (this == o) return true;
         if (!(o instanceof Widget)) return false;
         Widget widget = (Widget) o;
-        return getId() == widget.getId();
+        return getCity().equals(widget.getCity());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getCity());
     }
 
     public void setCity(City city) {

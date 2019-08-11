@@ -5,7 +5,7 @@ import com.orlinskas.weatherwidget.math.Random;
 import com.orlinskas.weatherwidget.request.Request;
 import com.orlinskas.weatherwidget.request.RequestBuilder;
 
-public class WidgetCreater {
+public class WidgetCreator {
     public Widget create(City city) {
         int id = Random.getID();
 

@@ -22,12 +22,15 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.orlinskas.weatherwidget.ActivityOpener;
 import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.Country;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.location.CityFinder;
 import com.orlinskas.weatherwidget.post.CountryNameWriter;
+import com.orlinskas.weatherwidget.widget.WidgetCreator;
+import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 @SuppressLint("MissingPermission")
 public class WidgetCreatorActivity extends AppCompatActivity {
@@ -373,7 +376,19 @@ public class WidgetCreatorActivity extends AppCompatActivity {
 
     private void createWidget() {
         if(isCorrectnessWidgetData()) {
-
+            try {
+                WidgetCreator widgetCreator = new WidgetCreator();
+                WidgetRepository widgetRepository = new WidgetRepository(getApplicationContext());
+                if(!widgetRepository.add(widgetCreator.create(city))){
+                    ToastBuilder.create(getApplicationContext(),"Не удалось создать");
+                }
+                else {
+                    ActivityOpener.openActivity(getApplicationContext(),MainActivity.class);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                ToastBuilder.create(getApplicationContext(),"Ошибка создания виджета");
+            }
         }
     }
 
