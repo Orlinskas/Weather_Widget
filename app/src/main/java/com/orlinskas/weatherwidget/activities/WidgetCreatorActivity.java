@@ -373,7 +373,7 @@ public class WidgetCreatorActivity extends AppCompatActivity {
 
     private void createWidget() {
         if(isCorrectnessWidgetData()) {
-            ToastBuilder.create(getApplicationContext(), "Создаем виджет");
+
         }
     }
 

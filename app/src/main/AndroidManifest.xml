@@ -33,16 +33,24 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CountryListActivity" />
-        <activity android:name=".activities.CityListActivity" />
-        <activity android:name=".activities.WidgetCreatorActivity" />
+
+        <activity
+            android:name=".activities.CountryListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CityListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.WidgetCreatorActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

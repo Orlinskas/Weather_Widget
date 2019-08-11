@@ -1,5 +1,6 @@
-package com.orlinskas.weatherwidget;
+package com.orlinskas.weatherwidget.widget;
 
+import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.request.Request;
 
 import java.io.Serializable;

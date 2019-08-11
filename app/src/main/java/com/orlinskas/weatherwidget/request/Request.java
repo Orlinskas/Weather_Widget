@@ -2,7 +2,9 @@ package com.orlinskas.weatherwidget.request;
 
 import com.orlinskas.weatherwidget.City;
 
-public class Request {
+import java.io.Serializable;
+
+public class Request implements Serializable {
     private String date;
     private City city;
     private String source;
