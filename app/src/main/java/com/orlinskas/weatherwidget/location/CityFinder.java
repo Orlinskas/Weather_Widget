@@ -10,7 +10,6 @@ import com.orlinskas.weatherwidget.specification.CitiesThisLocationSpecification
 import java.util.ArrayList;
 
 public class CityFinder {
-
     private Context context;
     private Location location;
 
@@ -27,16 +26,32 @@ public class CityFinder {
         double distanceToNearCity = 99999.0;
 
         for (City city : cities) {
-            double latitudeDistance = Math.pow(location.getLatitude() - city.getCoordLat(), 2.0);
-            double longitudeDistance = Math.pow(location.getLongitude() - city.getCoordLon(), 2.0);
 
-            double currentCityDistanceToMe = latitudeDistance + longitudeDistance;
+            double currentDistance = calculate(location, city);
 
-            if (distanceToNearCity > currentCityDistanceToMe) {
+            if (distanceToNearCity > currentDistance) {
                 nearCity = city;
-                distanceToNearCity = currentCityDistanceToMe;
+                distanceToNearCity = currentDistance;
             }
         }
         return nearCity;
+    }
+
+    private double calculate(Location location, City city) {
+        double PK = (180/Math.PI);
+
+        double a1 = location.getLatitude() / PK;
+        double a2 = location.getLongitude() / PK;
+
+        double b1 = city.getCoordLat() / PK;
+        double b2 = city.getCoordLon() / PK;
+
+        double t1 = Math.cos(a1)*Math.cos(a2)*Math.cos(b1)*Math.cos(b2);
+        double t2 = Math.cos(a1)*Math.sin(a2)*Math.cos(b1)*Math.sin(b2);
+        double t3 = Math.sin(a1)*Math.sin(b1);
+
+        double tt = Math.acos(t1 + t2 + t3);
+
+        return 6366000*tt;
     }
 }

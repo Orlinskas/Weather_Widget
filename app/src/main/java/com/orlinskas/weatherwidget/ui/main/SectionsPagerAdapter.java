@@ -13,41 +13,33 @@ import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 import java.util.ArrayList;
 
-/**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private static Widget[] widgetsArray;
-    private final Context mContext;
     private ArrayList<Widget> widgets;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
-        mContext = context;
-        WidgetRepository widgetRepository = new WidgetRepository(mContext);
+        WidgetRepository widgetRepository = new WidgetRepository(context);
         widgets = widgetRepository.query(new WidgetSpecification());
-        widgetsArray = (Widget[]) widgets.toArray();
     }
 
     @Override
     public Fragment getItem(int position) {
         WidgetFragment widgetFragment = new WidgetFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("widget", widgetsArray[position]);
+        bundle.putSerializable("widget", widgets.get(position));
         widgetFragment.setArguments(bundle);
-        return new WidgetFragment();
+        return widgetFragment;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return widgetsArray[position].getCity().getName();
+        return widgets.get(position).getCity().getName();
     }
 
     @Override
     public int getCount() {
-        return widgetsArray.length;
+        return widgets.size();
     }
 }
