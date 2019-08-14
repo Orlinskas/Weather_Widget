@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget;
+package com.orlinskas.weatherwidget.forecast;
 
 import java.util.Objects;
 

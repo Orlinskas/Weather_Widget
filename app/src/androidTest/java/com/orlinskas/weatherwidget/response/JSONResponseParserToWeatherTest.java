@@ -2,7 +2,7 @@ package com.orlinskas.weatherwidget.response;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.orlinskas.weatherwidget.Weather;
+import com.orlinskas.weatherwidget.forecast.Weather;
 
 import org.junit.Before;
 import org.junit.Test;

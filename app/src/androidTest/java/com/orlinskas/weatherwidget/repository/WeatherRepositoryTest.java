@@ -3,7 +3,7 @@ package com.orlinskas.weatherwidget.repository;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.orlinskas.weatherwidget.Weather;
+import com.orlinskas.weatherwidget.forecast.Weather;
 import com.orlinskas.weatherwidget.specification.WeatherSpecification;
 
 import org.junit.Before;

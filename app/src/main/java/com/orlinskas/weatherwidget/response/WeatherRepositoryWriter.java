@@ -2,7 +2,7 @@ package com.orlinskas.weatherwidget.response;
 
 import android.content.Context;
 
-import com.orlinskas.weatherwidget.Weather;
+import com.orlinskas.weatherwidget.forecast.Weather;
 import com.orlinskas.weatherwidget.repository.WeatherRepository;
 
 import java.util.ArrayList;

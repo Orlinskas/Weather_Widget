@@ -1,20 +1,22 @@
 package com.orlinskas.weatherwidget.date;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class DateHelper {
-    private final static String YYYY_MM_DD_HH_00 = "yyyy-MM-dd HH:00";
-    private final static String YYYY_MM_DD = "yyyy-MM-dd";
-
-    public static String getCurrentWithHour() {
-        SimpleDateFormat commonFormat = new SimpleDateFormat(YYYY_MM_DD_HH_00, Locale.ENGLISH);
+    public static String getCurrent(String format) {
+        SimpleDateFormat commonFormat = new SimpleDateFormat(format, Locale.ENGLISH);
         return commonFormat.format(new Date());
     }
 
-    public static String getCurrent() {
-        SimpleDateFormat commonFormat = new SimpleDateFormat(YYYY_MM_DD, Locale.ENGLISH);
-        return commonFormat.format(new Date());
+    public static Date getCurrentDate(String format) {
+        try {
+            return new SimpleDateFormat(format, Locale.ENGLISH).parse(DateHelper.getCurrent(format));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new Date();
+        }
     }
 }

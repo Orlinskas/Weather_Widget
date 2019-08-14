@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.orlinskas.weatherwidget.Weather;
+import com.orlinskas.weatherwidget.forecast.Weather;
 import com.orlinskas.weatherwidget.data.WeatherDatabaseAdapter;
 import com.orlinskas.weatherwidget.specification.SqlSpecification;
 

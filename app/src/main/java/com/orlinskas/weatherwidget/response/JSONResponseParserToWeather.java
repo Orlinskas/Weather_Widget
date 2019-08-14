@@ -1,6 +1,6 @@
 package com.orlinskas.weatherwidget.response;
 
-import com.orlinskas.weatherwidget.Weather;
+import com.orlinskas.weatherwidget.forecast.Weather;
 import com.orlinskas.weatherwidget.date.DateHelper;
 
 import org.json.JSONArray;
