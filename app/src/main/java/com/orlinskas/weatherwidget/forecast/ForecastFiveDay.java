@@ -6,7 +6,7 @@ public class ForecastFiveDay implements Serializable {
     private ForecastOneDay[] days;
 
     public ForecastFiveDay() {
-        this.days = new ForecastOneDay[4];
+        this.days = new ForecastOneDay[5];
     }
 
     public ForecastOneDay[] getDays() {

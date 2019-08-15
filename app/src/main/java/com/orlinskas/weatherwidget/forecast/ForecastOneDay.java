@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ForecastOneDay implements Serializable {
-    private Date dayDate;
+    private String dayDate;
     private ArrayList<Weather> dayWeathers;
 
-    public ForecastOneDay(Date dayDate) {
+    public ForecastOneDay(String dayDate) {
         this.dayDate = dayDate;
         this.dayWeathers = new ArrayList<>();
     }
 
-    public Date getDayDate() {
+    public String getDayDate() {
         return dayDate;
     }
 
-    public void setDayDate(Date dayDate) {
+    public void setDayDate(String dayDate) {
         this.dayDate = dayDate;
     }
 

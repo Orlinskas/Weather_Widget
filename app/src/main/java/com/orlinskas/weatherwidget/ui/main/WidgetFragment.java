@@ -13,10 +13,9 @@ import android.widget.TextView;
 
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
-import com.orlinskas.weatherwidget.forecast.ForecastFiveDay;
 import com.orlinskas.weatherwidget.forecast.ForecastFiveDayRepositoryGetter;
 import com.orlinskas.weatherwidget.forecast.ForecastReceiver;
-import com.orlinskas.weatherwidget.forecast.ForecastUpdateChecker;
+import com.orlinskas.weatherwidget.forecast.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.widget.Widget;
 
 import java.text.ParseException;
@@ -24,7 +23,6 @@ import java.text.ParseException;
 public class WidgetFragment extends Fragment implements WidgetObserver {
     private Widget widget;
     private TextView textView1, textView2;
-    private ForecastFiveDay forecastFiveDay;
 
     public WidgetFragment() {
     }
@@ -43,9 +41,10 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(checkNeedUpdate()){
-            update();
-        }
+        //if(checkNeedUpdate()){
+        //    update();
+        //}
+        getForecastFromRepository();
     }
 
     private void getFragmentArgument() {
@@ -63,7 +62,7 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
     private void getForecastFromRepository() {
         ForecastFiveDayRepositoryGetter fiveDayRepositoryGetter = new ForecastFiveDayRepositoryGetter(widget, getContext());
         try {
-            forecastFiveDay = fiveDayRepositoryGetter.get();
+            widget.setForecastFiveDay(fiveDayRepositoryGetter.process());
         } catch (ParseException e) {
             e.printStackTrace();
             ToastBuilder.create(getContext(),"Нет данных");
@@ -71,8 +70,8 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
     }
 
     private boolean checkNeedUpdate() {
-        ForecastUpdateChecker updateChecker = new ForecastUpdateChecker();
-        return updateChecker.check(forecastFiveDay);
+        WidgetUpdateChecker updateChecker = new WidgetUpdateChecker();
+        return updateChecker.check(widget);
     }
 
     private void sendRequest() {
