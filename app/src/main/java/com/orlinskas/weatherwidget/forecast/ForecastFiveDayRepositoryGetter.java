@@ -8,22 +8,19 @@ import com.orlinskas.weatherwidget.repository.WeatherRepository;
 import com.orlinskas.weatherwidget.specification.WeatherTimesSpecification;
 import com.orlinskas.weatherwidget.widget.Widget;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class ForecastFiveDayRepositoryGetter {
-    private final String TIME_03_00 = " 03:00";
-    private final String TIME_06_00 = " 06:00";
-    private final String TIME_09_00 = " 09:00";
-    private final String TIME_12_00 = " 12:00";
-    private final String TIME_15_00 = " 15:00";
-    private final String TIME_18_00 = " 18:00";
-    private final String TIME_21_00 = " 21:00";
-    private final String TIME_00_00 = " 00:00";
+    private final String TIME_03_00 = " 03:00:00";
+    private final String TIME_06_00 = " 06:00:00";
+    private final String TIME_09_00 = " 09:00:00";
+    private final String TIME_12_00 = " 12:00:00";
+    private final String TIME_15_00 = " 15:00:00";
+    private final String TIME_18_00 = " 18:00:00";
+    private final String TIME_21_00 = " 21:00:00";
+    private final String TIME_00_00 = " 00:00:00";
 
     private Widget widget;
     private Context context;
@@ -58,8 +55,12 @@ public class ForecastFiveDayRepositoryGetter {
                 plusDaysTo(date, 1) + TIME_00_00};
 
         for(String dateWithHours : dates){
-            ArrayList<Weather> weathersOnTime
-                    = repository.query(new WeatherTimesSpecification(widget, dateWithHours));
+            ArrayList<Weather> weathersOnTime = new ArrayList<>();
+            try {
+                weathersOnTime = repository.query(new WeatherTimesSpecification(widget, dateWithHours));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             dayWeathers.add(takeNewest(weathersOnTime));
         }
 
@@ -78,12 +79,11 @@ public class ForecastFiveDayRepositoryGetter {
     }
 
     private Weather takeNewest(ArrayList<Weather> weathersOnTime) {
-        return weathersOnTime.get(0);
+        if(weathersOnTime == null || weathersOnTime.size() == 0) {
+            return null;
+        }
+        else {
+            return weathersOnTime.get(weathersOnTime.size() - 1);
+        }
     }
-
-
-
-
-
-
 }

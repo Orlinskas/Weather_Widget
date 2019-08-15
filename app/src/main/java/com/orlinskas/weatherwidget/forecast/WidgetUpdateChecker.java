@@ -12,8 +12,8 @@ public class WidgetUpdateChecker {
            return true;
         }
         else {
-            Date firstForecastDayDate = widget.getForecastFiveDay().getDays()[0].getDayDate();
-            return !firstForecastDayDate.equals(DateHelper.getCurrentDate(DateFormat.YYYY_MM_DD));
+            String firstForecastDayDate = widget.getForecastFiveDay().getDays()[0].getDayDate();
+            return !firstForecastDayDate.equals(DateHelper.getCurrent(DateFormat.YYYY_MM_DD));
         }
     }
 }

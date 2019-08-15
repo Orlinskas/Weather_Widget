@@ -2,7 +2,6 @@ package com.orlinskas.weatherwidget.forecast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ForecastOneDay implements Serializable {
     private String dayDate;

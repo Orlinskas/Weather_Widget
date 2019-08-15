@@ -63,7 +63,7 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         ForecastFiveDayRepositoryGetter fiveDayRepositoryGetter = new ForecastFiveDayRepositoryGetter(widget, getContext());
         try {
             widget.setForecastFiveDay(fiveDayRepositoryGetter.process());
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             ToastBuilder.create(getContext(),"Нет данных");
         }
