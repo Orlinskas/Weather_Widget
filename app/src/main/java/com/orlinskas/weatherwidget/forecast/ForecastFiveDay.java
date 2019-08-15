@@ -1,6 +1,8 @@
 package com.orlinskas.weatherwidget.forecast;
 
-public class ForecastFiveDay {
+import java.io.Serializable;
+
+public class ForecastFiveDay implements Serializable {
     private ForecastOneDay[] days;
 
     public ForecastFiveDay() {

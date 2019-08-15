@@ -94,8 +94,12 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            sendRequest();
-            getForecastFromRepository();
+            try {
+                sendRequest();
+                getForecastFromRepository();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
