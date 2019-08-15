@@ -27,6 +27,22 @@ public class WidgetRepository {
         }
     }
 
+    public boolean update(Widget widget) {
+        try {
+            WidgetsList widgetsList = serializer.loadList();
+            ArrayList<Widget> widgets = widgetsList.getWidgets();
+            int index = widgets.indexOf(widget);
+            widgets.remove(widget);
+            widgets.add(index,widget);
+            widgetsList.setWidgets(widgets);
+            serializer.saveList(widgetsList);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean remote(Widget widget) {
         try {
             WidgetsList widgetsList = serializer.loadList();

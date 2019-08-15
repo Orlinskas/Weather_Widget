@@ -24,9 +24,7 @@ public class ForecastFiveDayRepositoryGetter {
 
     private Widget widget;
     private Context context;
-    private Date currentDate = DateHelper.getCurrentDate(DateFormat.YYYY_MM_DD);
-    private String current = DateHelper.parse(currentDate, DateFormat.YYYY_MM_DD);
-
+    private String current = DateHelper.parse(DateHelper.getCurrentDate(DateFormat.YYYY_MM_DD), DateFormat.YYYY_MM_DD);
 
     public ForecastFiveDayRepositoryGetter(Widget widget, Context context) {
         this.widget = widget;

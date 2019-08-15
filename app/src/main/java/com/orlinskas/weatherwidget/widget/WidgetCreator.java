@@ -12,6 +12,6 @@ public class WidgetCreator {
         RequestBuilder builder = new RequestBuilder();
         Request request = builder.build(city);
 
-        return new Widget(id, city,request);
+        return new Widget(id, city, request);
     }
 }
