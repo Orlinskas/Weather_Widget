@@ -1,7 +1,11 @@
 package com.orlinskas.weatherwidget.forecast;
 
 public class ForecastFiveDay {
-    private ForecastOneDay[] days = new ForecastOneDay[5];
+    private ForecastOneDay[] days;
+
+    public ForecastFiveDay() {
+        this.days = new ForecastOneDay[4];
+    }
 
     public ForecastOneDay[] getDays() {
         return days;

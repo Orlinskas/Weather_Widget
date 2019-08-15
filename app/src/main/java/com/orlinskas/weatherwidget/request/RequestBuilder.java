@@ -1,6 +1,7 @@
 package com.orlinskas.weatherwidget.request;
 
 import com.orlinskas.weatherwidget.City;
+import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.date.DateHelper;
 
 public class RequestBuilder {
@@ -17,7 +18,7 @@ public class RequestBuilder {
     private String apiKey;
 
     public Request build(City city) {
-        date = DateHelper.getCurrent();
+        date = DateHelper.getCurrent(DateFormat.YYYY_MM_DD);
         source = OPENWEATHERMAP_COM;
         forecastType = OPENWEATHERMAP_FORECAST_5day;
         unitsType = OPENWEATHERMAP_UNITS;

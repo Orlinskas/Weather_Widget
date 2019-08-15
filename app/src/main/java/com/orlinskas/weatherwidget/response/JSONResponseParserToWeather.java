@@ -1,5 +1,6 @@
 package com.orlinskas.weatherwidget.response;
 
+import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.forecast.Weather;
 import com.orlinskas.weatherwidget.date.DateHelper;
 
@@ -55,7 +56,7 @@ public class JSONResponseParserToWeather {
     }
 
     private void writeCurrentDate() {
-        forecastDate = DateHelper.getCurrent();
+        forecastDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD);
     }
 
     private void writeCityInfo(JSONObject object) {

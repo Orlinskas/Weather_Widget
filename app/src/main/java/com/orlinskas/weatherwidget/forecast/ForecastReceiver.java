@@ -20,7 +20,7 @@ public class ForecastReceiver {
         this.widget = widget;
     }
 
-    public void receive(Widget widget) {
+    public void receive() {
         RequestURLGenerator urlGenerator = new RequestURLGenerator();
         URL requestURL = urlGenerator.generate(widget.getRequest());
 

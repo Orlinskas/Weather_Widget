@@ -11,6 +11,7 @@ import com.orlinskas.weatherwidget.widget.Widget;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -23,34 +24,52 @@ public class ForecastFiveDayRepositoryGetter {
         this.context = context;
     }
 
-    public ForecastFiveDay get() {
+    public ForecastFiveDay get() throws ParseException {
         WeatherRepository weatherRepository = new WeatherRepository(context);
         ArrayList<Weather> weathers = weatherRepository.query(new WeatherWidgetSpecification(widget));
 
-        return process(weathers);
-
+        return processFiveDays(weathers);
     }
 
-    private ForecastFiveDay process(ArrayList<Weather> weathers) throws ParseException {
+    private ForecastFiveDay processFiveDays(ArrayList<Weather> weathers) throws ParseException {
         ForecastFiveDay forecastFiveDay = new ForecastFiveDay();
         ForecastOneDay[] forecastOneDays = forecastFiveDay.getDays();
 
-        Date current = DateHelper.getCurrentDate(DateFormat.YYYY_MM_DD);
-        Date currentPlusDay = current.setHours(current.getHours() + 24);
+        Date currentDate = DateHelper.getCurrentDate(DateFormat.YYYY_MM_DD);
 
-        for(Weather weather : weathers) {
-            if(getDate(weather).equals(current)) {
-                forecastOneDays[0].getDayWeathers().add(weather);
-            }
-            if(getDate(weather).equals(){
+        forecastOneDays[0] = processDay(weathers, currentDate);
+        forecastOneDays[1] = processDay(weathers, plusDays(currentDate, 1));
+        forecastOneDays[2] = processDay(weathers, plusDays(currentDate, 2));
+        forecastOneDays[3] = processDay(weathers, plusDays(currentDate, 3));
+        forecastOneDays[4] = processDay(weathers, plusDays(currentDate, 4));
 
+        forecastFiveDay.setDays(forecastOneDays);
+
+        return forecastFiveDay;
+    }
+
+    private ForecastOneDay processDay(ArrayList<Weather> weathers, Date date) throws ParseException {
+        ArrayList<Weather> dayWeathers = new ArrayList<>();
+        for (Weather weather : weathers) {
+            if(getDate(weather).equals(date)){
+                dayWeathers.add(weather);
             }
         }
+        ForecastOneDay forecastOneDay = new ForecastOneDay(date);
+        forecastOneDay.setDayWeathers(dayWeathers);
+        return forecastOneDay;
     }
 
     private Date getDate(Weather weather) throws ParseException {
         String textDate = weather.getForecastDate().substring(0,10);
         SimpleDateFormat dateFormat = new SimpleDateFormat(DateFormat.YYYY_MM_DD, Locale.ENGLISH);
         return dateFormat.parse(textDate);
+    }
+
+    private Date plusDays(Date date, int countDays) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, countDays);
+        return c.getTime();
     }
 }

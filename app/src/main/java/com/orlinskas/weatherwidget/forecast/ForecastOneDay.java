@@ -2,16 +2,22 @@ package com.orlinskas.weatherwidget.forecast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ForecastOneDay implements Serializable {
-    private String dayDate;
-    private ArrayList<Weather> dayWeathers = new ArrayList<>();
+    private Date dayDate;
+    private ArrayList<Weather> dayWeathers;
 
-    public String getDayDate() {
+    public ForecastOneDay(Date dayDate) {
+        this.dayDate = dayDate;
+        this.dayWeathers = new ArrayList<>();
+    }
+
+    public Date getDayDate() {
         return dayDate;
     }
 
-    public void setDayDate(String dayDate) {
+    public void setDayDate(Date dayDate) {
         this.dayDate = dayDate;
     }
 
