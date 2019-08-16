@@ -13,7 +13,7 @@ public class WidgetRepository {
         serializer = new WidgetSerializer(context);
     }
 
-    public boolean add(Widget widget) {
+    public boolean add(Widget widget) throws Exception{
         try {
             WidgetsList widgetsList = serializer.loadList();
             ArrayList<Widget> widgets = widgetsList.getWidgets();
@@ -27,23 +27,17 @@ public class WidgetRepository {
         }
     }
 
-    public boolean update(Widget widget) {
-        try {
-            WidgetsList widgetsList = serializer.loadList();
-            ArrayList<Widget> widgets = widgetsList.getWidgets();
-            int index = widgets.indexOf(widget);
-            widgets.remove(widget);
-            widgets.add(index,widget);
-            widgetsList.setWidgets(widgets);
-            serializer.saveList(widgetsList);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public void update(Widget widget) throws Exception{
+        WidgetsList widgetsList = serializer.loadList();
+        ArrayList<Widget> widgets = widgetsList.getWidgets();
+        int index = widgets.indexOf(widget);
+        widgets.remove(widget);
+        widgets.add(index,widget);
+        widgetsList.setWidgets(widgets);
+        serializer.saveList(widgetsList);
     }
 
-    public boolean remote(Widget widget) {
+    public boolean remote(Widget widget) throws Exception{
         try {
             WidgetsList widgetsList = serializer.loadList();
             ArrayList<Widget> widgets = widgetsList.getWidgets();
@@ -57,23 +51,17 @@ public class WidgetRepository {
         }
     }
 
-    public ArrayList<Widget> query(WidgetSpecification specification) {
+    public ArrayList<Widget> query(WidgetSpecification specification) throws Exception{
         ArrayList<Widget> queryWidgets = new ArrayList<>();
 
-        try {
-            WidgetsList widgetsList = serializer.loadList();
-            ArrayList<Widget> widgets = widgetsList.getWidgets();
-
-            for (Widget widget : widgets) {
-                if(specification.specified(widget)){
-                    queryWidgets.add(widget);
-                }
+        WidgetsList widgetsList = serializer.loadList();
+        ArrayList<Widget> widgets = widgetsList.getWidgets();
+        for (Widget widget : widgets) {
+            if(specification.specified(widget)){
+                queryWidgets.add(widget);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return queryWidgets;
     }
-
 }

@@ -1,6 +1,7 @@
 package com.orlinskas.weatherwidget.ui.main;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,13 +13,11 @@ import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 import com.orlinskas.weatherwidget.R;
-import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.forecast.ForecastFiveDayRepositoryGetter;
 import com.orlinskas.weatherwidget.forecast.ForecastReceiver;
 import com.orlinskas.weatherwidget.forecast.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.widget.Widget;
-
-import java.text.ParseException;
+import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 public class WidgetFragment extends Fragment implements WidgetObserver {
     private Widget widget;
@@ -41,10 +40,9 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //if(checkNeedUpdate()){
-        //    update();
-        //}
-        getForecastFromRepository();
+        if(checkNeedUpdate()){
+            update();
+        }
     }
 
     private void getFragmentArgument() {
@@ -53,38 +51,36 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         }
     }
 
-    @Override
-    public void update() {
-        UpdateTask updateTask = new UpdateTask();
-        updateTask.execute();
-    }
-
-    private void getForecastFromRepository() {
-        ForecastFiveDayRepositoryGetter fiveDayRepositoryGetter = new ForecastFiveDayRepositoryGetter(widget, getContext());
-        try {
-            widget.setForecastFiveDay(fiveDayRepositoryGetter.process());
-        } catch (Exception e) {
-            e.printStackTrace();
-            ToastBuilder.create(getContext(),"Нет данных");
-        }
-    }
-
     private boolean checkNeedUpdate() {
         WidgetUpdateChecker updateChecker = new WidgetUpdateChecker();
         return updateChecker.check(widget);
     }
 
-    private void sendRequest() {
-        ForecastReceiver receiver = new ForecastReceiver(getContext(),widget);
-        receiver.receive();
+    @Override
+    public void update() {
+        UpdateWidgetTask updateWidgetTask = new UpdateWidgetTask(getContext(), widget);
+        updateWidgetTask.execute();
+    }
+
+    public void setWidget(Widget widget) {
+        this.widget = widget;
     }
 
     private void updateUI() {
+        
 
     }
 
     @SuppressLint("StaticFieldLeak")
-    private class UpdateTask extends AsyncTask<Void, Void, Void> {
+    private class UpdateWidgetTask extends AsyncTask<Void, Void, Void> {
+        private Context context;
+        private Widget widget;
+
+        UpdateWidgetTask(Context context, Widget widget) {
+            this.context = context;
+            this.widget = widget;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -95,7 +91,8 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         protected Void doInBackground(Void... voids) {
             try {
                 sendRequest();
-                getForecastFromRepository();
+                updateForecastInWidget();
+                updateWidgetInRepository(widget);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -105,7 +102,27 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            setWidget(widget);
             updateUI();
+        }
+
+        private void sendRequest() {
+            ForecastReceiver receiver = new ForecastReceiver(context, widget);
+            receiver.receive();
+        }
+
+        private void updateForecastInWidget() {
+            ForecastFiveDayRepositoryGetter fiveDayRepositoryGetter = new ForecastFiveDayRepositoryGetter(widget, context);
+            widget.setForecastFiveDay(fiveDayRepositoryGetter.process());
+        }
+
+        private void updateWidgetInRepository(Widget widget) {
+            try {
+                WidgetRepository repository = new WidgetRepository(context);
+                repository.update(widget);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
