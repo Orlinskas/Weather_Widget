@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.chart.ChartLineDataManager;
 import com.orlinskas.weatherwidget.forecast.ForecastFiveDay;
 import com.orlinskas.weatherwidget.forecast.ForecastFiveDayRepositoryGetter;
 import com.orlinskas.weatherwidget.forecast.ForecastOneDay;
@@ -129,9 +130,14 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
             countryName.setText(widget.getCity().getCountryCode());
             cityName.setText(widget.getCity().getName());
             currentDate.setText(forecast.getDayDate());
-            setChartData();
+            lineChart = buildChart(day);
             setButtonAlpha();
         }
+    }
+
+    private LineChart buildChart(int day) {
+        ChartLineDataManager manager = new ChartLineDataManager(lineChart, widget, getContext());
+        return manager.getLineChart(day);
     }
 
     private void setButtonAlpha() {
@@ -149,8 +155,6 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         }
     }
 
-    private void setChartData() {
-    }
 
     @SuppressLint("StaticFieldLeak")
     private class UpdateWidgetTask extends AsyncTask<Void, Void, Void> {
