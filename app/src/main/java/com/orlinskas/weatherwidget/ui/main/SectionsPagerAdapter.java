@@ -20,7 +20,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         WidgetRepository widgetRepository = new WidgetRepository(context);
-        widgets = widgetRepository.query(new WidgetSpecification());
+        try {
+            widgets = widgetRepository.query(new WidgetSpecification());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

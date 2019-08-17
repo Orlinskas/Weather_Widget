@@ -31,9 +31,6 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         View root = inflater.inflate(R.layout.fragment_widget, container, false);
         getFragmentArgument();
 
-        textView1 = root.findViewById(R.id.textView);
-        textView2 = root.findViewById(R.id.textView2);
-
         return root;
     }
 
@@ -66,10 +63,7 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         this.widget = widget;
     }
 
-    private void updateUI() {
-        
-
-    }
+    private void updateUI() { }
 
     @SuppressLint("StaticFieldLeak")
     private class UpdateWidgetTask extends AsyncTask<Void, Void, Void> {
