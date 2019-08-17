@@ -38,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
         processFirstRun(getApplicationContext());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void processFirstRun(Context applicationContext) {
         FirstRunVerifier firstRunVerifier = new FirstRunVerifier(applicationContext);
 

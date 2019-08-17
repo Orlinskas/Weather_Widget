@@ -20,16 +20,13 @@ public class ForecastReceiver {
         this.widget = widget;
     }
 
-    public void receive() {
+    public void receive() throws Exception{
         RequestURLGenerator urlGenerator = new RequestURLGenerator();
         URL requestURL = urlGenerator.generate(widget.getRequest());
-
         RequestURLSender urlSender = new RequestURLSender();
         String response = urlSender.send(requestURL);
-
         JSONResponseParserToWeather parser = new JSONResponseParserToWeather();
         ArrayList<Weather> weathers = parser.parse(response);
-
         WeatherRepositoryWriter repositoryWriter = new WeatherRepositoryWriter(context);
         repositoryWriter.write(weathers);
     }
