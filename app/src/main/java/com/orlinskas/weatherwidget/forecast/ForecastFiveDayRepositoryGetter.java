@@ -64,6 +64,7 @@ public class ForecastFiveDayRepositoryGetter {
 
         ForecastOneDay forecastOneDay = new ForecastOneDay(date);
         forecastOneDay.setDayWeathers(dayWeathers);
+
         return forecastOneDay;
     }
 
@@ -73,6 +74,7 @@ public class ForecastFiveDayRepositoryGetter {
         c.setTime(date);
         c.add(Calendar.DATE, countDays);
         Date dateAfterPlusDay = c.getTime();
+
         return DateHelper.parse(dateAfterPlusDay, DateFormat.YYYY_MM_DD);
     }
 

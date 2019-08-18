@@ -1,48 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_widget_sv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+<RelativeLayout
     android:id="@+id/fragment_widget_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
     android:background="@color/colorPrimary">
 
-    <ProgressBar
-        android:id="@+id/fragment_widget_pb"
-        style="?android:attr/progressBarStyleHorizontal"
+    <RelativeLayout
+        android:id="@+id/fragment_widget_rl_control_bar_bot"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment_widget_tv_city_name"
-        android:layout_marginTop="1dp"
-        android:indeterminate="true"
-        android:visibility="invisible" />
+        android:layout_height="27dp"
+        android:layout_below="@+id/fragment_widget_chart">
 
-    <TextView
-        android:id="@+id/fragment_widget_tv_country_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:drawableStart="@drawable/ic_location"
-        android:maxLength="12"
-        android:maxLines="1"
-        android:text="country"
-        android:textColor="@color/colorTextBlack"
-        android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/fragment_widget_btn_left"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="2dp"
+            android:background="@color/colorPrimary"
+            android:tint="@color/colorAccent"
+            app:srcCompat="@drawable/ic_left" />
 
-    <TextView
-        android:id="@+id/fragment_widget_tv_city_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="1dp"
-        android:layout_toEndOf="@+id/fragment_widget_tv_country_name"
-        android:maxLength="10"
-        android:maxLines="1"
-        android:text="city"
-        android:textColor="@color/colorTextBlack"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/fragment_widget_tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:maxLines="1"
+            android:text="2077:01:22"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/fragment_widget_btn_right"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/colorPrimary"
+            android:filterTouchesWhenObscured="true"
+            android:tint="@color/colorAccent"
+            app:srcCompat="@drawable/ic_right" />
+    </RelativeLayout>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/fragment_widget_chart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/fragment_widget_tv_city_name" />
 
     <LinearLayout
         android:id="@+id/fragment_widget_ll_weather_icon"
@@ -51,6 +70,13 @@
         android:layout_below="@+id/fragment_widget_tv_city_name"
         android:layout_marginTop="1dp"
         android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/fragment_widget_iv_icon_03_00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@mipmap/ic_launcher_round" />
 
         <ImageView
             android:id="@+id/fragment_widget_iv_icon_06_00"
@@ -102,58 +128,44 @@
             app:srcCompat="@mipmap/ic_launcher_round" />
     </LinearLayout>
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/fragment_widget_chart"
+    <ProgressBar
+        android:id="@+id/fragment_widget_pb"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/fragment_widget_tv_city_name" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_widget_tv_city_name"
+        android:indeterminate="true"
+        android:visibility="invisible" />
 
-    <RelativeLayout
-        android:id="@+id/fragment_widget_rl_control_bar_bot"
-        android:layout_width="match_parent"
-        android:layout_height="22dp"
-        android:layout_below="@+id/fragment_widget_chart">
+    <TextView
+        android:id="@+id/fragment_widget_tv_country_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:drawableStart="@drawable/ic_location"
+        android:maxLength="12"
+        android:maxLines="1"
+        android:text="country"
+        android:textColor="@color/colorTextBlack"
+        android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/fragment_widget_btn_left"
-            style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="2dp"
-            android:background="@color/colorPrimary"
-            android:tint="@color/colorAccent"
-            app:srcCompat="@drawable/ic_left" />
-
-        <TextView
-            android:id="@+id/fragment_widget_tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="false"
-            android:maxLength="10"
-            android:maxLines="1"
-            android:text="2077:01:22"
-            android:textColor="@color/colorTextBlack"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/fragment_widget_btn_right"
-            style="@style/Widget.AppCompat.ImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="2dp"
-            android:background="@color/colorPrimary"
-            android:filterTouchesWhenObscured="true"
-            android:tint="@color/colorAccent"
-            app:srcCompat="@drawable/ic_right" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/fragment_widget_tv_city_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/fragment_widget_tv_country_name"
+        android:maxLength="10"
+        android:maxLines="1"
+        android:text="city"
+        android:textColor="@color/colorTextBlack"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>
+
+</ScrollView>

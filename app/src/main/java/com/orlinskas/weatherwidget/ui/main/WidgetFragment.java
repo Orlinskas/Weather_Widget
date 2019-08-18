@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.chart.ChartLineDataManager;
 import com.orlinskas.weatherwidget.forecast.ForecastFiveDay;
 import com.orlinskas.weatherwidget.forecast.ForecastFiveDayRepositoryGetter;
@@ -130,6 +131,7 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
             countryName.setText(widget.getCity().getCountryCode());
             cityName.setText(widget.getCity().getName());
             currentDate.setText(forecast.getDayDate());
+            lineChart.clear();
             lineChart = buildChart(day);
             setButtonAlpha();
         }
@@ -181,6 +183,7 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
                 updateWidgetInRepository(widget);
             } catch (Exception e) {
                 e.printStackTrace();
+                ToastBuilder.create(getContext(), "Не удалось получить данные");
             }
             return null;
         }

@@ -4,8 +4,6 @@ import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.widget.Widget;
 
-import java.util.Date;
-
 public class WidgetUpdateChecker {
     public boolean check(Widget widget) {
         if(widget.getForecastFiveDay() == null){
