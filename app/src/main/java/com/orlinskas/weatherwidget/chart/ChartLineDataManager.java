@@ -2,10 +2,13 @@ package com.orlinskas.weatherwidget.chart;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -14,6 +17,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.MPPointD;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.forecast.Weather;
@@ -47,7 +52,7 @@ public class ChartLineDataManager {
     }
 
     public LineChart getLineChart(int day) {
-        label = widget.getForecastFiveDay().getDays()[day].getDayDate();
+        label = widget.getCity().getCountryCode() + "  " +  widget.getCity().getName();
 
         chart.setDragEnabled(false);
         chart.setScaleEnabled(false);
@@ -58,9 +63,18 @@ public class ChartLineDataManager {
         dataSets.add(dataSet);
         LineData lineData = new LineData(dataSets);
         chart.setData(lineData);
+
         Description description = new Description();
-        description.setText("");
+        description.setEnabled(false);
+        //description.setText(label);
+        //description.setTextAlign(Paint.Align.RIGHT);
+        //description.setTextSize(16f);
+        //description.setTextColor(context.getResources().getColor(R.color.colorAccentDuo));
         chart.setDescription(description);
+
+        Legend legend = chart.getLegend();
+        legend.setEnabled(false);
+
         buildXAxis();
         buildYAxis();
 
@@ -68,16 +82,35 @@ public class ChartLineDataManager {
     }
 
     private void buildYAxis() {
+        Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
+
         YAxis yAxisLeft = chart.getAxisLeft();
-        yAxisLeft.setEnabled(false);
+        yAxisLeft.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
+        yAxisLeft.setTextSize(5f);
+        yAxisLeft.setTypeface(typeface);
+        yAxisLeft.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return "";
+            }
+        });
+
         YAxis yAxisRight = chart.getAxisRight();
+        yAxisRight.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
         yAxisRight.setTextSize(5f);
-        //yAxisRight.setTextColor();
+        yAxisRight.setTypeface(typeface);
+        yAxisRight.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return "";
+            }
+        });
+
     }
 
     private LineDataSet getLineDataSet(int day){
         List<Entry> entries = getEntries(day);
-        LineDataSet dataSet = new LineDataSet(entries, label);
+        LineDataSet dataSet = new LineDataSet(entries, null);
 
         dataSet.setMode(LineDataSet.Mode.LINEAR);
         dataSet.setFillAlpha(100);
@@ -85,6 +118,9 @@ public class ChartLineDataManager {
         dataSet.setCircleRadius(5f);
         dataSet.setValueTextSize(15f);
         dataSet.setCubicIntensity(3f);
+
+        Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
+        dataSet.setValueTypeface(typeface);
 
         dataSet.setColor(context.getResources().getColor(R.color.colorAccentDuo));
         dataSet.setCircleColor(context.getResources().getColor(R.color.colorAccent));
@@ -94,8 +130,11 @@ public class ChartLineDataManager {
         dataSet.setValueFormatter(new IValueFormatter() {
             @Override
             public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                return Float.toString(value).substring(0,2);
-                //ошибка
+                String result = Float.toString(value);
+                if(result.contains(".")) {
+                    result = result.substring(0,result.indexOf("."));
+                }
+                return result;
             }
         });
 
@@ -121,11 +160,13 @@ public class ChartLineDataManager {
 
     private void buildXAxis() {
         XAxis xAxis = chart.getXAxis();
+        Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
+        xAxis.setTypeface(typeface);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(12f);
         xAxis.setTextColor(context.getResources().getColor(R.color.colorTextBlack));
         xAxis.setDrawAxisLine(true);
-        xAxis.setDrawGridLines(false);
+        xAxis.setDrawGridLines(true);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {

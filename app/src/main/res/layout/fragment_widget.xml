@@ -61,14 +61,12 @@
         android:id="@+id/fragment_widget_chart"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/fragment_widget_tv_city_name" />
+        android:layout_below="@+id/fragment_widget_ll_weather_icon" />
 
     <LinearLayout
         android:id="@+id/fragment_widget_ll_weather_icon"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_below="@+id/fragment_widget_tv_city_name"
-        android:layout_marginTop="1dp"
+        android:layout_height="25dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -133,37 +131,8 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment_widget_tv_city_name"
         android:indeterminate="true"
         android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/fragment_widget_tv_country_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:drawableStart="@drawable/ic_location"
-        android:maxLength="12"
-        android:maxLines="1"
-        android:text="country"
-        android:textColor="@color/colorTextBlack"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/fragment_widget_tv_city_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="1dp"
-        android:layout_toEndOf="@+id/fragment_widget_tv_country_name"
-        android:maxLength="10"
-        android:maxLines="1"
-        android:text="city"
-        android:textColor="@color/colorTextBlack"
-        android:textStyle="bold" />
 
 
 </RelativeLayout>

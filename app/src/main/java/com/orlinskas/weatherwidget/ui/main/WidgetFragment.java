@@ -2,6 +2,7 @@ package com.orlinskas.weatherwidget.ui.main;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,9 +17,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.chart.ChartLineDataManager;
@@ -34,11 +37,12 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
     private Widget widget;
     private ProgressBar progressBar;
     private LinearLayout weatherIconLayout;
-    private TextView countryName, cityName, currentDate;
+    private TextView currentDate;
     private ImageView weatherIcon_06_00,  weatherIcon_09_00, weatherIcon_12_00, weatherIcon_15_00,
             weatherIcon_18_00, weatherIcon_21_00, weatherIcon_00_00;
     private ImageButton prevDay, nextDay;
     private LineChart lineChart;
+    private RelativeLayout relativeLayout;
     private int dayNumber;
 
     public WidgetFragment() {
@@ -48,8 +52,6 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_widget, container, false);
         progressBar = root.findViewById(R.id.fragment_widget_pb);
-        countryName = root.findViewById(R.id.fragment_widget_tv_country_name);
-        cityName = root.findViewById(R.id.fragment_widget_tv_city_name);
         currentDate = root.findViewById(R.id.fragment_widget_tv_date);
         weatherIconLayout = root.findViewById(R.id.fragment_widget_ll_weather_icon);
         weatherIcon_06_00 = root.findViewById(R.id.fragment_widget_iv_icon_06_00);
@@ -62,6 +64,7 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         prevDay = root.findViewById(R.id.fragment_widget_btn_left);
         nextDay = root.findViewById(R.id.fragment_widget_btn_right);
         lineChart = root.findViewById(R.id.fragment_widget_chart);
+        relativeLayout = root.findViewById(R.id.fragment_widget_rl);
 
         dayNumber = 0;
 
@@ -128,11 +131,11 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
     private void updateUI(int day) {
         if(widget.getForecastFiveDay() != null) {
             ForecastOneDay forecast = widget.getForecastFiveDay().getDays()[day];
-            countryName.setText(widget.getCity().getCountryCode());
-            cityName.setText(widget.getCity().getName());
             currentDate.setText(forecast.getDayDate());
+
             lineChart.clear();
             lineChart = buildChart(day);
+
             setButtonAlpha();
         }
     }
