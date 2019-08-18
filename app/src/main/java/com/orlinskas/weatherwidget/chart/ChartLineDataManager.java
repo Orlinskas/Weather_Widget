@@ -1,8 +1,6 @@
 package com.orlinskas.weatherwidget.chart;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -17,8 +15,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.MPPointD;
-import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.forecast.Weather;
@@ -29,7 +25,6 @@ import java.util.List;
 
 public class ChartLineDataManager {
     private Widget widget;
-    private String label;
     private String[] dates;
     private LineChart chart;
     private Context context;
@@ -52,8 +47,6 @@ public class ChartLineDataManager {
     }
 
     public LineChart getLineChart(int day) {
-        label = widget.getCity().getCountryCode() + "  " +  widget.getCity().getName();
-
         chart.setDragEnabled(false);
         chart.setScaleEnabled(false);
         chart.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
@@ -66,10 +59,6 @@ public class ChartLineDataManager {
 
         Description description = new Description();
         description.setEnabled(false);
-        //description.setText(label);
-        //description.setTextAlign(Paint.Align.RIGHT);
-        //description.setTextSize(16f);
-        //description.setTextColor(context.getResources().getColor(R.color.colorAccentDuo));
         chart.setDescription(description);
 
         Legend legend = chart.getLegend();
@@ -131,6 +120,10 @@ public class ChartLineDataManager {
             @Override
             public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
                 String result = Float.toString(value);
+                if(result.equals("0.001")) {
+                    //вычесляем метку отсутствия данных и ставим "-".
+                    return "-";
+                }
                 if(result.contains(".")) {
                     result = result.substring(0,result.indexOf("."));
                 }
@@ -146,12 +139,14 @@ public class ChartLineDataManager {
 
         List<Entry> entries = new ArrayList<>();
 
-        for(Weather weather : weathers) {
-            if(weather != null) {
-                int index = weathers.indexOf(weather);
-                float temperature = (float) weathers.get(index).getCurrentTemperature();
-
-                entries.add(new Entry(index, temperature));
+        for(int i = 0; i < weathers.size(); i++) {
+            if(weathers.get(i) != null) {
+                float temperature = (float) weathers.get(i).getCurrentTemperature();
+                entries.add(new Entry(i, temperature));
+            }
+            else {
+                //метка, что данных нет.
+                entries.add(new Entry(i, 0.001f));
             }
         }
 
@@ -167,6 +162,7 @@ public class ChartLineDataManager {
         xAxis.setTextColor(context.getResources().getColor(R.color.colorTextBlack));
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(true);
+
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
