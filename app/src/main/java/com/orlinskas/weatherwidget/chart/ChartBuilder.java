@@ -23,12 +23,10 @@ import com.orlinskas.weatherwidget.widget.Widget;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChartLineDataManager {
+public class ChartBuilder {
     private Widget widget;
-    private String[] dates;
     private LineChart chart;
     private Context context;
-
     private final String TIME_03_00 = "03:00";
     private final String TIME_06_00 = "06:00";
     private final String TIME_09_00 = "09:00";
@@ -37,22 +35,22 @@ public class ChartLineDataManager {
     private final String TIME_18_00 = "18:00";
     private final String TIME_21_00 = "21:00";
     private final String TIME_00_00 = "00:00";
+    private final String[] dates = new String[]{TIME_03_00, TIME_06_00, TIME_09_00, TIME_12_00, TIME_15_00, TIME_18_00,
+            TIME_21_00, TIME_00_00};
 
-    public ChartLineDataManager(LineChart chart, Widget widget, Context context) {
-        this.widget = widget;
-        dates = new String[]{TIME_03_00, TIME_06_00, TIME_09_00, TIME_12_00, TIME_15_00, TIME_18_00,
-                TIME_21_00, TIME_00_00};
+    public ChartBuilder(LineChart chart, Widget widget, Context context) {
         this.chart = chart;
+        this.widget = widget;
         this.context = context;
     }
 
-    public LineChart getLineChart(int day) {
+    public LineChart buildChart(int day) {
         chart.setDragEnabled(false);
         chart.setScaleEnabled(false);
         chart.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        LineDataSet dataSet = getLineDataSet(day);
+        LineDataSet dataSet = createLineDataSet(day);
         dataSets.add(dataSet);
         LineData lineData = new LineData(dataSets);
         chart.setData(lineData);
@@ -68,6 +66,72 @@ public class ChartLineDataManager {
         buildYAxis();
 
         return chart;
+    }
+
+    private LineDataSet createLineDataSet(int day){
+        List<Entry> entries = collectEntries(day);
+        LineDataSet dataSet = new LineDataSet(entries, null);
+
+        dataSet.setMode(LineDataSet.Mode.LINEAR);
+        dataSet.setFillAlpha(100);
+        dataSet.setLineWidth(3f);
+        dataSet.setCircleRadius(5f);
+        dataSet.setValueTextSize(15f);
+        dataSet.setCubicIntensity(3f);
+
+        Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
+        dataSet.setValueTypeface(typeface);
+
+        dataSet.setColor(context.getResources().getColor(R.color.colorAccentDuo));
+        dataSet.setCircleColor(context.getResources().getColor(R.color.colorAccent));
+        dataSet.setCircleHoleColor(context.getResources().getColor(R.color.colorTextBlack));
+        dataSet.setValueTextColor(context.getResources().getColor(R.color.colorTextBlack));
+
+        dataSet.setValueFormatter(new IValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                String result = Float.toString(value);
+                if(result.contains(".")) {
+                    result = result.substring(0, result.indexOf("."));
+                }
+                return result;
+            }
+        });
+
+        return dataSet;
+    }
+
+    private List<Entry> collectEntries(int day) {
+        ArrayList<Weather> weathers = widget.getForecastFiveDay().getDays()[day].getDayWeathers();
+
+        List<Entry> entries = new ArrayList<>();
+
+        for(int i = 0; i < weathers.size(); i++) {
+            if(weathers.get(i) != null) {
+                float temperature = (float) weathers.get(i).getCurrentTemperature();
+                entries.add(new Entry(i, temperature));
+            }
+        }
+
+        return entries;
+    }
+
+    private void buildXAxis() {
+        XAxis xAxis = chart.getXAxis();
+        Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
+        xAxis.setTypeface(typeface);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(12f);
+        xAxis.setTextColor(context.getResources().getColor(R.color.colorTextBlack));
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(true);
+
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return dates[(int) value];
+            }
+        });
     }
 
     private void buildYAxis() {
@@ -97,77 +161,7 @@ public class ChartLineDataManager {
 
     }
 
-    private LineDataSet getLineDataSet(int day){
-        List<Entry> entries = getEntries(day);
-        LineDataSet dataSet = new LineDataSet(entries, null);
 
-        dataSet.setMode(LineDataSet.Mode.LINEAR);
-        dataSet.setFillAlpha(100);
-        dataSet.setLineWidth(3f);
-        dataSet.setCircleRadius(5f);
-        dataSet.setValueTextSize(15f);
-        dataSet.setCubicIntensity(3f);
 
-        Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
-        dataSet.setValueTypeface(typeface);
 
-        dataSet.setColor(context.getResources().getColor(R.color.colorAccentDuo));
-        dataSet.setCircleColor(context.getResources().getColor(R.color.colorAccent));
-        dataSet.setCircleHoleColor(context.getResources().getColor(R.color.colorTextBlack));
-        dataSet.setValueTextColor(context.getResources().getColor(R.color.colorTextBlack));
-
-        dataSet.setValueFormatter(new IValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-                String result = Float.toString(value);
-                if(result.equals("0.001")) {
-                    //вычесляем метку отсутствия данных и ставим "-".
-                    return "-";
-                }
-                if(result.contains(".")) {
-                    result = result.substring(0,result.indexOf("."));
-                }
-                return result;
-            }
-        });
-
-        return dataSet;
-    }
-
-    private List<Entry> getEntries(int day) {
-        ArrayList<Weather> weathers = widget.getForecastFiveDay().getDays()[day].getDayWeathers();
-
-        List<Entry> entries = new ArrayList<>();
-
-        for(int i = 0; i < weathers.size(); i++) {
-            if(weathers.get(i) != null) {
-                float temperature = (float) weathers.get(i).getCurrentTemperature();
-                entries.add(new Entry(i, temperature));
-            }
-            else {
-                //метка, что данных нет.
-                entries.add(new Entry(i, 0.001f));
-            }
-        }
-
-        return entries;
-    }
-
-    private void buildXAxis() {
-        XAxis xAxis = chart.getXAxis();
-        Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
-        xAxis.setTypeface(typeface);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(12f);
-        xAxis.setTextColor(context.getResources().getColor(R.color.colorTextBlack));
-        xAxis.setDrawAxisLine(true);
-        xAxis.setDrawGridLines(true);
-
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return dates[(int) value];
-            }
-        });
-    }
 }

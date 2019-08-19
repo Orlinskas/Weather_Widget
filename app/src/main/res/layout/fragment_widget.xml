@@ -68,62 +68,6 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/fragment_widget_iv_icon_03_00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <ImageView
-            android:id="@+id/fragment_widget_iv_icon_06_00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <ImageView
-            android:id="@+id/fragment_widget_iv_icon_09_00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <ImageView
-            android:id="@+id/fragment_widget_iv_icon_12_00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <ImageView
-            android:id="@+id/fragment_widget_iv_icon_15_00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <ImageView
-            android:id="@+id/fragment_widget_iv_icon_18_00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <ImageView
-            android:id="@+id/fragment_widget_iv_icon_21_00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <ImageView
-            android:id="@+id/fragment_widget_iv_icon_00_00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@mipmap/ic_launcher_round" />
     </LinearLayout>
 
     <ProgressBar
@@ -133,6 +77,19 @@
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/fragment_widget_tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fragment_widget_chart"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:maxLines="1"
+        android:text="Country"
+        android:textColor="@color/colorTextLabel"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

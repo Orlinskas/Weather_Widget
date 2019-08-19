@@ -2,7 +2,6 @@ package com.orlinskas.weatherwidget.ui.main;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,18 +13,15 @@ import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
-import com.orlinskas.weatherwidget.chart.ChartLineDataManager;
-import com.orlinskas.weatherwidget.forecast.ForecastFiveDay;
+import com.orlinskas.weatherwidget.chart.ChartBuilder;
+import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
 import com.orlinskas.weatherwidget.forecast.ForecastFiveDayRepositoryGetter;
 import com.orlinskas.weatherwidget.forecast.ForecastOneDay;
 import com.orlinskas.weatherwidget.forecast.ForecastReceiver;
@@ -37,12 +33,9 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
     private Widget widget;
     private ProgressBar progressBar;
     private LinearLayout weatherIconLayout;
-    private TextView currentDate;
-    private ImageView weatherIcon_06_00,  weatherIcon_09_00, weatherIcon_12_00, weatherIcon_15_00,
-            weatherIcon_18_00, weatherIcon_21_00, weatherIcon_00_00;
+    private TextView currentDate, chartLabelDescription;
     private ImageButton prevDay, nextDay;
     private LineChart lineChart;
-    private RelativeLayout relativeLayout;
     private int dayNumber;
 
     public WidgetFragment() {
@@ -54,17 +47,10 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         progressBar = root.findViewById(R.id.fragment_widget_pb);
         currentDate = root.findViewById(R.id.fragment_widget_tv_date);
         weatherIconLayout = root.findViewById(R.id.fragment_widget_ll_weather_icon);
-        weatherIcon_06_00 = root.findViewById(R.id.fragment_widget_iv_icon_06_00);
-        weatherIcon_09_00 = root.findViewById(R.id.fragment_widget_iv_icon_09_00);
-        weatherIcon_12_00 = root.findViewById(R.id.fragment_widget_iv_icon_12_00);
-        weatherIcon_15_00 = root.findViewById(R.id.fragment_widget_iv_icon_15_00);
-        weatherIcon_18_00 = root.findViewById(R.id.fragment_widget_iv_icon_18_00);
-        weatherIcon_21_00 = root.findViewById(R.id.fragment_widget_iv_icon_21_00);
-        weatherIcon_00_00 = root.findViewById(R.id.fragment_widget_iv_icon_00_00);
         prevDay = root.findViewById(R.id.fragment_widget_btn_left);
         nextDay = root.findViewById(R.id.fragment_widget_btn_right);
         lineChart = root.findViewById(R.id.fragment_widget_chart);
-        relativeLayout = root.findViewById(R.id.fragment_widget_rl);
+        chartLabelDescription = root.findViewById(R.id.fragment_widget_tv_description);
 
         dayNumber = 0;
 
@@ -133,16 +119,26 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
             ForecastOneDay forecast = widget.getForecastFiveDay().getDays()[day];
             currentDate.setText(forecast.getDayDate());
 
+            String description = widget.getCity().getCountryCode() + "  " + widget.getCity().getName();
+            chartLabelDescription.setText(description);
+
             lineChart.clear();
             lineChart = buildChart(day);
+
+            weatherIconLayout = buildLinearLayout(day);
 
             setButtonAlpha();
         }
     }
 
+    private LinearLayout buildLinearLayout(int day) {
+        WeatherIconsLayoutBuilder builder = new WeatherIconsLayoutBuilder(weatherIconLayout,widget, getContext());
+        return builder.buildLayout(day);
+    }
+
     private LineChart buildChart(int day) {
-        ChartLineDataManager manager = new ChartLineDataManager(lineChart, widget, getContext());
-        return manager.getLineChart(day);
+        ChartBuilder builder = new ChartBuilder(lineChart, widget, getContext());
+        return builder.buildChart(day);
     }
 
     private void setButtonAlpha() {
@@ -159,7 +155,6 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
             nextDay.setAlpha(1.0f);
         }
     }
-
 
     @SuppressLint("StaticFieldLeak")
     private class UpdateWidgetTask extends AsyncTask<Void, Void, Void> {
