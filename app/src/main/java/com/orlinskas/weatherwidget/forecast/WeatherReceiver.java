@@ -11,11 +11,11 @@ import com.orlinskas.weatherwidget.widget.Widget;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ForecastReceiver {
+public class WeatherReceiver {
     private Context context;
     private Widget widget;
 
-    public ForecastReceiver(Context context, Widget widget) {
+    public WeatherReceiver(Context context, Widget widget) {
         this.context = context;
         this.widget = widget;
     }

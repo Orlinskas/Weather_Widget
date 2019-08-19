@@ -17,40 +17,30 @@ import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.forecast.Weather;
-import com.orlinskas.weatherwidget.widget.Widget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChartBuilder {
-    private Widget widget;
     private LineChart chart;
     private Context context;
-    private final String TIME_03_00 = "03:00";
-    private final String TIME_06_00 = "06:00";
-    private final String TIME_09_00 = "09:00";
-    private final String TIME_12_00 = "12:00";
-    private final String TIME_15_00 = "15:00";
-    private final String TIME_18_00 = "18:00";
-    private final String TIME_21_00 = "21:00";
-    private final String TIME_00_00 = "00:00";
-    private final String[] dates = new String[]{TIME_03_00, TIME_06_00, TIME_09_00, TIME_12_00, TIME_15_00, TIME_18_00,
-            TIME_21_00, TIME_00_00};
+    private Forecast forecast;
 
-    public ChartBuilder(LineChart chart, Widget widget, Context context) {
+    public ChartBuilder(LineChart chart, Forecast forecast, Context context) {
         this.chart = chart;
-        this.widget = widget;
         this.context = context;
+        this.forecast = forecast;
     }
 
-    public LineChart buildChart(int day) {
+    public LineChart buildChart() {
         chart.setDragEnabled(false);
         chart.setScaleEnabled(false);
         chart.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        LineDataSet dataSet = createLineDataSet(day);
+        LineDataSet dataSet = createLineDataSet();
         dataSets.add(dataSet);
         LineData lineData = new LineData(dataSets);
         chart.setData(lineData);
@@ -68,8 +58,8 @@ public class ChartBuilder {
         return chart;
     }
 
-    private LineDataSet createLineDataSet(int day){
-        List<Entry> entries = collectEntries(day);
+    private LineDataSet createLineDataSet() {
+        List<Entry> entries = collectEntries();
         LineDataSet dataSet = new LineDataSet(entries, null);
 
         dataSet.setMode(LineDataSet.Mode.LINEAR);
@@ -101,8 +91,8 @@ public class ChartBuilder {
         return dataSet;
     }
 
-    private List<Entry> collectEntries(int day) {
-        ArrayList<Weather> weathers = widget.getForecastFiveDay().getDays()[day].getDayWeathers();
+    private List<Entry> collectEntries() {
+        ArrayList<Weather> weathers = forecast.getDayWeathers();
 
         List<Entry> entries = new ArrayList<>();
 
@@ -129,7 +119,13 @@ public class ChartBuilder {
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return dates[(int) value];
+                try {
+                    String date = forecast.getDayWeathers().get((int) value).getTimeOfDataForecast();
+                    return date.substring(11);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "n/a";
+                }
             }
         });
     }
@@ -158,10 +154,5 @@ public class ChartBuilder {
                 return "";
             }
         });
-
     }
-
-
-
-
 }

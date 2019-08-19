@@ -1,5 +1,6 @@
 package com.orlinskas.weatherwidget.response;
 
+import com.orlinskas.weatherwidget.date.DateCalculator;
 import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.forecast.Weather;
 import com.orlinskas.weatherwidget.date.DateHelper;
@@ -32,16 +33,15 @@ public class JSONResponseParserToWeather {
         ArrayList<Weather> weathers = new ArrayList<>();
         try {
             JSONObject fullJson = new JSONObject(json);
-
-            writeCurrentDate();
             writeCityInfo(fullJson.getJSONObject("city"));
+            writeCurrentDate();
 
             JSONArray forecastList = fullJson.getJSONArray("list");
             for (int i = 0; i < forecastList.length(); i++) {
                 JSONObject dayForecast = forecastList.getJSONObject(i);
 
                 checkPrecipitation(dayForecast);
-                timeOfDataForecast = dayForecast.getString("dt_txt");
+                timeOfDataForecast = calculateWithTimeZone(dayForecast.getString("dt_txt"));
                 writeMainInfo(dayForecast.getJSONObject("main"));
                 writeWeatherInfo(dayForecast.getJSONArray("weather").getJSONObject(0));
                 writeCloudinessInfo(dayForecast.getJSONObject("clouds"));
@@ -55,10 +55,6 @@ public class JSONResponseParserToWeather {
         return weathers;
     }
 
-    private void writeCurrentDate() {
-        forecastDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD);
-    }
-
     private void writeCityInfo(JSONObject object) {
         try {
             cityID = object.getInt("id");
@@ -69,6 +65,10 @@ public class JSONResponseParserToWeather {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void writeCurrentDate() {
+        forecastDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD);
     }
 
     private void checkPrecipitation(JSONObject dayForecast) {
@@ -93,6 +93,11 @@ public class JSONResponseParserToWeather {
         else {
             snowVolume = 0;
         }
+    }
+
+    private String calculateWithTimeZone(String dateLine) {
+        DateCalculator calculator = new DateCalculator();
+        return calculator.plusHours(dateLine, timezone, DateFormat.YYYY_MM_DD_HH_MM);
     }
 
     private void writeMainInfo(JSONObject object) {

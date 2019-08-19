@@ -21,7 +21,7 @@ public class WeatherIconsLayoutBuilder {
     }
 
     public LinearLayout buildLayout(int day) {
-        ArrayList<Weather> weathers = widget.getForecastFiveDay().getDays()[day].getDayWeathers();
+        ArrayList<Weather> weathers = widget.getDaysForecast().get(day).getDayWeathers();
         WeatherIconsSelector iconsManager = new WeatherIconsSelector();
         ArrayList<Integer> icons = iconsManager.select(weathers);
 

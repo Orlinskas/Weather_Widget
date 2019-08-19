@@ -22,9 +22,9 @@ import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.chart.ChartBuilder;
 import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
-import com.orlinskas.weatherwidget.forecast.ForecastFiveDayRepositoryGetter;
-import com.orlinskas.weatherwidget.forecast.ForecastOneDay;
-import com.orlinskas.weatherwidget.forecast.ForecastReceiver;
+import com.orlinskas.weatherwidget.forecast.ForecastArrayBuilder;
+import com.orlinskas.weatherwidget.forecast.Forecast;
+import com.orlinskas.weatherwidget.forecast.WeatherReceiver;
 import com.orlinskas.weatherwidget.forecast.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
@@ -115,8 +115,8 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
     }
 
     private void updateUI(int day) {
-        if(widget.getForecastFiveDay() != null) {
-            ForecastOneDay forecast = widget.getForecastFiveDay().getDays()[day];
+        if(widget.getDaysForecast() != null) {
+            Forecast forecast = widget.getDaysForecast().get(day);
             currentDate.setText(forecast.getDayDate());
 
             String description = widget.getCity().getCountryCode() + "  " + widget.getCity().getName();
@@ -137,8 +137,8 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
     }
 
     private LineChart buildChart(int day) {
-        ChartBuilder builder = new ChartBuilder(lineChart, widget, getContext());
-        return builder.buildChart(day);
+        ChartBuilder builder = new ChartBuilder(lineChart, widget.getDaysForecast().get(day), getContext());
+        return builder.buildChart();
     }
 
     private void setButtonAlpha() {
@@ -196,13 +196,13 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         }
 
         private void sendRequest() throws Exception {
-            ForecastReceiver receiver = new ForecastReceiver(context, widget);
+            WeatherReceiver receiver = new WeatherReceiver(context, widget);
             receiver.receive();
         }
 
         private void updateForecastInWidget() throws Exception {
-            ForecastFiveDayRepositoryGetter fiveDayRepositoryGetter = new ForecastFiveDayRepositoryGetter(widget, context);
-            widget.setForecastFiveDay(fiveDayRepositoryGetter.process());
+            ForecastArrayBuilder forecastsBuilder = new ForecastArrayBuilder(widget, context);
+            widget.setDaysForecast(forecastsBuilder.process());
         }
 
         private void updateWidgetInRepository(Widget widget) throws Exception {

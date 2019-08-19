@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class RequestURLSender {
-    public String send(URL url) {
+    public String send(URL url) throws IOException {
     HttpURLConnection httpURLConnection = null;
 
     try {
@@ -22,13 +22,11 @@ public class RequestURLSender {
         } else {
             return null;
         }
-    } catch (IOException e) {
-        e.printStackTrace();
-    } finally { if (httpURLConnection != null) {
+    }
+    finally { if (httpURLConnection != null) {
         httpURLConnection.disconnect();
     }
     }
-    return null;
   }
 }
 

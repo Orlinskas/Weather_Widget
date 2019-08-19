@@ -1,10 +1,11 @@
 package com.orlinskas.weatherwidget.widget;
 
 import com.orlinskas.weatherwidget.City;
-import com.orlinskas.weatherwidget.forecast.ForecastFiveDay;
+import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.request.Request;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Widget implements Serializable {
@@ -12,7 +13,7 @@ public class Widget implements Serializable {
     private String source = "OpenWeather";
     private City city;
     private Request request;
-    private ForecastFiveDay forecastFiveDay;
+    private ArrayList<Forecast> daysForecast;
 
     public Widget(int id, City city, Request request) {
         this.id = id;
@@ -53,11 +54,11 @@ public class Widget implements Serializable {
         return request;
     }
 
-    public ForecastFiveDay getForecastFiveDay() {
-        return forecastFiveDay;
+    public ArrayList<Forecast> getDaysForecast() {
+        return daysForecast;
     }
 
-    public void setForecastFiveDay(ForecastFiveDay forecastFiveDay) {
-        this.forecastFiveDay = forecastFiveDay;
+    public void setDaysForecast(ArrayList<Forecast> daysForecast) {
+        this.daysForecast = daysForecast;
     }
 }

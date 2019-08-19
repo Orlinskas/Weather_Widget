@@ -36,7 +36,6 @@ public class CityListActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Country country;
     private LoadTask loadTask = new LoadTask();
-    private int listItemHeight;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

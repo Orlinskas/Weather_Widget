@@ -3,11 +3,11 @@ package com.orlinskas.weatherwidget.forecast;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ForecastOneDay implements Serializable {
+public class Forecast implements Serializable {
     private String dayDate;
     private ArrayList<Weather> dayWeathers;
 
-    public ForecastOneDay(String dayDate) {
+    public Forecast(String dayDate) {
         this.dayDate = dayDate;
         this.dayWeathers = new ArrayList<>();
     }

@@ -45,9 +45,8 @@ public class WeatherRepository implements Repository<Weather> {
             cv.put(COLUMN_SNOW_VOLUME, object.getSnowVolume());
 
             database.insert(TABLE_WEATHER, null, cv);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        }
+        finally {
             database.close();
         }
     }

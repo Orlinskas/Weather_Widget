@@ -6,11 +6,11 @@ import com.orlinskas.weatherwidget.widget.Widget;
 
 public class WidgetUpdateChecker {
     public boolean check(Widget widget) {
-        if(widget.getForecastFiveDay() == null){
+        if(widget.getDaysForecast() == null){
            return true;
         }
         else {
-            String firstForecastDayDate = widget.getForecastFiveDay().getDays()[0].getDayDate();
+            String firstForecastDayDate = widget.getDaysForecast().get(0).getDayDate();
             return !firstForecastDayDate.equals(DateHelper.getCurrent(DateFormat.YYYY_MM_DD));
         }
     }
