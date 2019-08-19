@@ -18,7 +18,7 @@ public class JSONResponseParserToWeather {
     private String forecastDate;
     private int currentTemperature;
     private int pressure;
-    private int humidityPercent;
+    private int timezone;
     private int weatherID;
     private String weatherGroup;
     private String weatherGroupDescription;
@@ -64,6 +64,8 @@ public class JSONResponseParserToWeather {
             cityID = object.getInt("id");
             cityName = object.getString("name");
             countryCode = object.getString("country");
+            int timezoneInSeconds = object.getInt("timezone");
+            timezone = timezoneInSeconds / 3600;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -97,7 +99,6 @@ public class JSONResponseParserToWeather {
         try {
             currentTemperature = (int) object.getDouble("temp");
             pressure = (int) object.getDouble("pressure");
-            humidityPercent = object.getInt("humidity");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -140,7 +141,7 @@ public class JSONResponseParserToWeather {
 
     private Weather createWeatherObject() {
         return new Weather(cityID, cityName, countryCode, timeOfDataForecast, forecastDate,
-                currentTemperature, pressure, humidityPercent, weatherID, weatherGroup,
+                currentTemperature, pressure, timezone, weatherID, weatherGroup,
                 weatherGroupDescription, weatherIconID, cloudinessPercent, windSpeed, rainVolume,
                 snowVolume);
     }
