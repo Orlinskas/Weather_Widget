@@ -3,6 +3,7 @@ package com.orlinskas.weatherwidget.ui.main;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.widget.Widget;
 
 public interface WidgetContract {
@@ -12,21 +13,26 @@ public interface WidgetContract {
         void setIconsLayout(LinearLayout linearLayout);
         void setWidget(Widget widget);
         void updateUI();
+        void doToast(String message);
     }
 
     interface Presenter {
         void attachView(WidgetContract.View view);
-        boolean nextDay();
-        boolean prevDay();
+        void viewIsReady();
         Widget getWidget();
         LinearLayout getIconsLayout();
         LineChart getChartLayout();
         String getChartDescription();
         String getCurrentDate();
-        void viewIsReady();
+        boolean nextDay();
+        boolean prevDay();
+        void destroy();
     }
 
-    interface Repository {
-        String loadMessage();
+    interface WidgetModel {
+        LinearLayout buildIconsLayout(Forecast forecast);
+        LineChart buildChartLayout(Forecast forecast);
+        Widget update(Widget widget);
+
     }
 }

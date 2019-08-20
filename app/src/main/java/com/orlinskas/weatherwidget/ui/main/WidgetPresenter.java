@@ -4,33 +4,32 @@ import android.content.Context;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.orlinskas.weatherwidget.chart.ChartBuilder;
-import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
 import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.widget.Widget;
+import com.orlinskas.weatherwidget.widget.WidgetModel;
 
 public class WidgetPresenter implements WidgetContract.Presenter {
-    private WidgetContract.View widgetView;
+    private WidgetContract.View view;
+    private WidgetContract.WidgetModel model;
     private Widget widget;
-    private Context context;
     private int dayNumber;
     private int dayCount;
 
-    public WidgetPresenter(Widget widget, Context context) {
+    WidgetPresenter(Widget widget, Context context) {
         this.widget = widget;
-        this.context = context;
+        model = new WidgetModel(context);
         dayNumber = 0;
-        dayCount = widget.getDaysForecast().size();
+        dayCount = widget.getDaysForecast().size() - 1;
     }
 
     @Override
     public void attachView(WidgetContract.View view) {
-        this.widgetView = view;
+        this.view = view;
     }
 
     @Override
     public void viewIsReady() {
-        widgetView.updateUI();
+        view.updateUI();
     }
 
     @Override
@@ -40,17 +39,21 @@ public class WidgetPresenter implements WidgetContract.Presenter {
 
     @Override
     public LinearLayout getIconsLayout() {
-        return buildLinearLayout(getForecastFromDay(dayNumber));
+        return model.buildIconsLayout(getCurrentForecast());
     }
 
     @Override
     public LineChart getChartLayout() {
-        return buildChart(getForecastFromDay(dayNumber));
+        return model.buildChartLayout(getCurrentForecast());
     }
 
     @Override
     public String getCurrentDate() {
-        return getForecastFromDay(dayNumber).getDayDate();
+        return getCurrentForecast().getDayDate();
+    }
+
+    private Forecast getCurrentForecast() {
+        return widget.getDaysForecast().get(dayNumber);
     }
 
     @Override
@@ -64,8 +67,10 @@ public class WidgetPresenter implements WidgetContract.Presenter {
     public boolean prevDay() {
         if(dayNumber > 0){
             dayNumber--;
+            view.updateUI();
             return true;
         }
+        view.doToast(buildMessageAvailableDates());
         return false;
     }
 
@@ -73,23 +78,32 @@ public class WidgetPresenter implements WidgetContract.Presenter {
     public boolean nextDay() {
         if(dayNumber < dayCount){
             dayNumber++;
+            view.updateUI();
             return true;
         }
+        view.doToast(buildMessageAvailableDates());
         return false;
     }
 
-    private Forecast getForecastFromDay(int dayNumber) {
-        return widget.getDaysForecast().get(dayNumber);
+    private String buildMessageAvailableDates() {
+        try {
+            return String.format(
+                    "%1$s %2$s %3$s %4$s.",
+                    "Доступно с",
+                    widget.getDaysForecast().get(0).getDayDate(),
+                    "до",
+                    widget.getDaysForecast().get(dayCount).getDayDate()
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Пока нет данных";
+        }
     }
 
-    private LinearLayout buildLinearLayout(Forecast forecast) {
-        WeatherIconsLayoutBuilder builder = new WeatherIconsLayoutBuilder(forecast, context);
-        return builder.buildLayout();
+    @Override
+    public void destroy() {
+        model = null;
+        view = null;
+        widget = null;
     }
-
-    private LineChart buildChart(Forecast forecast) {
-        ChartBuilder builder = new ChartBuilder(forecast, context);
-        return builder.buildChart();
-    }
-
 }

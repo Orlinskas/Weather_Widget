@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.widget.Widget;
 
 public class WidgetFragment extends Fragment implements WidgetContract.View {
@@ -110,6 +111,17 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
 
     private void setChartDescription(String chartDescription) {
         chartDescriptionTV.setText(chartDescription);
+    }
+
+    @Override
+    public void doToast(String message) {
+        ToastBuilder.create(getContext(), message);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.destroy();
     }
 
     //private void setButtonAlpha() {
