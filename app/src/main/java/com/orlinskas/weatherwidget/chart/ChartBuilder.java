@@ -2,6 +2,7 @@ package com.orlinskas.weatherwidget.chart;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -24,17 +25,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChartBuilder {
-    private LineChart chart;
     private Context context;
     private Forecast forecast;
 
-    public ChartBuilder(LineChart chart, Forecast forecast, Context context) {
-        this.chart = chart;
+    public ChartBuilder(Forecast forecast, Context context) {
         this.context = context;
         this.forecast = forecast;
     }
 
     public LineChart buildChart() {
+        LineChart chart = new LineChart(context);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
+                (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        chart.setLayoutParams(params);
+
         chart.setDragEnabled(false);
         chart.setScaleEnabled(false);
         chart.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
@@ -52,8 +56,8 @@ public class ChartBuilder {
         Legend legend = chart.getLegend();
         legend.setEnabled(false);
 
-        buildXAxis();
-        buildYAxis();
+        chart = buildXAxis(chart);
+        chart = buildYAxis(chart);
 
         return chart;
     }
@@ -106,7 +110,7 @@ public class ChartBuilder {
         return entries;
     }
 
-    private void buildXAxis() {
+    private LineChart buildXAxis(LineChart chart) {
         XAxis xAxis = chart.getXAxis();
         Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
         xAxis.setTypeface(typeface);
@@ -128,9 +132,11 @@ public class ChartBuilder {
                 }
             }
         });
+
+        return chart;
     }
 
-    private void buildYAxis() {
+    private LineChart buildYAxis(LineChart chart) {
         Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
 
         YAxis yAxisLeft = chart.getAxisLeft();
@@ -154,5 +160,7 @@ public class ChartBuilder {
                 return "";
             }
         });
+
+        return chart;
     }
 }

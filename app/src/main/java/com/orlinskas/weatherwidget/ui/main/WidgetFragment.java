@@ -1,8 +1,5 @@
 package com.orlinskas.weatherwidget.ui.main;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,82 +12,56 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.orlinskas.weatherwidget.R;
-import com.orlinskas.weatherwidget.ToastBuilder;
-import com.orlinskas.weatherwidget.chart.ChartBuilder;
-import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
-import com.orlinskas.weatherwidget.forecast.ForecastArrayBuilder;
-import com.orlinskas.weatherwidget.forecast.Forecast;
-import com.orlinskas.weatherwidget.forecast.WeatherReceiver;
-import com.orlinskas.weatherwidget.forecast.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.widget.Widget;
-import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
-public class WidgetFragment extends Fragment implements WidgetObserver {
+public class WidgetFragment extends Fragment implements WidgetContract.View {
     private Widget widget;
     private ProgressBar progressBar;
-    private LinearLayout weatherIconLayout;
-    private TextView currentDate, chartLabelDescription;
-    private ImageButton prevDay, nextDay;
-    private LineChart lineChart;
-    private int dayNumber;
-
-    public WidgetFragment() {
-    }
+    private RelativeLayout iconsLayoutCase;
+    private RelativeLayout chartLayoutCase;
+    private TextView currentDateTV, chartDescriptionTV;
+    private ImageButton prevDayBtn, nextDayBtn;
+    private WidgetContract.Presenter presenter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_widget, container, false);
         progressBar = root.findViewById(R.id.fragment_widget_pb);
-        currentDate = root.findViewById(R.id.fragment_widget_tv_date);
-        weatherIconLayout = root.findViewById(R.id.fragment_widget_ll_weather_icon);
-        prevDay = root.findViewById(R.id.fragment_widget_btn_left);
-        nextDay = root.findViewById(R.id.fragment_widget_btn_right);
-        lineChart = root.findViewById(R.id.fragment_widget_chart);
-        chartLabelDescription = root.findViewById(R.id.fragment_widget_tv_description);
-
-        dayNumber = 0;
+        iconsLayoutCase = root.findViewById(R.id.fragment_widget_rl_icons_case);
+        chartLayoutCase = root.findViewById(R.id.fragment_widget_rl_chart_case);
+        prevDayBtn = root.findViewById(R.id.fragment_widget_btn_left);
+        nextDayBtn = root.findViewById(R.id.fragment_widget_btn_right);
+        chartDescriptionTV = root.findViewById(R.id.fragment_widget_tv_description);
+        currentDateTV = root.findViewById(R.id.fragment_widget_tv_date);
 
         getFragmentArgument();
 
         final Animation buttonClickAnim = AnimationUtils.loadAnimation(getContext(), R.anim.animation_button);
 
-        prevDay.setOnClickListener(new View.OnClickListener() {
+        prevDayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dayNumber > 0) {
+                if(presenter.prevDay()){
                     v.startAnimation(buttonClickAnim);
-                    dayNumber--;
-                    updateUI(dayNumber);
                 }
             }
         });
 
-        nextDay.setOnClickListener(new View.OnClickListener() {
+        nextDayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dayNumber < 4) {
+                if(presenter.nextDay()) {
                     v.startAnimation(buttonClickAnim);
-                    dayNumber++;
-                    updateUI(dayNumber);
                 }
             }
         });
-
-        updateUI(dayNumber);
 
         return root;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if(checkNeedUpdate()){
-            update();
-        }
     }
 
     private void getFragmentArgument() {
@@ -99,115 +70,115 @@ public class WidgetFragment extends Fragment implements WidgetObserver {
         }
     }
 
-    private boolean checkNeedUpdate() {
-        WidgetUpdateChecker updateChecker = new WidgetUpdateChecker();
-        return updateChecker.check(widget);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        presenter = new WidgetPresenter(widget, getContext());
+        presenter.attachView(this);
+        presenter.viewIsReady();
     }
 
     @Override
-    public void update() {
-        UpdateWidgetTask updateWidgetTask = new UpdateWidgetTask(getContext(), widget);
-        updateWidgetTask.execute();
+    public void updateUI() {
+        setWidget(presenter.getWidget());
+        setIconsLayout(presenter.getIconsLayout());
+        setChart(presenter.getChartLayout());
+        setChartDate(presenter.getCurrentDate());
+        setChartDescription(presenter.getChartDescription());
     }
 
+    @Override
     public void setWidget(Widget widget) {
         this.widget = widget;
     }
 
-    private void updateUI(int day) {
-        if(widget.getDaysForecast() != null) {
-            Forecast forecast = widget.getDaysForecast().get(day);
-            currentDate.setText(forecast.getDayDate());
-
-            String description = widget.getCity().getCountryCode() + "  " + widget.getCity().getName();
-            chartLabelDescription.setText(description);
-
-            lineChart.clear();
-            lineChart = buildChart(day);
-
-            weatherIconLayout = buildLinearLayout(day);
-
-            setButtonAlpha();
-        }
+    @Override
+    public void setIconsLayout(LinearLayout linearLayout) {
+        iconsLayoutCase.removeAllViews();
+        iconsLayoutCase.addView(linearLayout);
     }
 
-    private LinearLayout buildLinearLayout(int day) {
-        WeatherIconsLayoutBuilder builder = new WeatherIconsLayoutBuilder(weatherIconLayout,widget, getContext());
-        return builder.buildLayout(day);
+    @Override
+    public void setChart(LineChart chart) {
+        chartLayoutCase.removeAllViews();
+        chartLayoutCase.addView(chart);
     }
 
-    private LineChart buildChart(int day) {
-        ChartBuilder builder = new ChartBuilder(lineChart, widget.getDaysForecast().get(day), getContext());
-        return builder.buildChart();
+    private void setChartDate(String currentDate) {
+        currentDateTV.setText(currentDate);
     }
 
-    private void setButtonAlpha() {
-        if(dayNumber == 0) {
-            prevDay.setAlpha(0.3f);
-        }
-        else {
-            prevDay.setAlpha(1.0f);
-        }
-        if(dayNumber == 4) {
-            nextDay.setAlpha(0.3f);
-        }
-        else {
-            nextDay.setAlpha(1.0f);
-        }
+    private void setChartDescription(String chartDescription) {
+        chartDescriptionTV.setText(chartDescription);
     }
 
-    @SuppressLint("StaticFieldLeak")
-    private class UpdateWidgetTask extends AsyncTask<Void, Void, Void> {
-        private Context context;
-        private Widget widget;
-
-        UpdateWidgetTask(Context context, Widget widget) {
-            this.context = context;
-            this.widget = widget;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-            weatherIconLayout.setVisibility(View.INVISIBLE);
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                sendRequest();
-                updateForecastInWidget();
-                updateWidgetInRepository(widget);
-            } catch (Exception e) {
-                e.printStackTrace();
-                ToastBuilder.create(getContext(), "Не удалось получить данные");
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            setWidget(widget);
-            updateUI(dayNumber);
-            progressBar.setVisibility(View.INVISIBLE);
-            weatherIconLayout.setVisibility(View.VISIBLE);
-        }
-
-        private void sendRequest() throws Exception {
-            WeatherReceiver receiver = new WeatherReceiver(context, widget);
-            receiver.receive();
-        }
-
-        private void updateForecastInWidget() throws Exception {
-            ForecastArrayBuilder forecastsBuilder = new ForecastArrayBuilder(widget, context);
-            widget.setDaysForecast(forecastsBuilder.process());
-        }
-
-        private void updateWidgetInRepository(Widget widget) throws Exception {
-            WidgetRepository repository = new WidgetRepository(context);
-            repository.update(widget);
-        }
-    }
+    //private void setButtonAlpha() {
+    //    if(dayNumber == 0) {
+    //        prevDayBtn.setAlpha(0.3f);
+    //    }
+    //    else {
+    //        prevDayBtn.setAlpha(1.0f);
+    //    }
+    //    if(dayNumber == 4) {
+    //        nextDayBtn.setAlpha(0.3f);
+    //    }
+    //    else {
+    //        nextDayBtn.setAlpha(1.0f);
+    //    }
+    //}
+    //
+    //@SuppressLint("StaticFieldLeak")
+    //private class UpdateWidgetTask extends AsyncTask<Void, Void, Void> {
+    //    private Context context;
+    //    private Widget widget;
+//
+    //    UpdateWidgetTask(Context context, Widget widget) {
+    //        this.context = context;
+    //        this.widget = widget;
+    //    }
+//
+    //    @Override
+    //    protected void onPreExecute() {
+    //        super.onPreExecute();
+    //        progressBar.setVisibility(View.VISIBLE);
+    //        weatherIconLayout.setVisibility(View.INVISIBLE);
+    //    }
+//
+    //    @Override
+    //    protected Void doInBackground(Void... voids) {
+    //        try {
+    //            sendRequest();
+    //            updateForecastInWidget();
+    //            updateWidgetInRepository(widget);
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //            ToastBuilder.create(getContext(), "Не удалось получить данные");
+    //        }
+    //        return null;
+    //    }
+//
+    //    @Override
+    //    protected void onPostExecute(Void aVoid) {
+    //        super.onPostExecute(aVoid);
+    //        setWidget(widget);
+    //        updateUI(dayNumber);
+    //        progressBar.setVisibility(View.INVISIBLE);
+    //        weatherIconLayout.setVisibility(View.VISIBLE);
+    //    }
+//
+    //    private void sendRequest() throws Exception {
+    //        WeatherReceiver receiver = new WeatherReceiver(context, widget);
+    //        receiver.receive();
+    //    }
+//
+    //    private void updateForecastInWidget() throws Exception {
+    //        ForecastArrayBuilder forecastsBuilder = new ForecastArrayBuilder(widget, context);
+    //        widget.setDaysForecast(forecastsBuilder.process());
+    //    }
+//
+    //    private void updateWidgetInRepository(Widget widget) throws Exception {
+    //        WidgetRepository repository = new WidgetRepository(context);
+    //        repository.update(widget);
+    //    }
+    //}
 }

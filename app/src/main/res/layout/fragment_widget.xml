@@ -19,7 +19,7 @@
         android:id="@+id/fragment_widget_rl_control_bar_bot"
         android:layout_width="match_parent"
         android:layout_height="27dp"
-        android:layout_below="@+id/fragment_widget_chart">
+        android:layout_below="@+id/fragment_widget_rl_chart_case">
 
         <ImageButton
             android:id="@+id/fragment_widget_btn_left"
@@ -57,18 +57,20 @@
             app:srcCompat="@drawable/ic_right" />
     </RelativeLayout>
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/fragment_widget_chart"
+    <RelativeLayout
+        android:id="@+id/fragment_widget_rl_chart_case"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/fragment_widget_ll_weather_icon" />
+        android:layout_below="@+id/fragment_widget_rl_icons_case">
+    </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/fragment_widget_ll_weather_icon"
+
+    <RelativeLayout
+        android:id="@+id/fragment_widget_rl_icons_case"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:orientation="horizontal">
-    </LinearLayout>
+        android:background="@color/colorPrimary">
+        </RelativeLayout>
 
     <ProgressBar
         android:id="@+id/fragment_widget_pb"
@@ -82,7 +84,7 @@
         android:id="@+id/fragment_widget_tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/fragment_widget_chart"
+        android:layout_alignBottom="@+id/fragment_widget_rl_chart_case"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:maxLines="1"
