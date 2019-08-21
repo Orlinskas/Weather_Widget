@@ -122,7 +122,16 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
     public String getChartDescription() {
         String countryCode = widget.getCity().getCountryCode();
         String cityName = widget.getCity().getName();
-        return countryCode + "  " + cityName;
+        int timeZone = widget.getDaysForecast().get(dayNumber).getDayWeathers().get(0).getTimezone();
+        String timeZoneFormat;
+        if(timeZone > 0) {
+            timeZoneFormat = "UTC +" + timeZone;
+        }
+        else {
+            timeZoneFormat = "UTC " + timeZone;
+        }
+
+        return countryCode + "  " + cityName + "  " + timeZoneFormat;
     }
 
     @Override
@@ -167,6 +176,8 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
         this.widget = findWidgetInRepo(widgetID);
         view.stopProgressDialog();
         view.doSnackBar("Обновлено");
+        dayNumber = 0;
+        dayCount = this.widget.getDaysForecast().size() - 1;
         showViewElements();
     }
 
@@ -182,10 +193,5 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
         model = null;
         widget = null;
     }
-
-
-
-
-
 
 }

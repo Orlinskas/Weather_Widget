@@ -18,8 +18,9 @@
     <RelativeLayout
         android:id="@+id/fragment_widget_rl_control_bar_bot"
         android:layout_width="match_parent"
-        android:layout_height="27dp"
-        android:layout_below="@+id/fragment_widget_rl_chart_case">
+        android:layout_height="30dp"
+        android:layout_below="@+id/fragment_widget_rl_chart_case"
+        android:layout_marginTop="3dp">
 
         <ImageButton
             android:id="@+id/fragment_widget_btn_left"
@@ -27,7 +28,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="1dp"
             android:background="@color/colorPrimary"
             android:tint="@color/colorAccent"
             app:srcCompat="@drawable/ic_left" />
@@ -38,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:maxLines="1"
-            android:text="2077:01:22"
+            android:text="-"
             android:textColor="@color/colorTextBlack"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -50,7 +53,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="1dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="1dp"
             android:background="@color/colorPrimary"
             android:filterTouchesWhenObscured="true"
             android:tint="@color/colorAccent"
@@ -60,17 +65,16 @@
     <RelativeLayout
         android:id="@+id/fragment_widget_rl_chart_case"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/fragment_widget_rl_icons_case">
-    </RelativeLayout>
+        android:layout_height="150dp"
+        android:layout_below="@+id/fragment_widget_rl_icons_case"></RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/fragment_widget_rl_icons_case"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:background="@color/colorPrimary">
-        </RelativeLayout>
+        android:layout_marginBottom="-5dp"
+        android:background="@color/colorPrimary"></RelativeLayout>
 
     <ProgressBar
         android:id="@+id/fragment_widget_pb"
@@ -85,10 +89,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/fragment_widget_rl_chart_case"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50dp"
         android:layout_marginBottom="20dp"
         android:maxLines="1"
-        android:text="Country"
+        android:text="Loading..."
         android:textColor="@color/colorTextLabel"
         android:textSize="16sp"
         android:textStyle="bold" />
