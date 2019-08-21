@@ -5,8 +5,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.orlinskas.weatherwidget.ToastBuilder;
+import com.orlinskas.weatherwidget.date.DateFormat;
+import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.forecast.ForecastArrayBuilder;
 import com.orlinskas.weatherwidget.forecast.WeatherReceiver;
+import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.ui.main.WidgetContract;
 
 public class WidgetModel implements WidgetContract.WidgetModel {
@@ -33,6 +36,7 @@ public class WidgetModel implements WidgetContract.WidgetModel {
                 sendRequest();
                 updateForecastInWidget();
                 updateWidgetInRepository();
+                saveWidgetUpdateDate();
             } catch (Exception e) {
                 e.printStackTrace();
                 ToastBuilder.create(context,"Ошибка подключения");
@@ -43,7 +47,15 @@ public class WidgetModel implements WidgetContract.WidgetModel {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            ToastBuilder.create(context,"Новые данные получены, перезапустите приложение");
+            ToastBuilder.createLong(context,"Доступен свежий прогноз, перезапустите приложение");
+        }
+
+        private void saveWidgetUpdateDate() {
+            String key = String.valueOf(widget.getId());
+            String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
+
+            Preferences preferences = Preferences.getInstance(context,Preferences.WIDGET_UPDATE_DATES);
+            preferences.saveData(key, currentDate);
         }
 
         private void sendRequest() throws Exception {

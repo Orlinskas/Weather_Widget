@@ -12,12 +12,12 @@ public class FirstRunVerifier {
     }
 
     public boolean check() {
-        preferences = Preferences.getInstance(context,Preferences.APP_STATUS);
+        preferences = Preferences.getInstance(context, Preferences.APP_STATUS);
         return preferences.getData(FIRST_RUN, false);
     }
 
     public void setFirstRun(boolean value) {
-        preferences = Preferences.getInstance(context,Preferences.APP_STATUS);
+        preferences = Preferences.getInstance(context, Preferences.APP_STATUS);
         preferences.saveData(FIRST_RUN, value);
     }
 }

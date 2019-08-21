@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateCalculator {
+
     public String plusDays(String dateLine, int countDays, String dateFormat) {
         Date date = DateHelper.parse(dateLine, dateFormat);
         Calendar c = Calendar.getInstance();
@@ -22,5 +23,10 @@ public class DateCalculator {
         Date dateAfterPlusDay = c.getTime();
 
         return DateHelper.parse(dateAfterPlusDay, dateFormat);
+    }
+
+    public int calculateDifferencesInHours(Date old, Date now) {
+        long milliseconds = now.getTime() - old.getTime();
+        return (int) (milliseconds / (60 * 60 * 1000));
     }
 }

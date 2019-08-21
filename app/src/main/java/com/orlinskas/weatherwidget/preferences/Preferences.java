@@ -3,6 +3,8 @@ package com.orlinskas.weatherwidget.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Date;
+
 public class Preferences {
     private static Preferences preferences;
     private SharedPreferences sharedPreferences;
@@ -10,6 +12,7 @@ public class Preferences {
     public static final String JSON_LINE = "jsonLine";
     public static final String APP_STATUS = "appStatus";
     public static final String APP_TEST = "test";
+    public static final String WIDGET_UPDATE_DATES = "dates";
 
     public static Preferences getInstance(Context context, String preferencesName) {
         if (preferences == null) {

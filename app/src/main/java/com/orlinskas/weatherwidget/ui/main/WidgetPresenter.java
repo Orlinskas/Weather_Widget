@@ -125,8 +125,8 @@ public class WidgetPresenter implements WidgetContract.Presenter {
 
     @Override
     public boolean checkAvailableUpdate(Widget widget) {
-        WidgetUpdateChecker checker = new WidgetUpdateChecker();
-        return checker.check(widget);
+        WidgetUpdateChecker checker = new WidgetUpdateChecker(widget, context);
+        return checker.check();
     }
 
     private boolean isInternetConnection(Context context) {
