@@ -1,10 +1,15 @@
 package com.orlinskas.weatherwidget.ui.main;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.orlinskas.weatherwidget.chart.ChartBuilder;
+import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
 import com.orlinskas.weatherwidget.forecast.Forecast;
+import com.orlinskas.weatherwidget.forecast.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetModel;
 
@@ -12,12 +17,16 @@ public class WidgetPresenter implements WidgetContract.Presenter {
     private WidgetContract.View view;
     private WidgetContract.WidgetModel model;
     private Widget widget;
+    private Context context;
+    private Context appContext;
     private int dayNumber;
     private int dayCount;
 
-    WidgetPresenter(Widget widget, Context context) {
+    WidgetPresenter(Widget widget, Context context, Context appContext) {
         this.widget = widget;
-        model = new WidgetModel(context);
+        this.context = context;
+        this.appContext = appContext;
+        model = new WidgetModel();
         dayNumber = 0;
         dayCount = widget.getDaysForecast().size() - 1;
     }
@@ -30,6 +39,18 @@ public class WidgetPresenter implements WidgetContract.Presenter {
     @Override
     public void viewIsReady() {
         view.updateUI();
+
+        if(checkAvailableUpdate(widget)) {
+            if(isInternetConnection(context)) {
+                String cityName = widget.getCity().getName();
+                view.doSnackBar(cityName + " - обновляется...");
+                model.doUpdate(widget, appContext);
+            }
+            else {
+                String cityName = widget.getCity().getName();
+                view.doSnackBar(cityName + " - требует обновления, но у вас выключен интернет.");
+            }
+        }
     }
 
     @Override
@@ -39,12 +60,14 @@ public class WidgetPresenter implements WidgetContract.Presenter {
 
     @Override
     public LinearLayout getIconsLayout() {
-        return model.buildIconsLayout(getCurrentForecast());
+        WeatherIconsLayoutBuilder builder = new WeatherIconsLayoutBuilder(getCurrentForecast(), context);
+        return builder.buildLayout();
     }
 
     @Override
     public LineChart getChartLayout() {
-        return model.buildChartLayout(getCurrentForecast());
+        ChartBuilder builder = new ChartBuilder(getCurrentForecast(), context);
+        return builder.buildChart();
     }
 
     @Override
@@ -101,9 +124,22 @@ public class WidgetPresenter implements WidgetContract.Presenter {
     }
 
     @Override
+    public boolean checkAvailableUpdate(Widget widget) {
+        WidgetUpdateChecker checker = new WidgetUpdateChecker();
+        return checker.check(widget);
+    }
+
+    private boolean isInternetConnection(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    @Override
     public void destroy() {
-        model = null;
         view = null;
+        model = null;
         widget = null;
     }
 }

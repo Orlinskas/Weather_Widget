@@ -2,6 +2,7 @@ package com.orlinskas.weatherwidget.forecast;
 
 import android.content.Context;
 
+import com.orlinskas.weatherwidget.request.Request;
 import com.orlinskas.weatherwidget.request.RequestURLGenerator;
 import com.orlinskas.weatherwidget.request.RequestURLSender;
 import com.orlinskas.weatherwidget.response.JSONResponseParserToWeather;
@@ -13,16 +14,16 @@ import java.util.ArrayList;
 
 public class WeatherReceiver {
     private Context context;
-    private Widget widget;
+    private Request request;
 
-    public WeatherReceiver(Context context, Widget widget) {
+    public WeatherReceiver(Context context, Request request) {
         this.context = context;
-        this.widget = widget;
+        this.request = request;
     }
 
     public void receive() throws Exception{
         RequestURLGenerator urlGenerator = new RequestURLGenerator();
-        URL requestURL = urlGenerator.generate(widget.getRequest());
+        URL requestURL = urlGenerator.generate(request);
         RequestURLSender urlSender = new RequestURLSender();
         String response = urlSender.send(requestURL);
         JSONResponseParserToWeather parser = new JSONResponseParserToWeather();

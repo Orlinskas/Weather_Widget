@@ -2,6 +2,7 @@ package com.orlinskas.weatherwidget.ui.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,23 +21,22 @@ import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.widget.Widget;
 
+import java.util.Objects;
+
 public class WidgetFragment extends Fragment implements WidgetContract.View {
     private Widget widget;
-    private ProgressBar progressBar;
     private RelativeLayout iconsLayoutCase;
     private RelativeLayout chartLayoutCase;
     private TextView currentDateTV, chartDescriptionTV;
-    private ImageButton prevDayBtn, nextDayBtn;
     private WidgetContract.Presenter presenter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_widget, container, false);
-        progressBar = root.findViewById(R.id.fragment_widget_pb);
         iconsLayoutCase = root.findViewById(R.id.fragment_widget_rl_icons_case);
         chartLayoutCase = root.findViewById(R.id.fragment_widget_rl_chart_case);
-        prevDayBtn = root.findViewById(R.id.fragment_widget_btn_left);
-        nextDayBtn = root.findViewById(R.id.fragment_widget_btn_right);
+        ImageButton prevDayBtn = root.findViewById(R.id.fragment_widget_btn_left);
+        ImageButton nextDayBtn = root.findViewById(R.id.fragment_widget_btn_right);
         chartDescriptionTV = root.findViewById(R.id.fragment_widget_tv_description);
         currentDateTV = root.findViewById(R.id.fragment_widget_tv_date);
 
@@ -74,7 +74,7 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new WidgetPresenter(widget, getContext());
+        presenter = new WidgetPresenter(widget, getContext(), Objects.requireNonNull(getActivity()).getApplicationContext());
         presenter.attachView(this);
         presenter.viewIsReady();
     }
@@ -119,78 +119,13 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
     }
 
     @Override
+    public void doSnackBar(String message) {
+        Snackbar.make(Objects.requireNonNull(getView()), message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         presenter.destroy();
     }
-
-    //private void setButtonAlpha() {
-    //    if(dayNumber == 0) {
-    //        prevDayBtn.setAlpha(0.3f);
-    //    }
-    //    else {
-    //        prevDayBtn.setAlpha(1.0f);
-    //    }
-    //    if(dayNumber == 4) {
-    //        nextDayBtn.setAlpha(0.3f);
-    //    }
-    //    else {
-    //        nextDayBtn.setAlpha(1.0f);
-    //    }
-    //}
-    //
-    //@SuppressLint("StaticFieldLeak")
-    //private class UpdateWidgetTask extends AsyncTask<Void, Void, Void> {
-    //    private Context context;
-    //    private Widget widget;
-//
-    //    UpdateWidgetTask(Context context, Widget widget) {
-    //        this.context = context;
-    //        this.widget = widget;
-    //    }
-//
-    //    @Override
-    //    protected void onPreExecute() {
-    //        super.onPreExecute();
-    //        progressBar.setVisibility(View.VISIBLE);
-    //        weatherIconLayout.setVisibility(View.INVISIBLE);
-    //    }
-//
-    //    @Override
-    //    protected Void doInBackground(Void... voids) {
-    //        try {
-    //            sendRequest();
-    //            updateForecastInWidget();
-    //            updateWidgetInRepository(widget);
-    //        } catch (Exception e) {
-    //            e.printStackTrace();
-    //            ToastBuilder.create(getContext(), "Не удалось получить данные");
-    //        }
-    //        return null;
-    //    }
-//
-    //    @Override
-    //    protected void onPostExecute(Void aVoid) {
-    //        super.onPostExecute(aVoid);
-    //        setWidget(widget);
-    //        updateUI(dayNumber);
-    //        progressBar.setVisibility(View.INVISIBLE);
-    //        weatherIconLayout.setVisibility(View.VISIBLE);
-    //    }
-//
-    //    private void sendRequest() throws Exception {
-    //        WeatherReceiver receiver = new WeatherReceiver(context, widget);
-    //        receiver.receive();
-    //    }
-//
-    //    private void updateForecastInWidget() throws Exception {
-    //        ForecastArrayBuilder forecastsBuilder = new ForecastArrayBuilder(widget, context);
-    //        widget.setDaysForecast(forecastsBuilder.process());
-    //    }
-//
-    //    private void updateWidgetInRepository(Widget widget) throws Exception {
-    //        WidgetRepository repository = new WidgetRepository(context);
-    //        repository.update(widget);
-    //    }
-    //}
 }

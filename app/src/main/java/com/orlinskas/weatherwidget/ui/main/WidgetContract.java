@@ -1,5 +1,6 @@
 package com.orlinskas.weatherwidget.ui.main;
 
+import android.content.Context;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -14,6 +15,7 @@ public interface WidgetContract {
         void setWidget(Widget widget);
         void updateUI();
         void doToast(String message);
+        void doSnackBar(String message);
     }
 
     interface Presenter {
@@ -27,12 +29,10 @@ public interface WidgetContract {
         boolean nextDay();
         boolean prevDay();
         void destroy();
+        boolean checkAvailableUpdate(Widget widget);
     }
 
     interface WidgetModel {
-        LinearLayout buildIconsLayout(Forecast forecast);
-        LineChart buildChartLayout(Forecast forecast);
-        Widget update(Widget widget);
-
+        void doUpdate(Widget widget, Context appContext);
     }
 }

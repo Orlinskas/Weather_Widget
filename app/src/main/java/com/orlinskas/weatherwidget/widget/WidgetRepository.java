@@ -32,7 +32,7 @@ public class WidgetRepository {
         ArrayList<Widget> widgets = widgetsList.getWidgets();
         int index = widgets.indexOf(widget);
         widgets.remove(widget);
-        widgets.add(index,widget);
+        widgets.add(index, widget);
         widgetsList.setWidgets(widgets);
         serializer.saveList(widgetsList);
     }
