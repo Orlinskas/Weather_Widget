@@ -115,7 +115,21 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
     }
 
     private Forecast getCurrentForecast() {
+        setButtonAlpha();
         return widget.getDaysForecast().get(dayNumber);
+    }
+
+    private void setButtonAlpha() {
+        if(dayNumber == 0) {
+            view.setAlpha(view.LEFT_BUTTON, view.LOW_MODE);
+        }
+        else if(dayNumber == dayCount) {
+            view.setAlpha(view.RIGHT_BUTTON, view.LOW_MODE);
+        }
+        else {
+            view.setAlpha(view.RIGHT_BUTTON, view.DEFAULT_MODE);
+            view.setAlpha(view.LEFT_BUTTON, view.DEFAULT_MODE);
+        }
     }
 
     @Override

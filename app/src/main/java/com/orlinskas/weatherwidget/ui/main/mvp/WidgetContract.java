@@ -13,8 +13,13 @@ public interface WidgetContract {
         void updateUI();
         void doToast(String message);
         void doSnackBar(String message);
+        void setAlpha(String item, int mode);
         void startProgressDialog();
         void stopProgressDialog();
+        String LEFT_BUTTON = "left";
+        String RIGHT_BUTTON = "right";
+        int DEFAULT_MODE = 0;
+        int LOW_MODE = 1;
     }
 
     interface Presenter {

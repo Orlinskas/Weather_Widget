@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -27,6 +27,8 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
     private ProgressBar progressBar;
     private RelativeLayout iconsLayoutCase;
     private RelativeLayout chartLayoutCase;
+    private ImageView leftBtn;
+    private ImageView rightBtn;
     private TextView currentDateTV, chartDescriptionTV;
     private WidgetContract.Presenter presenter;
 
@@ -36,8 +38,10 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
         progressBar = root.findViewById(R.id.fragment_widget_pb);
         iconsLayoutCase = root.findViewById(R.id.fragment_widget_rl_icons_case);
         chartLayoutCase = root.findViewById(R.id.fragment_widget_rl_chart_case);
-        ImageButton prevDayBtn = root.findViewById(R.id.fragment_widget_btn_left);
-        ImageButton nextDayBtn = root.findViewById(R.id.fragment_widget_btn_right);
+        //ImageButton prevDayBtn = root.findViewById(R.id.fragment_widget_btn_left);
+        //ImageButton nextDayBtn = root.findViewById(R.id.fragment_widget_btn_right);
+        leftBtn = root.findViewById(R.id.fragment_widget_iv_left);
+        rightBtn = root.findViewById(R.id.fragment_widget_iv_right);
         chartDescriptionTV = root.findViewById(R.id.fragment_widget_tv_description);
         currentDateTV = root.findViewById(R.id.fragment_widget_tv_date);
 
@@ -45,7 +49,7 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
 
         final Animation buttonClickAnim = AnimationUtils.loadAnimation(getContext(), R.anim.animation_button);
 
-        prevDayBtn.setOnClickListener(new View.OnClickListener() {
+        leftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(presenter.prevDay()){
@@ -54,7 +58,7 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
             }
         });
 
-        nextDayBtn.setOnClickListener(new View.OnClickListener() {
+        rightBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(presenter.nextDay()) {
@@ -118,6 +122,29 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
     @Override
     public void doSnackBar(String message) {
         Snackbar.make(Objects.requireNonNull(getView()), message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void setAlpha(String itemName, int mode) {
+        int alpha = 250;
+
+        switch (mode) {
+            case DEFAULT_MODE:
+                alpha = 250;
+                break;
+            case LOW_MODE:
+                alpha = 50;
+                break;
+        }
+
+        switch (itemName) {
+            case LEFT_BUTTON:
+                leftBtn.setImageAlpha(alpha);
+                break;
+            case RIGHT_BUTTON:
+                rightBtn.setImageAlpha(alpha);
+                break;
+        }
     }
 
     @Override
