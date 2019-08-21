@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.orlinskas.weatherwidget.specification.WidgetSimpleSpecification;
+import com.orlinskas.weatherwidget.ui.main.mvp.WidgetFragment;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 

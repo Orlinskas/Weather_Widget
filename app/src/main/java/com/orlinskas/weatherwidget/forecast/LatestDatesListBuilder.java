@@ -9,16 +9,16 @@ import com.orlinskas.weatherwidget.widget.Widget;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
-class LatestWeathersFromRepository {
+class LatestDatesListBuilder {
     private Widget widget;
     private Context context;
 
-    LatestWeathersFromRepository(Widget widget, Context context) {
+    LatestDatesListBuilder(Widget widget, Context context) {
         this.widget = widget;
         this.context = context;
     }
 
-    ArrayList<String> getUnique() {
+    ArrayList<String> build() {
         WeatherRepository repository = new WeatherRepository(context);
         ArrayList<Weather> allWeathersForCity = repository.query(new WeatherWidgetSpecification(widget));
 

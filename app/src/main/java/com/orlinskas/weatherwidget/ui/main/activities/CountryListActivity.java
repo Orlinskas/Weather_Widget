@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.activities;
+package com.orlinskas.weatherwidget.ui.main.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.Country;
 import com.orlinskas.weatherwidget.R;
-import com.orlinskas.weatherwidget.presenters.CountryListPresenter;
+import com.orlinskas.weatherwidget.repository.CountryListPresenter;
 
 import java.util.ArrayList;
 

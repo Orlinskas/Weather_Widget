@@ -6,6 +6,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.Country;
+import com.orlinskas.weatherwidget.repository.CityListPresenter;
 
 import org.junit.Before;
 import org.junit.Test;

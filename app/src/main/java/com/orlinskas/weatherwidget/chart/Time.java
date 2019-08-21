@@ -1,6 +1,5 @@
 package com.orlinskas.weatherwidget.chart;
 
-import com.orlinskas.weatherwidget.forecast.Weather;
 
 public class Time {
     private static final String TIME_01_00 = "01:00";

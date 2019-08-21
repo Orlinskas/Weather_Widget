@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main;
+package com.orlinskas.weatherwidget.ui.main.mvp;
 
 import android.content.Context;
 import android.widget.LinearLayout;
@@ -26,8 +26,6 @@ public interface WidgetContract {
         boolean nextDay();
         boolean prevDay();
         void destroy();
-        void onUpdateFinished();
-        void onUpdateFailed();
     }
 
     interface WidgetModel {

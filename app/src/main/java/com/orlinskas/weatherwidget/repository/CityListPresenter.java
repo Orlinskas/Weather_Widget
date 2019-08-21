@@ -1,10 +1,9 @@
-package com.orlinskas.weatherwidget.presenters;
+package com.orlinskas.weatherwidget.repository;
 
 import android.content.Context;
 
 import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.Country;
-import com.orlinskas.weatherwidget.repository.CityRepository;
 import com.orlinskas.weatherwidget.specification.CitiesThisCountrySpecification;
 
 import java.util.ArrayList;

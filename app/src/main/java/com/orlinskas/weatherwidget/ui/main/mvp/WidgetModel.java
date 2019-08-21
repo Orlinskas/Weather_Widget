@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.widget;
+package com.orlinskas.weatherwidget.ui.main.mvp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,15 +6,16 @@ import android.os.AsyncTask;
 
 import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.date.DateHelper;
-import com.orlinskas.weatherwidget.forecast.ForecastArrayBuilder;
+import com.orlinskas.weatherwidget.forecast.ForecastListBuilder;
 import com.orlinskas.weatherwidget.forecast.WeatherReceiver;
 import com.orlinskas.weatherwidget.preferences.Preferences;
-import com.orlinskas.weatherwidget.ui.main.WidgetContract;
+import com.orlinskas.weatherwidget.widget.Widget;
+import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 public class WidgetModel implements WidgetContract.WidgetModel {
-    private WidgetContract.Presenter presenter;
+    private WidgetUpdateListener presenter;
 
-    public WidgetModel(WidgetContract.Presenter presenter) {
+    WidgetModel(WidgetUpdateListener presenter) {
         this.presenter = presenter;
     }
 
@@ -28,10 +29,10 @@ public class WidgetModel implements WidgetContract.WidgetModel {
     private class UpdateWidgetTask extends AsyncTask <Void, Void, Void> {
         private Context context;
         private int widgetID;
-        private WidgetContract.Presenter presenter;
+        private WidgetUpdateListener presenter;
         private Throwable error;
 
-        UpdateWidgetTask(Context context, int widgetID, WidgetContract.Presenter presenter) {
+        UpdateWidgetTask(Context context, int widgetID, WidgetUpdateListener presenter) {
             this.context = context;
             this.widgetID = widgetID;
             this.presenter = presenter;
@@ -93,8 +94,8 @@ public class WidgetModel implements WidgetContract.WidgetModel {
         }
 
         private void updateForecastInWidget(Widget widget) {
-            ForecastArrayBuilder forecastsBuilder = new ForecastArrayBuilder(widget, context);
-            widget.setDaysForecast(forecastsBuilder.process());
+            ForecastListBuilder forecastsBuilder = new ForecastListBuilder(widget, context);
+            widget.setDaysForecast(forecastsBuilder.build());
         }
 
         private void updateWidgetInRepository(Widget widget) throws Exception {

@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main;
+package com.orlinskas.weatherwidget.ui.main.mvp;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -9,11 +9,9 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.orlinskas.weatherwidget.chart.ChartBuilder;
 import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
 import com.orlinskas.weatherwidget.forecast.Forecast;
-import com.orlinskas.weatherwidget.forecast.WidgetUpdateChecker;
+import com.orlinskas.weatherwidget.widget.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.widget.Widget;
-import com.orlinskas.weatherwidget.widget.WidgetModel;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
-import com.orlinskas.weatherwidget.widget.WidgetUpdateListener;
 
 public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateListener {
     private WidgetContract.View view;
@@ -30,7 +28,19 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
         this.appContext = appContext;
         this.view = view;
         this.widgetID = widgetID;
-        this.widget = findWidgetInRepo(widgetID);
+    }
+
+    @Override
+    public void startWork() {
+        widget = findWidgetInRepo(widgetID);
+        model = new WidgetModel(this);
+
+        if(widget.getDaysForecast() == null) {
+            goWithEmptyData(widgetID, viewContext);
+        }
+        else {
+            goWithData();
+        }
     }
 
     private Widget findWidgetInRepo(int widgetID) {
@@ -42,18 +52,6 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
             e.printStackTrace();
         }
         return widget;
-    }
-
-    @Override
-    public void startWork() {
-        model = new WidgetModel(this);
-
-        if(widget.getDaysForecast() == null) {
-            goWithEmptyData(widgetID, viewContext);
-        }
-        else {
-            goWithData();
-        }
     }
 
     private void goWithEmptyData(int widgetID, Context appContext) {

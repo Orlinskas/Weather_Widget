@@ -19,8 +19,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
-public class LatestWeathersFromRepositoryTest {
-    private LatestWeathersFromRepository fromRepository;
+public class LatestDatesListBuilderTest {
+    private LatestDatesListBuilder fromRepository;
     private ArrayList<String> dates;
     private Context context;
     private City city;
@@ -36,12 +36,12 @@ public class LatestWeathersFromRepositoryTest {
         when(city.getCoordLat()).thenReturn(36.6);
         WidgetCreator creator = new WidgetCreator();
         Widget widget = creator.create(city);
-        fromRepository = new LatestWeathersFromRepository(widget, context);
+        fromRepository = new LatestDatesListBuilder(widget, context);
     }
 
     @Test
     public void getUnique() {
-        dates = fromRepository.getUnique();
+        dates = fromRepository.build();
         assertNotNull(dates);
     }
 }

@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.forecast;
+package com.orlinskas.weatherwidget.widget;
 
 import android.content.Context;
 
@@ -6,8 +6,6 @@ import com.orlinskas.weatherwidget.date.DateCalculator;
 import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.preferences.Preferences;
-import com.orlinskas.weatherwidget.widget.Widget;
-import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 import java.util.Date;
 

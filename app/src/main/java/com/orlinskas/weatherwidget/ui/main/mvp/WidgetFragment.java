@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main;
+package com.orlinskas.weatherwidget.ui.main.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.activities;
+package com.orlinskas.weatherwidget.ui.main.activities;
 
 import android.content.Context;
 import android.os.Bundle;

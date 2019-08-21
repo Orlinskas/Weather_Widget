@@ -4,6 +4,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.orlinskas.weatherwidget.Country;
+import com.orlinskas.weatherwidget.repository.CountryListPresenter;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

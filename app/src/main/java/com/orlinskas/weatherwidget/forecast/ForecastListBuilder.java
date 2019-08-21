@@ -10,19 +10,19 @@ import com.orlinskas.weatherwidget.widget.Widget;
 
 import java.util.ArrayList;
 
-public class ForecastArrayBuilder {
+public class ForecastListBuilder {
 
     private Widget widget;
     private Context context;
 
-    public ForecastArrayBuilder(Widget widget, Context context) {
+    public ForecastListBuilder(Widget widget, Context context) {
         this.widget = widget;
         this.context = context;
     }
 
-    public ArrayList<Forecast> process() {
-        LatestWeathersFromRepository repository = new LatestWeathersFromRepository(widget, context);
-        ArrayList<String> dates = repository.getUnique();
+    public ArrayList<Forecast> build() {
+        LatestDatesListBuilder list = new LatestDatesListBuilder(widget, context);
+        ArrayList<String> dates = list.build();
         ArrayList<Forecast> forecasts = new ArrayList<>();
 
         int todayIndex = findToday(dates);
