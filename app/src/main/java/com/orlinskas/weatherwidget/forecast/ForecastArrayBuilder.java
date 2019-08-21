@@ -2,6 +2,8 @@ package com.orlinskas.weatherwidget.forecast;
 
 import android.content.Context;
 
+import com.orlinskas.weatherwidget.date.DateFormat;
+import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.repository.WeatherRepository;
 import com.orlinskas.weatherwidget.specification.WeatherDaySpecification;
 import com.orlinskas.weatherwidget.widget.Widget;
@@ -19,17 +21,35 @@ public class ForecastArrayBuilder {
     }
 
     public ArrayList<Forecast> process() {
-        LatestWeathersFromRepository repository = new LatestWeathersFromRepository(widget,context);
+        LatestWeathersFromRepository repository = new LatestWeathersFromRepository(widget, context);
         ArrayList<String> dates = repository.getUnique();
         ArrayList<Forecast> forecasts = new ArrayList<>();
 
-        forecasts.add(createForecast(dates.get(0)));
-        forecasts.add(createForecast(dates.get(1)));
-        forecasts.add(createForecast(dates.get(2)));
-        forecasts.add(createForecast(dates.get(3)));
-        forecasts.add(createForecast(dates.get(4)));
+        int todayIndex = findToday(dates);
+
+        forecasts.add(createForecast(dates.get(todayIndex)));
+        forecasts.add(createForecast(dates.get(todayIndex + 1)));
+        forecasts.add(createForecast(dates.get(todayIndex + 2)));
+        forecasts.add(createForecast(dates.get(todayIndex + 3)));
+        try {
+            forecasts.add(createForecast(dates.get(todayIndex + 4)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return forecasts;
+    }
+
+    private int findToday(ArrayList<String> dates) {
+        String todayDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD);
+
+        for (String date : dates) {
+            if(date.equals(todayDate)){
+                return dates.indexOf(date);
+            }
+        }
+
+        return dates.size() - 4;
     }
 
     private Forecast createForecast(String date) {

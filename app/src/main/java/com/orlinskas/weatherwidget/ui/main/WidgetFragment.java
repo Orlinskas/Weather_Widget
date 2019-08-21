@@ -19,12 +19,11 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
-import com.orlinskas.weatherwidget.widget.Widget;
 
 import java.util.Objects;
 
 public class WidgetFragment extends Fragment implements WidgetContract.View {
-    private Widget widget;
+    private int widgetID;
     private ProgressBar progressBar;
     private RelativeLayout iconsLayoutCase;
     private RelativeLayout chartLayoutCase;
@@ -42,7 +41,7 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
         chartDescriptionTV = root.findViewById(R.id.fragment_widget_tv_description);
         currentDateTV = root.findViewById(R.id.fragment_widget_tv_date);
 
-        getFragmentArgument();
+        widgetID = getWidgetIDArgument();
 
         final Animation buttonClickAnim = AnimationUtils.loadAnimation(getContext(), R.anim.animation_button);
 
@@ -67,17 +66,20 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
         return root;
     }
 
-    private void getFragmentArgument() {
+    private int getWidgetIDArgument() {
+        int id = 0;
         if (getArguments() != null) {
-            widget = (Widget) getArguments().getSerializable("widget");
+            id = getArguments().getInt("widgetID");
         }
+        return id;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new WidgetPresenter(this, widget,
+        presenter = new WidgetPresenter(this, widgetID,
                 getContext(), Objects.requireNonNull(getActivity()).getBaseContext());
+        presenter.startWork();
     }
 
     @Override

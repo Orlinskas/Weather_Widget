@@ -7,21 +7,37 @@ import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.widget.Widget;
+import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 import java.util.Date;
 
 public class WidgetUpdateChecker {
-    private Widget widget;
+    private int widgetID;
     private Context context;
+    private Preferences preferences;
 
-    public WidgetUpdateChecker(Widget widget, Context context) {
-        this.widget = widget;
+    public WidgetUpdateChecker(int widgetID, Context context) {
         this.context = context;
+        this.widgetID = widgetID;
     }
 
     public boolean check() {
-        Preferences preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
-        String lastUpdate = preferences.getData(String.valueOf(widget.getId()) ,"1996.01.22 15:00");
+        Widget widget = findWidgetInRepo(widgetID);
+
+        try {
+            preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String lastUpdate;
+
+        if(widget != null & preferences != null) {
+            lastUpdate = preferences.getData(String.valueOf(widget.getId()) ,"1996.01.22 15:00");
+        }
+        else {
+            return false;
+        }
 
         Date lastUpdateDate = DateHelper.parse(lastUpdate, DateFormat.YYYY_MM_DD_HH_MM);
         Date currentDate = DateHelper.getCurrentDate(DateFormat.YYYY_MM_DD_HH_MM);
@@ -30,13 +46,16 @@ public class WidgetUpdateChecker {
         int hours = calculator.calculateDifferencesInHours(lastUpdateDate, currentDate);
 
         return hours > 12;
+    }
 
-        //if(widget.getDaysForecast() == null){
-        //   return true;
-        //}
-        //else {
-        //    String firstForecastDayDate = widget.getDaysForecast().get(0).getDayDate();
-        //    return !firstForecastDayDate.equals(DateHelper.getCurrent(DateFormat.YYYY_MM_DD));
-        //}
+    private Widget findWidgetInRepo(int widgetID) {
+        Widget widget = null;
+        WidgetRepository repository = new WidgetRepository(context);
+        try {
+            widget = repository.find(widgetID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return widget;
     }
 }

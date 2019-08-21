@@ -4,8 +4,6 @@ import android.content.Context;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.orlinskas.weatherwidget.forecast.Forecast;
-import com.orlinskas.weatherwidget.widget.Widget;
 
 public interface WidgetContract {
 
@@ -20,6 +18,7 @@ public interface WidgetContract {
     }
 
     interface Presenter {
+        void startWork();
         LinearLayout getIconsLayout();
         LineChart getChartLayout();
         String getChartDescription();
@@ -27,11 +26,11 @@ public interface WidgetContract {
         boolean nextDay();
         boolean prevDay();
         void destroy();
-        boolean checkAvailableUpdate(Widget widget);
         void onUpdateFinished();
+        void onUpdateFailed();
     }
 
     interface WidgetModel {
-        void doUpdate(Widget widget, Context appContext);
+        void doUpdate(int widgetID, Context appContext);
     }
 }

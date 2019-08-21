@@ -10,67 +10,93 @@ import com.orlinskas.weatherwidget.chart.ChartBuilder;
 import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
 import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.forecast.WidgetUpdateChecker;
-import com.orlinskas.weatherwidget.specification.WidgetCitySpecification;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetModel;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 import com.orlinskas.weatherwidget.widget.WidgetUpdateListener;
 
-import java.util.ArrayList;
-
 public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateListener {
     private WidgetContract.View view;
     private WidgetContract.WidgetModel model;
+    private int widgetID;
     private Widget widget;
     private Context viewContext;
     private Context appContext;
     private int dayNumber;
     private int dayCount;
 
-    WidgetPresenter(WidgetContract.View view, Widget widget, Context viewContext, Context appContext) {
-        this.view = view;
-        this.widget = widget;
+    WidgetPresenter(WidgetContract.View view, int widgetID, Context viewContext, Context appContext) {
         this.viewContext = viewContext;
         this.appContext = appContext;
+        this.view = view;
+        this.widgetID = widgetID;
+        this.widget = findWidgetInRepo(widgetID);
+    }
+
+    private Widget findWidgetInRepo(int widgetID) {
+        Widget widget = null;
+        WidgetRepository repository = new WidgetRepository(viewContext);
+        try {
+            widget = repository.find(widgetID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return widget;
+    }
+
+    @Override
+    public void startWork() {
         model = new WidgetModel(this);
 
         if(widget.getDaysForecast() == null) {
-            goWithEmptyData(widget, viewContext);
+            goWithEmptyData(widgetID, viewContext);
         }
         else {
             goWithData();
         }
     }
 
-    private void goWithEmptyData(Widget widget, Context appContext) {
-        model.doUpdate(widget, appContext);
+    private void goWithEmptyData(int widgetID, Context appContext) {
+        model.doUpdate(widgetID, appContext);
         view.startProgressDialog();
     }
 
     private void goWithData() {
         dayNumber = 0;
         dayCount = this.widget.getDaysForecast().size() - 1;
-        startWork();
+        showViewElements();
     }
 
-    private void setWidget(Widget widget) {
-        this.widget = widget;
-    }
-
-    private void startWork() {
+    private void showViewElements() {
         view.updateUI();
-
-        if(checkAvailableUpdate(widget)) {
-            if(isInternetConnection(viewContext)) {
-                String cityName = widget.getCity().getName();
-                view.doSnackBar(cityName + " - обновляется...");
-                model.doUpdate(widget, appContext);
-            }
-            else {
-                String cityName = widget.getCity().getName();
-                view.doSnackBar(cityName + " - требует обновления, но у вас выключен интернет.");
-            }
+        if(checkAvailableUpdate(widgetID)) {
+            startUpdate();
         }
+    }
+
+    private boolean checkAvailableUpdate(int widgetID) {
+        WidgetUpdateChecker checker = new WidgetUpdateChecker(widgetID, viewContext);
+        return checker.check();
+    }
+
+    private void startUpdate() {
+        int sendWidgetID = widget.getId();
+        String cityName = widget.getCity().getName();
+
+        if(isInternetConnection(viewContext)) {
+            view.doSnackBar(cityName + " - обновляется...");
+            model.doUpdate(sendWidgetID, appContext);
+        }
+        else {
+            view.doToast("Выключен интернет");
+        }
+    }
+
+    private boolean isInternetConnection(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     @Override
@@ -139,16 +165,17 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
     }
 
     @Override
-    public boolean checkAvailableUpdate(Widget widget) {
-        WidgetUpdateChecker checker = new WidgetUpdateChecker(widget, viewContext);
-        return checker.check();
+    public void onUpdateFinished() {
+        this.widget = findWidgetInRepo(widgetID);
+        view.stopProgressDialog();
+        view.doSnackBar("Обновлено");
+        showViewElements();
     }
 
-    private boolean isInternetConnection(Context context) {
-        ConnectivityManager cm =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
+    @Override
+    public void onUpdateFailed() {
+        view.doToast("Ошибка получения данных");
+        view.doToast("Перезапустите приложение");
     }
 
     @Override
@@ -158,20 +185,9 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
         widget = null;
     }
 
-    @Override
-    public void onUpdateFinished() {
-        setUpdateWidget();
-    }
 
-    private void setUpdateWidget() {
-        WidgetRepository repository = new WidgetRepository(viewContext);
-        try {
-            ArrayList<Widget> widgets = repository.query(new WidgetCitySpecification(widget));
-            setWidget(widgets.get(0));
-            view.stopProgressDialog();
-            startWork();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
+
+
+
 }

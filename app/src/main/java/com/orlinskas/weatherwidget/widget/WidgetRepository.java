@@ -3,7 +3,6 @@ package com.orlinskas.weatherwidget.widget;
 import android.content.Context;
 
 import com.orlinskas.weatherwidget.specification.Specification;
-import com.orlinskas.weatherwidget.specification.WidgetSpecification;
 
 import java.util.ArrayList;
 
@@ -50,6 +49,18 @@ public class WidgetRepository {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public Widget find(int widgetId) throws Exception {
+        WidgetsList widgetsList = serializer.loadList();
+        ArrayList<Widget> widgets = widgetsList.getWidgets();
+        for (Widget widget : widgets) {
+            if(widget.getId() == widgetId){
+                return widget;
+            }
+        }
+
+        return null;
     }
 
     public ArrayList<Widget> query(Specification<Widget> specification) throws Exception{

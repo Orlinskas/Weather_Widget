@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.forecast.ForecastArrayBuilder;
@@ -20,33 +19,36 @@ public class WidgetModel implements WidgetContract.WidgetModel {
     }
 
     @Override
-    public void doUpdate(Widget widget, Context appContext) {
-        UpdateWidgetTask task = new UpdateWidgetTask(appContext, widget, presenter);
+    public void doUpdate(int widgetID, Context appContext) {
+        UpdateWidgetTask task = new UpdateWidgetTask(appContext, widgetID, presenter);
         task.execute();
     }
 
     @SuppressLint("StaticFieldLeak")
     private class UpdateWidgetTask extends AsyncTask <Void, Void, Void> {
         private Context context;
-        private Widget widget;
+        private int widgetID;
         private WidgetContract.Presenter presenter;
+        private Throwable error;
 
-        UpdateWidgetTask(Context context, Widget widget, WidgetContract.Presenter presenter) {
+        UpdateWidgetTask(Context context, int widgetID, WidgetContract.Presenter presenter) {
             this.context = context;
-            this.widget = widget;
+            this.widgetID = widgetID;
             this.presenter = presenter;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Widget widget;
             try {
-                sendRequest();
-                updateForecastInWidget();
-                updateWidgetInRepository();
-                saveWidgetUpdateDate();
+                widget = findWidgetInRepo(widgetID);
+                sendRequest(widget);
+                updateForecastInWidget(widget);
+                updateWidgetInRepository(widget);
+                saveWidgetUpdateDate(widget);
             } catch (Exception e) {
                 e.printStackTrace();
-                //ToastBuilder.create(context,"Ошибка подключения");
+                error = e;
             }
             return null;
         }
@@ -54,11 +56,30 @@ public class WidgetModel implements WidgetContract.WidgetModel {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            ToastBuilder.createLong(context,"Доступен свежий прогноз, перезапустите приложение");
-            presenter.onUpdateFinished();
+            generateCallBack();
         }
 
-        private void saveWidgetUpdateDate() {
+        private void generateCallBack() {
+            if(error == null) {
+                presenter.onUpdateFinished();
+            }
+            else {
+                presenter.onUpdateFailed();
+            }
+        }
+
+        private Widget findWidgetInRepo(int widgetID) {
+            Widget widget = null;
+            WidgetRepository repository = new WidgetRepository(context);
+            try {
+                widget = repository.find(widgetID);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return widget;
+        }
+
+        private void saveWidgetUpdateDate(Widget widget) {
             String key = String.valueOf(widget.getId());
             String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
 
@@ -66,17 +87,17 @@ public class WidgetModel implements WidgetContract.WidgetModel {
             preferences.saveData(key, currentDate);
         }
 
-        private void sendRequest() throws Exception {
+        private void sendRequest(Widget widget) throws Exception {
             WeatherReceiver receiver = new WeatherReceiver(context, widget.getRequest());
             receiver.receive();
         }
 
-        private void updateForecastInWidget() {
+        private void updateForecastInWidget(Widget widget) {
             ForecastArrayBuilder forecastsBuilder = new ForecastArrayBuilder(widget, context);
             widget.setDaysForecast(forecastsBuilder.process());
         }
 
-        private void updateWidgetInRepository() throws Exception {
+        private void updateWidgetInRepository(Widget widget) throws Exception {
             WidgetRepository repository = new WidgetRepository(context);
             repository.update(widget);
         }
