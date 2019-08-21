@@ -13,21 +13,28 @@ import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.ui.main.WidgetContract;
 
 public class WidgetModel implements WidgetContract.WidgetModel {
+    private WidgetContract.Presenter presenter;
+
+    public WidgetModel(WidgetContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
 
     @Override
     public void doUpdate(Widget widget, Context appContext) {
-        UpdateWidgetTask task = new UpdateWidgetTask(appContext, widget);
+        UpdateWidgetTask task = new UpdateWidgetTask(appContext, widget, presenter);
         task.execute();
     }
 
     @SuppressLint("StaticFieldLeak")
-    private class UpdateWidgetTask extends AsyncTask<Void, Void, Void> {
+    private class UpdateWidgetTask extends AsyncTask <Void, Void, Void> {
         private Context context;
         private Widget widget;
+        private WidgetContract.Presenter presenter;
 
-        UpdateWidgetTask(Context context, Widget widget) {
+        UpdateWidgetTask(Context context, Widget widget, WidgetContract.Presenter presenter) {
             this.context = context;
             this.widget = widget;
+            this.presenter = presenter;
         }
 
         @Override
@@ -39,7 +46,7 @@ public class WidgetModel implements WidgetContract.WidgetModel {
                 saveWidgetUpdateDate();
             } catch (Exception e) {
                 e.printStackTrace();
-                ToastBuilder.create(context,"Ошибка подключения");
+                //ToastBuilder.create(context,"Ошибка подключения");
             }
             return null;
         }
@@ -48,6 +55,7 @@ public class WidgetModel implements WidgetContract.WidgetModel {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             ToastBuilder.createLong(context,"Доступен свежий прогноз, перезапустите приложение");
+            presenter.onUpdateFinished();
         }
 
         private void saveWidgetUpdateDate() {
@@ -63,7 +71,7 @@ public class WidgetModel implements WidgetContract.WidgetModel {
             receiver.receive();
         }
 
-        private void updateForecastInWidget() throws Exception {
+        private void updateForecastInWidget() {
             ForecastArrayBuilder forecastsBuilder = new ForecastArrayBuilder(widget, context);
             widget.setDaysForecast(forecastsBuilder.process());
         }

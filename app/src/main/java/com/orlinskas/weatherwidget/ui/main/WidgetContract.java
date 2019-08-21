@@ -12,16 +12,14 @@ public interface WidgetContract {
     interface View {
         void setChart(LineChart chart);
         void setIconsLayout(LinearLayout linearLayout);
-        void setWidget(Widget widget);
         void updateUI();
         void doToast(String message);
         void doSnackBar(String message);
+        void startProgressDialog();
+        void stopProgressDialog();
     }
 
     interface Presenter {
-        void attachView(WidgetContract.View view);
-        void viewIsReady();
-        Widget getWidget();
         LinearLayout getIconsLayout();
         LineChart getChartLayout();
         String getChartDescription();
@@ -30,6 +28,7 @@ public interface WidgetContract {
         boolean prevDay();
         void destroy();
         boolean checkAvailableUpdate(Widget widget);
+        void onUpdateFinished();
     }
 
     interface WidgetModel {

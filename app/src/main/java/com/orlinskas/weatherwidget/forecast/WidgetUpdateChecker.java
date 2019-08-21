@@ -13,7 +13,6 @@ import java.util.Date;
 public class WidgetUpdateChecker {
     private Widget widget;
     private Context context;
-    private Preferences preferences;
 
     public WidgetUpdateChecker(Widget widget, Context context) {
         this.widget = widget;
@@ -21,7 +20,7 @@ public class WidgetUpdateChecker {
     }
 
     public boolean check() {
-        preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
+        Preferences preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
         String lastUpdate = preferences.getData(String.valueOf(widget.getId()) ,"1996.01.22 15:00");
 
         Date lastUpdateDate = DateHelper.parse(lastUpdate, DateFormat.YYYY_MM_DD_HH_MM);

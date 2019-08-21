@@ -10,38 +10,58 @@ import com.orlinskas.weatherwidget.chart.ChartBuilder;
 import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
 import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.forecast.WidgetUpdateChecker;
+import com.orlinskas.weatherwidget.specification.WidgetCitySpecification;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetModel;
+import com.orlinskas.weatherwidget.widget.WidgetRepository;
+import com.orlinskas.weatherwidget.widget.WidgetUpdateListener;
 
-public class WidgetPresenter implements WidgetContract.Presenter {
+import java.util.ArrayList;
+
+public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateListener {
     private WidgetContract.View view;
     private WidgetContract.WidgetModel model;
     private Widget widget;
-    private Context context;
+    private Context viewContext;
     private Context appContext;
     private int dayNumber;
     private int dayCount;
 
-    WidgetPresenter(Widget widget, Context context, Context appContext) {
-        this.widget = widget;
-        this.context = context;
-        this.appContext = appContext;
-        model = new WidgetModel();
-        dayNumber = 0;
-        dayCount = widget.getDaysForecast().size() - 1;
-    }
-
-    @Override
-    public void attachView(WidgetContract.View view) {
+    WidgetPresenter(WidgetContract.View view, Widget widget, Context viewContext, Context appContext) {
         this.view = view;
+        this.widget = widget;
+        this.viewContext = viewContext;
+        this.appContext = appContext;
+        model = new WidgetModel(this);
+
+        if(widget.getDaysForecast() == null) {
+            goWithEmptyData(widget, viewContext);
+        }
+        else {
+            goWithData();
+        }
     }
 
-    @Override
-    public void viewIsReady() {
+    private void goWithEmptyData(Widget widget, Context appContext) {
+        model.doUpdate(widget, appContext);
+        view.startProgressDialog();
+    }
+
+    private void goWithData() {
+        dayNumber = 0;
+        dayCount = this.widget.getDaysForecast().size() - 1;
+        startWork();
+    }
+
+    private void setWidget(Widget widget) {
+        this.widget = widget;
+    }
+
+    private void startWork() {
         view.updateUI();
 
         if(checkAvailableUpdate(widget)) {
-            if(isInternetConnection(context)) {
+            if(isInternetConnection(viewContext)) {
                 String cityName = widget.getCity().getName();
                 view.doSnackBar(cityName + " - обновляется...");
                 model.doUpdate(widget, appContext);
@@ -54,19 +74,14 @@ public class WidgetPresenter implements WidgetContract.Presenter {
     }
 
     @Override
-    public Widget getWidget() {
-        return widget;
-    }
-
-    @Override
     public LinearLayout getIconsLayout() {
-        WeatherIconsLayoutBuilder builder = new WeatherIconsLayoutBuilder(getCurrentForecast(), context);
+        WeatherIconsLayoutBuilder builder = new WeatherIconsLayoutBuilder(getCurrentForecast(), viewContext);
         return builder.buildLayout();
     }
 
     @Override
     public LineChart getChartLayout() {
-        ChartBuilder builder = new ChartBuilder(getCurrentForecast(), context);
+        ChartBuilder builder = new ChartBuilder(getCurrentForecast(), viewContext);
         return builder.buildChart();
     }
 
@@ -125,7 +140,7 @@ public class WidgetPresenter implements WidgetContract.Presenter {
 
     @Override
     public boolean checkAvailableUpdate(Widget widget) {
-        WidgetUpdateChecker checker = new WidgetUpdateChecker(widget, context);
+        WidgetUpdateChecker checker = new WidgetUpdateChecker(widget, viewContext);
         return checker.check();
     }
 
@@ -141,5 +156,22 @@ public class WidgetPresenter implements WidgetContract.Presenter {
         view = null;
         model = null;
         widget = null;
+    }
+
+    @Override
+    public void onUpdateFinished() {
+        setUpdateWidget();
+    }
+
+    private void setUpdateWidget() {
+        WidgetRepository repository = new WidgetRepository(viewContext);
+        try {
+            ArrayList<Widget> widgets = repository.query(new WidgetCitySpecification(widget));
+            setWidget(widgets.get(0));
+            view.stopProgressDialog();
+            startWork();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

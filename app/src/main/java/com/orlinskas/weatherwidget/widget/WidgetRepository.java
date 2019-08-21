@@ -2,6 +2,7 @@ package com.orlinskas.weatherwidget.widget;
 
 import android.content.Context;
 
+import com.orlinskas.weatherwidget.specification.Specification;
 import com.orlinskas.weatherwidget.specification.WidgetSpecification;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class WidgetRepository {
         }
     }
 
-    public ArrayList<Widget> query(WidgetSpecification specification) throws Exception{
+    public ArrayList<Widget> query(Specification<Widget> specification) throws Exception{
         ArrayList<Widget> queryWidgets = new ArrayList<>();
 
         WidgetsList widgetsList = serializer.loadList();
