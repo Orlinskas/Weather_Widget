@@ -9,6 +9,7 @@ import com.orlinskas.weatherwidget.specification.WeatherDaySpecification;
 import com.orlinskas.weatherwidget.widget.Widget;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 public class ForecastListBuilder {
 
@@ -54,8 +55,12 @@ public class ForecastListBuilder {
 
     private Forecast createForecast(String date) {
         WeatherRepository repository = new WeatherRepository(context);
-        ArrayList<Weather> dayWeathers;
-        dayWeathers = repository.query(new WeatherDaySpecification(widget, date));
+
+        ArrayList<Weather> dayWeathers = repository.query(new WeatherDaySpecification(widget, date));
+
+        LinkedHashSet<Weather> uniqueDayWeathers = new LinkedHashSet<>(dayWeathers);
+        dayWeathers.clear();
+        dayWeathers.addAll(uniqueDayWeathers);
 
         Forecast forecast = new Forecast(date);
         forecast.setDayWeathers(dayWeathers);
