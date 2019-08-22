@@ -9,6 +9,7 @@ import com.orlinskas.weatherwidget.specification.WeatherDaySpecification;
 import com.orlinskas.weatherwidget.widget.Widget;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashSet;
 
 public class ForecastListBuilder {
@@ -57,14 +58,53 @@ public class ForecastListBuilder {
         WeatherRepository repository = new WeatherRepository(context);
 
         ArrayList<Weather> dayWeathers = repository.query(new WeatherDaySpecification(widget, date));
+        LinkedHashSet<String> uniqueTimeWeathers = new LinkedHashSet<>();
 
-        LinkedHashSet<Weather> uniqueDayWeathers = new LinkedHashSet<>(dayWeathers);
-        dayWeathers.clear();
-        dayWeathers.addAll(uniqueDayWeathers);
+        for(Weather weather : dayWeathers) {
+            String time = weather.getTimeOfDataForecast();
+            uniqueTimeWeathers.add(time);
+        }
+
+        ArrayList<Weather> finalUniqueWeathers = new ArrayList<>();
+
+        for(String time : uniqueTimeWeathers) {
+            Weather weather = findLatestWeather(time, dayWeathers);
+            if(weather != null) {
+                finalUniqueWeathers.add(weather);
+            }
+        }
 
         Forecast forecast = new Forecast(date);
-        forecast.setDayWeathers(dayWeathers);
+        forecast.setDayWeathers(finalUniqueWeathers);
 
         return forecast;
+    }
+
+    private Weather findLatestWeather(String time, ArrayList<Weather> dayWeathers) {
+        ArrayList<Weather> timeWeathers = new ArrayList<>();
+
+        for(Weather weather : dayWeathers) {
+            if(weather.getTimeOfDataForecast().equals(time)) {
+                timeWeathers.add(weather);
+            }
+        }
+
+        Weather latestWeather = null;
+
+        try {
+            latestWeather = timeWeathers.get(0);
+
+            for(Weather weather : timeWeathers) {
+                Date current = DateHelper.parse(latestWeather.getForecastDate(), DateFormat.YYYY_MM_DD);
+                Date verifiable = DateHelper.parse(weather.getForecastDate(), DateFormat.YYYY_MM_DD);
+                if(current.before(verifiable)) {
+                    latestWeather = weather;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return latestWeather;
     }
 }
