@@ -29,6 +29,8 @@ import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.location.CityFinder;
 import com.orlinskas.weatherwidget.post.CountryNameWriter;
+import com.orlinskas.weatherwidget.widget.Widget;
+import com.orlinskas.weatherwidget.widget.WidgetCopyChecker;
 import com.orlinskas.weatherwidget.widget.WidgetCreator;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
@@ -379,11 +381,16 @@ public class WidgetCreatorActivity extends AppCompatActivity {
             try {
                 WidgetCreator widgetCreator = new WidgetCreator();
                 WidgetRepository widgetRepository = new WidgetRepository(getApplicationContext());
-                if(!widgetRepository.add(widgetCreator.create(city))){
-                    ToastBuilder.create(getApplicationContext(),"Не удалось создать");
+                Widget widget = widgetCreator.create(city);
+
+                WidgetCopyChecker checker = new WidgetCopyChecker(this, widget);
+                if(checker.check()){
+                    ToastBuilder.create(getApplicationContext(),"Уже создан");
                 }
                 else {
-                    ActivityOpener.openActivity(getApplicationContext(),MainActivity.class);
+                    widgetRepository.add(widget);
+                    this.finish();
+                    ActivityOpener.openActivity(this, MainActivity.class);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

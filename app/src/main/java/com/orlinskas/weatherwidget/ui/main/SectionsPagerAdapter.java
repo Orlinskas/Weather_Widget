@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.orlinskas.weatherwidget.specification.WidgetSimpleSpecification;
+import com.orlinskas.weatherwidget.specification.WidgetEmptySpecification;
 import com.orlinskas.weatherwidget.ui.main.mvp.WidgetFragment;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
@@ -22,7 +22,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         super(fm);
         WidgetRepository widgetRepository = new WidgetRepository(context);
         try {
-            widgets = widgetRepository.query(new WidgetSimpleSpecification());
+            widgets = widgetRepository.query(new WidgetEmptySpecification());
         } catch (Exception e) {
             e.printStackTrace();
         }

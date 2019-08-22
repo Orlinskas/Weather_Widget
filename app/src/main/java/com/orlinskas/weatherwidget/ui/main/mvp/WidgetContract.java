@@ -16,6 +16,7 @@ public interface WidgetContract {
         void setAlpha(String item, int mode);
         void startProgressDialog();
         void stopProgressDialog();
+        void finish();
         String LEFT_BUTTON = "left";
         String RIGHT_BUTTON = "right";
         int DEFAULT_MODE = 0;
@@ -30,6 +31,7 @@ public interface WidgetContract {
         String getCurrentDate();
         boolean nextDay();
         boolean prevDay();
+        void removeWidget(int widgetID);
         void destroy();
     }
 

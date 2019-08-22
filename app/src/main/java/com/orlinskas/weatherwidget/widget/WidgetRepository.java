@@ -13,7 +13,7 @@ public class WidgetRepository {
         serializer = new WidgetSerializer(context);
     }
 
-    public boolean add(Widget widget) throws Exception{
+    public boolean add(Widget widget) throws Exception {
         try {
             WidgetsList widgetsList = serializer.loadList();
             ArrayList<Widget> widgets = widgetsList.getWidgets();
@@ -27,7 +27,7 @@ public class WidgetRepository {
         }
     }
 
-    public void update(Widget widget) throws Exception{
+    public void update(Widget widget) throws Exception {
         WidgetsList widgetsList = serializer.loadList();
         ArrayList<Widget> widgets = widgetsList.getWidgets();
         int index = widgets.indexOf(widget);
@@ -37,7 +37,7 @@ public class WidgetRepository {
         serializer.saveList(widgetsList);
     }
 
-    public boolean remote(Widget widget) throws Exception{
+    public boolean remote(Widget widget) throws Exception {
         try {
             WidgetsList widgetsList = serializer.loadList();
             ArrayList<Widget> widgets = widgetsList.getWidgets();
@@ -63,7 +63,7 @@ public class WidgetRepository {
         return null;
     }
 
-    public ArrayList<Widget> query(Specification<Widget> specification) throws Exception{
+    public ArrayList<Widget> query(Specification<Widget> specification) throws Exception {
         ArrayList<Widget> queryWidgets = new ArrayList<>();
 
         WidgetsList widgetsList = serializer.loadList();

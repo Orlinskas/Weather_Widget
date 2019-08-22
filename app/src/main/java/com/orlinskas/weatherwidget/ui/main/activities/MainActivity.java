@@ -16,6 +16,7 @@ import com.orlinskas.weatherwidget.preferences.FirstRunVerifier;
 import com.orlinskas.weatherwidget.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
+    private int backPressCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,5 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
             ToastBuilder.create(applicationContext, "Готово!");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCount++;
+        if(backPressCount == 1) ToastBuilder.create(this, "Нажмите еще раз для выхода");
+        else if(backPressCount == 2) this.finish();
     }
 }

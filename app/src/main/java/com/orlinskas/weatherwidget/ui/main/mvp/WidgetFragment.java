@@ -1,8 +1,10 @@
 package com.orlinskas.weatherwidget.ui.main.mvp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -22,7 +25,7 @@ import com.orlinskas.weatherwidget.ToastBuilder;
 
 import java.util.Objects;
 
-public class WidgetFragment extends Fragment implements WidgetContract.View {
+public class WidgetFragment extends Fragment implements WidgetContract.View, BottomMenu {
     private int widgetID;
     private ProgressBar progressBar;
     private RelativeLayout iconsLayoutCase;
@@ -67,6 +70,8 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
             }
         });
 
+
+
         return root;
     }
 
@@ -84,6 +89,7 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
         presenter = new WidgetPresenter(this, widgetID,
                 getContext(), Objects.requireNonNull(getActivity()).getBaseContext());
         presenter.startWork();
+        addViewButton();
     }
 
     @Override
@@ -160,8 +166,51 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
     }
 
     @Override
+    public void finish() {
+        Intent intent = Objects.requireNonNull(getActivity()).getIntent();
+        Objects.requireNonNull(getActivity()).finish();
+        startActivity(intent);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         presenter.destroy();
+    }
+
+    @Override
+    public void addViewButton() {
+        RelativeLayout view = (RelativeLayout) getView();
+
+        LinearLayout layout = new LinearLayout(getContext());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
+                (LinearLayout.LayoutParams.MATCH_PARENT, 100);
+        layout.setLayoutParams(params);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setGravity(Gravity.BOTTOM);
+
+        LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams
+                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        buttonParams.gravity = Gravity.CENTER;
+
+        Button button = new Button(getContext());
+        button.setLayoutParams(buttonParams);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.removeWidget(widgetID);
+            }
+        });
+
+        layout.addView(button);
+
+        if (view != null) {
+            try {
+                view.addView(layout);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
