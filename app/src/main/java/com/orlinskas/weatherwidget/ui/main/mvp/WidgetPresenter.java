@@ -198,8 +198,7 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
 
     @Override
     public void onUpdateFailed() {
-        view.doToast("Ошибка получения данных");
-        view.doToast("Перезапустите приложение");
+        view.doSnackBar("Ошибка получения данных");
     }
 
     @Override
@@ -215,5 +214,4 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
         model = null;
         widget = null;
     }
-
 }

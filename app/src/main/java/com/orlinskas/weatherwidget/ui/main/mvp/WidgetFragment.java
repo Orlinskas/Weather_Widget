@@ -1,5 +1,8 @@
 package com.orlinskas.weatherwidget.ui.main.mvp;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +27,9 @@ import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 
 import java.util.Objects;
+
+import static android.view.Gravity.BOTTOM;
+import static android.view.Gravity.CENTER_HORIZONTAL;
 
 public class WidgetFragment extends Fragment implements WidgetContract.View, BottomMenu {
     private int widgetID;
@@ -178,28 +184,51 @@ public class WidgetFragment extends Fragment implements WidgetContract.View, Bot
         presenter.destroy();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void addViewButton() {
         RelativeLayout view = (RelativeLayout) getView();
 
-        LinearLayout layout = new LinearLayout(getContext());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
-                (LinearLayout.LayoutParams.MATCH_PARENT, 100);
+        RelativeLayout layout = new RelativeLayout(getContext());
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                (RelativeLayout.LayoutParams.MATCH_PARENT, 180);
+        params.setMargins(17,17,17, 17);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         layout.setLayoutParams(params);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setGravity(Gravity.BOTTOM);
+        layout.setBackgroundColor(this.getResources().getColor(R.color.colorPrimary));
 
         LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams
                 (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        buttonParams.gravity = Gravity.CENTER;
+        buttonParams.setMargins(10,10,10,10);
+        buttonParams.setLayoutDirection(CENTER_HORIZONTAL);
 
         Button button = new Button(getContext());
         button.setLayoutParams(buttonParams);
+        button.setText("Delete");
+        button.setBackgroundColor(this.getResources().getColor(R.color.colorAccentDuo));
+
+        final Animation buttonClickAnim = AnimationUtils.loadAnimation(getContext(), R.anim.animation_button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.removeWidget(widgetID);
+                v.startAnimation(buttonClickAnim);
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                dialog.setTitle("Подтверждение");  // заголовок
+                dialog.setMessage("Удалить виджет?"); // сообщение
+                dialog.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        presenter.removeWidget(widgetID);
+                    }
+                });
+                dialog.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int arg1) {
+                        dialog.cancel();
+                    }
+                });
+
+                dialog.show();
             }
         });
 

@@ -8,88 +8,163 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-<RelativeLayout
-    android:id="@+id/fragment_widget_rl"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="@color/colorPrimary">
-
     <RelativeLayout
-        android:id="@+id/fragment_widget_rl_control_bar_bot"
+        android:id="@+id/fragment_widget_rl"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_below="@+id/fragment_widget_rl_chart_case"
-        android:layout_marginTop="3dp">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/colorPrimary">
 
-        <ImageView
-            android:id="@+id/fragment_widget_iv_left"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="5dp"
-            android:alpha="0.8"
-            app:srcCompat="@drawable/ic_left_arrow_2" />
+        <RelativeLayout
+            android:id="@+id/fragment_widget_rl_control_bar_bot"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/fragment_widget_rl_chart_case"
+            android:layout_marginTop="3dp">
+
+            <ImageView
+                android:id="@+id/fragment_widget_iv_left"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="5dp"
+                android:alpha="0.8"
+                app:srcCompat="@drawable/ic_left_arrow_2" />
+
+            <TextView
+                android:id="@+id/fragment_widget_tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:maxLines="1"
+                android:text="-"
+                android:textColor="@color/colorTextBlack"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/fragment_widget_iv_right"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="5dp"
+                android:alpha="0.8"
+                app:srcCompat="@drawable/ic_right_arrow_2" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragment_widget_rl_chart_case"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_below="@+id/fragment_widget_rl_icons_case"></RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/fragment_widget_rl_icons_case"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/colorPrimary"></RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/fragment_widget_pb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/fragment_widget_tv_date"
+            android:id="@+id/fragment_widget_tv_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_alignBottom="@+id/fragment_widget_rl_chart_case"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="20dp"
             android:maxLines="1"
-            android:text="-"
-            android:textColor="@color/colorTextBlack"
+            android:text="Loading..."
+            android:textColor="@color/colorTextLabel"
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/fragment_widget_iv_right"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
-            android:alpha="0.8"
-            app:srcCompat="@drawable/ic_right_arrow_2" />
+        <LinearLayout
+            android:id="@+id/fragment_widget_rl_scince_data"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_below="@+id/fragment_widget_rl_control_bar_bot"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:id="@+id/fragment_widget_rl_scince_data_presure_iv"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_presure" />
+
+            <TextView
+                android:id="@+id/fragment_widget_rl_scince_data_presure_tv"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:text="TextView"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/fragment_widget_rl_scince_data_wind_iv"
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_wind"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/fragment_widget_rl_scince_data_wind_tv"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:text="TextView"
+                android:textSize="12sp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/fragment_widget_rl_scince_data_rain_volume_iv"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_rain"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/fragment_widget_rl_scince_data_rain_volume_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:text="TextView"
+                android:textSize="12sp"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/fragment_widget_rl_scince_data_snow_iv"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_snow"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/fragment_widget_rl_scince_data_snow_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:text="TextView"
+                android:textSize="12sp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/fragment_widget_rl_chart_case"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@+id/fragment_widget_rl_icons_case"></RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/fragment_widget_rl_icons_case"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginBottom="-5dp"
-        android:background="@color/colorPrimary"></RelativeLayout>
-
-    <ProgressBar
-        android:id="@+id/fragment_widget_pb"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/fragment_widget_tv_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/fragment_widget_rl_chart_case"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="20dp"
-        android:maxLines="1"
-        android:text="Loading..."
-        android:textColor="@color/colorTextLabel"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-
-</RelativeLayout>
-
 </RelativeLayout>
