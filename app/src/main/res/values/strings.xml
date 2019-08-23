@@ -18,6 +18,26 @@
     <string name="on">On</string>
     <string name="network">Network</string>
     <string name="gps">GPS</string>
+    <string name="left_button">left button</string>
+    <string name="tv_date">-</string>
+    <string name="right_button">right button</string>
+    <string name="loading">Loading...</string>
+    <string name="pressure">Давление</string>
+    <string name="value">Значение</string>
+    <string name="priboru">Приборы</string>
+    <string name="dimensions">meter/sec</string>
+    <string name="icon_info">icon info</string>
+    <string name="long_tire">—</string>
+    <string name="help">help</string>
+    <string name="hpa">hPa</string>
+    <string name="wind_speed">Скорость ветра</string>
+    <string name="meter_sec">meter/sec</string>
+    <string name="humidity">Влажность</string>
+    <string name="persent">%</string>
+    <string name="rain_name">Дождь</string>
+    <string name="snow">Снег</string>
+    <string name="delete_widget">удалить виджет</string>
+    <string name="mm_day">mm/day</string>
     <string-array name="spinner">
         <item>выбрать…</item>
     </string-array>
