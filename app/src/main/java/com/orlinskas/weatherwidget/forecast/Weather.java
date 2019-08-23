@@ -16,7 +16,7 @@ public class Weather implements Serializable {
     private String weatherGroup;
     private String weatherGroupDescription;
     private String weatherIconID;
-    private int cloudinessPercent;
+    private int humidity;
     private double windSpeed;
     private int rainVolume;
     private int snowVolume;
@@ -28,7 +28,7 @@ public class Weather implements Serializable {
     public Weather(int cityID, String cityName, String countryCode, String timeOfDataForecast,
                    String forecastDate, int currentTemperature, int pressure, int timezone,
                    int weatherID, String weatherGroup, String weatherGroupDescription, String weatherIconID,
-                   int cloudinessPercent, double windSpeed, int rainVolume, int snowVolume) {
+                   int humidity, double windSpeed, int rainVolume, int snowVolume) {
         this.cityID = cityID;
         this.cityName = cityName;
         this.countryCode = countryCode;
@@ -41,7 +41,7 @@ public class Weather implements Serializable {
         this.weatherGroup = weatherGroup;
         this.weatherGroupDescription = weatherGroupDescription;
         this.weatherIconID = weatherIconID;
-        this.cloudinessPercent = cloudinessPercent;
+        this.humidity = humidity;
         this.windSpeed = windSpeed;
         this.rainVolume = rainVolume;
         this.snowVolume = snowVolume;
@@ -57,7 +57,7 @@ public class Weather implements Serializable {
                 getPressure() == that.getPressure() &&
                 getTimezone() == that.getTimezone() &&
                 getWeatherID() == that.getWeatherID() &&
-                getCloudinessPercent() == that.getCloudinessPercent() &&
+                getHumidity() == that.getHumidity() &&
                 Double.compare(that.getWindSpeed(), getWindSpeed()) == 0 &&
                 getRainVolume() == that.getRainVolume() &&
                 getSnowVolume() == that.getSnowVolume() &&
@@ -74,7 +74,7 @@ public class Weather implements Serializable {
     public int hashCode() {
         return Objects.hash(getCityID(), getCityName(), getCountryCode(), getTimeOfDataForecast(),
                 getForecastDate(), getCurrentTemperature(), getPressure(), getTimezone(), getWeatherID(),
-                getWeatherGroup(), getWeatherGroupDescription(), getWeatherIconID(), getCloudinessPercent(),
+                getWeatherGroup(), getWeatherGroupDescription(), getWeatherIconID(), getHumidity(),
                 getWindSpeed(), getRainVolume(), getSnowVolume());
     }
 
@@ -174,12 +174,12 @@ public class Weather implements Serializable {
         this.weatherIconID = weatherIconID;
     }
 
-    public int getCloudinessPercent() {
-        return cloudinessPercent;
+    public int getHumidity() {
+        return humidity;
     }
 
-    public void setCloudinessPercent(int cloudinessPercent) {
-        this.cloudinessPercent = cloudinessPercent;
+    public void setHumidity(int humidity) {
+        this.humidity = humidity;
     }
 
     public double getWindSpeed() {

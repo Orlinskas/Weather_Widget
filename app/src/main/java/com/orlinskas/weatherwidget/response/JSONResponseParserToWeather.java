@@ -24,7 +24,7 @@ public class JSONResponseParserToWeather {
     private String weatherGroup;
     private String weatherGroupDescription;
     private String weatherIconID;
-    private int cloudinessPercent;
+    private int humidity;
     private double windSpeed;
     private int rainVolume;
     private int snowVolume;
@@ -44,7 +44,6 @@ public class JSONResponseParserToWeather {
                 timeOfDataForecast = calculateWithTimeZone(dayForecast.getString("dt_txt"));
                 writeMainInfo(dayForecast.getJSONObject("main"));
                 writeWeatherInfo(dayForecast.getJSONArray("weather").getJSONObject(0));
-                writeCloudinessInfo(dayForecast.getJSONObject("clouds"));
                 writeWindInfo(dayForecast.getJSONObject("wind"));
 
                 weathers.add(createWeatherObject());
@@ -104,6 +103,7 @@ public class JSONResponseParserToWeather {
         try {
             currentTemperature = (int) object.getDouble("temp");
             pressure = (int) object.getDouble("pressure");
+            humidity = object.getInt("humidity");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -115,14 +115,6 @@ public class JSONResponseParserToWeather {
             weatherGroup = object.getString("main");
             weatherGroupDescription = object.getString("description");
             weatherIconID = object.getString("icon");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void writeCloudinessInfo(JSONObject object) {
-        try {
-            cloudinessPercent = object.getInt("all");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -147,7 +139,7 @@ public class JSONResponseParserToWeather {
     private Weather createWeatherObject() {
         return new Weather(cityID, cityName, countryCode, timeOfDataForecast, forecastDate,
                 currentTemperature, pressure, timezone, weatherID, weatherGroup,
-                weatherGroupDescription, weatherIconID, cloudinessPercent, windSpeed, rainVolume,
+                weatherGroupDescription, weatherIconID, humidity, windSpeed, rainVolume,
                 snowVolume);
     }
 }

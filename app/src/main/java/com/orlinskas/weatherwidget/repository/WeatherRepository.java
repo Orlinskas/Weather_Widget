@@ -39,7 +39,7 @@ public class WeatherRepository implements Repository<Weather> {
             cv.put(COLUMN_WEATHER_GROUP, object.getWeatherGroup());
             cv.put(COLUMN_WEATHER_GROUP_DESCRIPTION, object.getWeatherGroupDescription());
             cv.put(COLUMN_WEATHER_ICON_ID, object.getWeatherIconID());
-            cv.put(COLUMN_CLOUDINESS_PERCENT, object.getCloudinessPercent());
+            cv.put(COLUMN_CLOUDINESS_PERCENT, object.getHumidity());
             cv.put(COLUMN_WIND_SPEED, object.getWindSpeed());
             cv.put(COLUMN_RAIN_VOLUME, object.getRainVolume());
             cv.put(COLUMN_SNOW_VOLUME, object.getSnowVolume());
