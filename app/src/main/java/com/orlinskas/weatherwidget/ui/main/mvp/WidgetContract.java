@@ -4,12 +4,14 @@ import android.content.Context;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.orlinskas.weatherwidget.forecast.InstrumentPerformance;
 
 public interface WidgetContract {
 
     interface View {
         void setChart(LineChart chart);
         void setIconsLayout(LinearLayout linearLayout);
+        void setInstrumentPerformance(InstrumentPerformance performance);
         void updateUI();
         void doToast(String message);
         void doSnackBar(String message);
@@ -27,10 +29,12 @@ public interface WidgetContract {
         void startWork();
         LinearLayout getIconsLayout();
         LineChart getChartLayout();
+        InstrumentPerformance getInstrumentPerformance();
         String getChartDescription();
         String getCurrentDate();
         boolean nextDay();
         boolean prevDay();
+        void help();
         void removeWidget(int widgetID);
         void destroy();
     }

@@ -9,6 +9,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.orlinskas.weatherwidget.chart.ChartBuilder;
 import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
 import com.orlinskas.weatherwidget.forecast.Forecast;
+import com.orlinskas.weatherwidget.forecast.InstrumentPerformance;
 import com.orlinskas.weatherwidget.widget.WidgetRemover;
 import com.orlinskas.weatherwidget.widget.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.widget.Widget;
@@ -150,6 +151,11 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
     }
 
     @Override
+    public InstrumentPerformance getInstrumentPerformance() {
+        return null;
+    }
+
+    @Override
     public boolean prevDay() {
         if(dayNumber > 0){
             dayNumber--;
@@ -158,6 +164,11 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
         }
         view.doToast(buildMessageAvailableDates());
         return false;
+    }
+
+    @Override
+    public void help() {
+
     }
 
     @Override

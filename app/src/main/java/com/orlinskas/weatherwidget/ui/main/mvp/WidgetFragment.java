@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,20 +24,20 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
+import com.orlinskas.weatherwidget.forecast.InstrumentPerformance;
 
 import java.util.Objects;
 
-import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.CENTER_HORIZONTAL;
 
-public class WidgetFragment extends Fragment implements WidgetContract.View, BottomMenu {
+public class WidgetFragment extends Fragment implements WidgetContract.View {
     private int widgetID;
     private ProgressBar progressBar;
     private RelativeLayout iconsLayoutCase;
     private RelativeLayout chartLayoutCase;
-    private ImageView leftBtn;
-    private ImageView rightBtn;
-    private TextView currentDateTV, chartDescriptionTV;
+    private ImageView leftBtn, rightBtn, helpBtn;
+    private Button deleteBtn;
+    private TextView currentDateTV, chartDescriptionTV, pressureValTV, humidityValTV, windSpeedValTV, rainValTV, snowValTV;
     private WidgetContract.Presenter presenter;
 
     @Override
@@ -47,12 +46,19 @@ public class WidgetFragment extends Fragment implements WidgetContract.View, Bot
         progressBar = root.findViewById(R.id.fragment_widget_pb);
         iconsLayoutCase = root.findViewById(R.id.fragment_widget_rl_icons_case);
         chartLayoutCase = root.findViewById(R.id.fragment_widget_rl_chart_case);
-        //ImageButton prevDayBtn = root.findViewById(R.id.fragment_widget_btn_left);
-        //ImageButton nextDayBtn = root.findViewById(R.id.fragment_widget_btn_right);
         leftBtn = root.findViewById(R.id.fragment_widget_iv_left);
         rightBtn = root.findViewById(R.id.fragment_widget_iv_right);
         chartDescriptionTV = root.findViewById(R.id.fragment_widget_tv_description);
         currentDateTV = root.findViewById(R.id.fragment_widget_tv_date);
+
+        pressureValTV = root.findViewById(R.id.fragment_widget_rl_info_pressure_tv_value);
+        humidityValTV  = root.findViewById(R.id.fragment_widget_rl_info_humidity_tv_value);
+        windSpeedValTV = root.findViewById(R.id.fragment_widget_rl_info_wind_tv_value);
+        rainValTV  = root.findViewById(R.id.fragment_widget_rl_info_rain_tv_value);
+        snowValTV = root.findViewById(R.id.fragment_widget_rl_info_snow_tv_value);
+
+        deleteBtn = root.findViewById(R.id.fragment_widget_rl_menu_delete_btn);
+        helpBtn = root.findViewById(R.id.fragment_widget_rl_info_help_iv);
 
         widgetID = getWidgetIDArgument();
 
@@ -76,8 +82,6 @@ public class WidgetFragment extends Fragment implements WidgetContract.View, Bot
             }
         });
 
-
-
         return root;
     }
 
@@ -95,7 +99,6 @@ public class WidgetFragment extends Fragment implements WidgetContract.View, Bot
         presenter = new WidgetPresenter(this, widgetID,
                 getContext(), Objects.requireNonNull(getActivity()).getBaseContext());
         presenter.startWork();
-        addViewButton();
     }
 
     @Override
@@ -116,6 +119,11 @@ public class WidgetFragment extends Fragment implements WidgetContract.View, Bot
     public void setChart(LineChart chart) {
         chartLayoutCase.removeAllViews();
         chartLayoutCase.addView(chart);
+    }
+
+    @Override
+    public void setInstrumentPerformance(InstrumentPerformance performance) {
+
     }
 
     private void setChartDate(String currentDate) {
@@ -184,62 +192,4 @@ public class WidgetFragment extends Fragment implements WidgetContract.View, Bot
         presenter.destroy();
     }
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void addViewButton() {
-        RelativeLayout view = (RelativeLayout) getView();
-
-        RelativeLayout layout = new RelativeLayout(getContext());
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
-                (RelativeLayout.LayoutParams.MATCH_PARENT, 180);
-        params.setMargins(17,17,17, 17);
-        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        layout.setLayoutParams(params);
-        layout.setBackgroundColor(this.getResources().getColor(R.color.colorPrimary));
-
-        LinearLayout.LayoutParams buttonParams = new LinearLayout.LayoutParams
-                (LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        buttonParams.setMargins(10,10,10,10);
-        buttonParams.setLayoutDirection(CENTER_HORIZONTAL);
-
-        Button button = new Button(getContext());
-        button.setLayoutParams(buttonParams);
-        button.setText("Delete");
-        button.setBackgroundColor(this.getResources().getColor(R.color.colorAccentDuo));
-
-        final Animation buttonClickAnim = AnimationUtils.loadAnimation(getContext(), R.anim.animation_button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(buttonClickAnim);
-
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-                dialog.setTitle("Подтверждение");  // заголовок
-                dialog.setMessage("Удалить виджет?"); // сообщение
-                dialog.setPositiveButton("Да", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int arg1) {
-                        presenter.removeWidget(widgetID);
-                    }
-                });
-                dialog.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int arg1) {
-                        dialog.cancel();
-                    }
-                });
-
-                dialog.show();
-            }
-        });
-
-        layout.addView(button);
-
-        if (view != null) {
-            try {
-                view.addView(layout);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

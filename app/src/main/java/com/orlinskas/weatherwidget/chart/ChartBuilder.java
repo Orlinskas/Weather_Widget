@@ -124,12 +124,18 @@ public class ChartBuilder {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 try {
-                    String date = forecast.getDayWeathers().get((int) value).getTimeOfDataForecast();
-                    return date.substring(11);
+                    if(value % 1 == 0) {
+                        String date = forecast.getDayWeathers().get((int) value).getTimeOfDataForecast();
+                        return date.substring(11);
+                    }
+                    else if(value % 1 >= 0.6) {
+                        String date = forecast.getDayWeathers().get((int) value + 1).getTimeOfDataForecast();
+                        return date.substring(11);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return "n/a";
                 }
+                return "";
             }
         });
 
@@ -137,23 +143,11 @@ public class ChartBuilder {
     }
 
     private LineChart buildYAxis(LineChart chart) {
-        Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
-
         YAxis yAxisLeft = chart.getAxisLeft();
-        yAxisLeft.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
-        yAxisLeft.setTextSize(5f);
-        yAxisLeft.setTypeface(typeface);
-        yAxisLeft.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return "";
-            }
-        });
+        yAxisLeft.setEnabled(false);
 
         YAxis yAxisRight = chart.getAxisRight();
         yAxisRight.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART);
-        yAxisRight.setTextSize(5f);
-        yAxisRight.setTypeface(typeface);
         yAxisRight.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
