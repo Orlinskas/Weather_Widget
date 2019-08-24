@@ -84,8 +84,8 @@ public class WeatherRepository implements Repository<Weather> {
                     String weatherIconID = cursor.getString(cursor.getColumnIndex(COLUMN_WEATHER_ICON_ID));
                     int cloudinessPercent = cursor.getInt(cursor.getColumnIndex(COLUMN_CLOUDINESS_PERCENT));
                     double windSpeed = cursor.getDouble(cursor.getColumnIndex(COLUMN_WIND_SPEED));
-                    int rainVolume = cursor.getInt(cursor.getColumnIndex(COLUMN_RAIN_VOLUME));
-                    int snowVolume = cursor.getInt(cursor.getColumnIndex(COLUMN_SNOW_VOLUME));
+                    double rainVolume = cursor.getDouble(cursor.getColumnIndex(COLUMN_RAIN_VOLUME));
+                    double snowVolume = cursor.getDouble(cursor.getColumnIndex(COLUMN_SNOW_VOLUME));
 
                     weathers.add(new Weather(cityID, cityName, countryCode, timeOfDataForecast, forecastDate,
                             currentTemperature, pressure, humidityPercent, weatherID, weatherGroup, weatherGroupDescription,

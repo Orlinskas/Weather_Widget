@@ -10,6 +10,7 @@ import com.orlinskas.weatherwidget.chart.ChartBuilder;
 import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
 import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.forecast.InstrumentPerformance;
+import com.orlinskas.weatherwidget.forecast.InstrumentPerformanceBuilder;
 import com.orlinskas.weatherwidget.widget.WidgetRemover;
 import com.orlinskas.weatherwidget.widget.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.widget.Widget;
@@ -112,6 +113,12 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
     }
 
     @Override
+    public InstrumentPerformance getInstrumentPerformance() {
+        InstrumentPerformanceBuilder builder = new InstrumentPerformanceBuilder(getCurrentForecast());
+        return builder.build();
+    }
+
+    @Override
     public String getCurrentDate() {
         return getCurrentForecast().getDayDate();
     }
@@ -151,11 +158,6 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
     }
 
     @Override
-    public InstrumentPerformance getInstrumentPerformance() {
-        return null;
-    }
-
-    @Override
     public boolean prevDay() {
         if(dayNumber > 0){
             dayNumber--;
@@ -164,11 +166,6 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
         }
         view.doToast(buildMessageAvailableDates());
         return false;
-    }
-
-    @Override
-    public void help() {
-
     }
 
     @Override
@@ -217,6 +214,12 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
         WidgetRemover remover = new WidgetRemover(viewContext);
         remover.remove(widgetID);
         view.finish();
+    }
+
+    @Override
+    public void help() {
+        //открыть помощь
+        view.doSnackBar("Помощь");
     }
 
     @Override

@@ -4,10 +4,10 @@ public class InstrumentPerformance {
     private int averagePressure;
     private double averageWindSpeed;
     private int averageHumidity;
-    private int averageRainVolume;
-    private int averageSnowVolume;
+    private double averageRainVolume;
+    private double averageSnowVolume;
 
-    public InstrumentPerformance(int averagePressure, double averageWindSpeed, int averageHumidity, int averageRainVolume, int averageSnowVolume) {
+    InstrumentPerformance(int averagePressure, double averageWindSpeed, int averageHumidity, double averageRainVolume, double averageSnowVolume) {
         this.averagePressure = averagePressure;
         this.averageWindSpeed = averageWindSpeed;
         this.averageHumidity = averageHumidity;
@@ -27,11 +27,11 @@ public class InstrumentPerformance {
         return averageHumidity;
     }
 
-    public int getAverageRainVolume() {
+    public double getAverageRainVolume() {
         return averageRainVolume;
     }
 
-    public int getAverageSnowVolume() {
+    public double getAverageSnowVolume() {
         return averageSnowVolume;
     }
 }

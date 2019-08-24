@@ -18,8 +18,8 @@ public class Weather implements Serializable {
     private String weatherIconID;
     private int humidity;
     private double windSpeed;
-    private int rainVolume;
-    private int snowVolume;
+    private double rainVolume;
+    private double snowVolume;
 
     public Weather(String timeOfDataForecast) {
         this.timeOfDataForecast = timeOfDataForecast;
@@ -28,7 +28,7 @@ public class Weather implements Serializable {
     public Weather(int cityID, String cityName, String countryCode, String timeOfDataForecast,
                    String forecastDate, int currentTemperature, int pressure, int timezone,
                    int weatherID, String weatherGroup, String weatherGroupDescription, String weatherIconID,
-                   int humidity, double windSpeed, int rainVolume, int snowVolume) {
+                   int humidity, double windSpeed, double rainVolume, double snowVolume) {
         this.cityID = cityID;
         this.cityName = cityName;
         this.countryCode = countryCode;
@@ -82,10 +82,6 @@ public class Weather implements Serializable {
         return cityID;
     }
 
-    public void setCityID(int cityID) {
-        this.cityID = cityID;
-    }
-
     public String getCityName() {
         return cityName;
     }
@@ -106,105 +102,52 @@ public class Weather implements Serializable {
         return timeOfDataForecast;
     }
 
-    public void setTimeOfDataForecast(String timeOfDataForecast) {
-        this.timeOfDataForecast = timeOfDataForecast;
-    }
-
     public String getForecastDate() {
         return forecastDate;
-    }
-
-    public void setForecastDate(String forecastDate) {
-        this.forecastDate = forecastDate;
     }
 
     public int getCurrentTemperature() {
         return currentTemperature;
     }
 
-    public void setCurrentTemperature(int currentTemperature) {
-        this.currentTemperature = currentTemperature;
-    }
-
     public int getPressure() {
         return pressure;
-    }
-
-    public void setPressure(int pressure) {
-        this.pressure = pressure;
     }
 
     public int getTimezone() {
         return timezone;
     }
 
-    public void setTimezone(int timezone) {
-        this.timezone = timezone;
-    }
-
     public int getWeatherID() {
         return weatherID;
-    }
-
-    public void setWeatherID(int weatherID) {
-        this.weatherID = weatherID;
     }
 
     public String getWeatherGroup() {
         return weatherGroup;
     }
 
-    public void setWeatherGroup(String weatherGroup) {
-        this.weatherGroup = weatherGroup;
-    }
-
     public String getWeatherGroupDescription() {
         return weatherGroupDescription;
-    }
-
-    public void setWeatherGroupDescription(String weatherGroupDescription) {
-        this.weatherGroupDescription = weatherGroupDescription;
     }
 
     public String getWeatherIconID() {
         return weatherIconID;
     }
 
-    public void setWeatherIconID(String weatherIconID) {
-        this.weatherIconID = weatherIconID;
-    }
-
     public int getHumidity() {
         return humidity;
-    }
-
-    public void setHumidity(int humidity) {
-        this.humidity = humidity;
     }
 
     public double getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(double windSpeed) {
-        this.windSpeed = windSpeed;
-    }
-
-    public int getRainVolume() {
+    public double getRainVolume() {
         return rainVolume;
     }
 
-    public void setRainVolume(int rainVolume) {
-        this.rainVolume = rainVolume;
-    }
-
-    public int getSnowVolume() {
+    public double getSnowVolume() {
         return snowVolume;
     }
-
-    public void setSnowVolume(int snowVolume) {
-        this.snowVolume = snowVolume;
-    }
-
 
 }

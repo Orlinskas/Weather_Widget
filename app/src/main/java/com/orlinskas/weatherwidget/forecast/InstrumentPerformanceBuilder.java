@@ -14,12 +14,12 @@ public class InstrumentPerformanceBuilder {
         this.forecast = forecast;
     }
 
-    private InstrumentPerformance build() {
+    public InstrumentPerformance build() {
         int pressure = (int) pickOutData(PRESSURE);
         double wind = pickOutData(WIND_SPEED);
         int humidity = (int) pickOutData(HUMIDITY);
-        int rain = (int) pickOutData(RAIN);
-        int snow = (int) pickOutData(SNOW);
+        double rain = pickOutData(RAIN);
+        double snow = pickOutData(SNOW);
 
         return new InstrumentPerformance(pressure, wind, humidity, rain, snow);
     }
@@ -41,10 +41,10 @@ public class InstrumentPerformanceBuilder {
                     values.add((double)weather.getHumidity());
                     break;
                 case RAIN:
-                    values.add((double)weather.getRainVolume());
+                    values.add(weather.getRainVolume());
                     break;
                 case SNOW:
-                    values.add((double)weather.getSnowVolume());
+                    values.add(weather.getSnowVolume());
                     break;
             }
         }

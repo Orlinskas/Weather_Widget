@@ -26,8 +26,8 @@ public class JSONResponseParserToWeather {
     private String weatherIconID;
     private int humidity;
     private double windSpeed;
-    private int rainVolume;
-    private int snowVolume;
+    private double rainVolume;
+    private double snowVolume;
 
     public ArrayList<Weather> parse(String json) {
         ArrayList<Weather> weathers = new ArrayList<>();
@@ -129,11 +129,11 @@ public class JSONResponseParserToWeather {
     }
 
     private void writeRain(JSONObject object) throws JSONException {
-        rainVolume = (int) object.getDouble("3h");
+        rainVolume = object.getDouble("3h");
     }
 
     private void writeSnow(JSONObject object) throws JSONException {
-        snowVolume = (int) object.getDouble("3h");
+        snowVolume = object.getDouble("3h");
     }
 
     private Weather createWeatherObject() {

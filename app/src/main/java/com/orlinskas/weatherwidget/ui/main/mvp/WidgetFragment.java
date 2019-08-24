@@ -1,8 +1,5 @@
 package com.orlinskas.weatherwidget.ui.main.mvp;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,8 +24,6 @@ import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.forecast.InstrumentPerformance;
 
 import java.util.Objects;
-
-import static android.view.Gravity.CENTER_HORIZONTAL;
 
 public class WidgetFragment extends Fragment implements WidgetContract.View {
     private int widgetID;
@@ -82,6 +77,22 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
             }
         });
 
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(buttonClickAnim);
+                presenter.help();
+            }
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(buttonClickAnim);
+                presenter.removeWidget(widgetID);
+            }
+        });
+
         return root;
     }
 
@@ -107,6 +118,7 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
         setChart(presenter.getChartLayout());
         setChartDate(presenter.getCurrentDate());
         setChartDescription(presenter.getChartDescription());
+        setInstrumentPerformance(presenter.getInstrumentPerformance());
     }
 
     @Override
@@ -123,7 +135,11 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
 
     @Override
     public void setInstrumentPerformance(InstrumentPerformance performance) {
-
+        humidityValTV.setText(String.valueOf(performance.getAverageHumidity()));
+        windSpeedValTV.setText(String.valueOf(performance.getAverageWindSpeed()));
+        pressureValTV.setText(String.valueOf(performance.getAveragePressure()));
+        rainValTV.setText(String.valueOf(performance.getAverageRainVolume()));
+        snowValTV.setText(String.valueOf(performance.getAverageSnowVolume()));
     }
 
     private void setChartDate(String currentDate) {
@@ -191,5 +207,4 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
         super.onDestroyView();
         presenter.destroy();
     }
-
 }

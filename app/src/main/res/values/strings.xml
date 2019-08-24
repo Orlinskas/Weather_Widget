@@ -30,7 +30,7 @@
     <string name="long_tire">—</string>
     <string name="help">help</string>
     <string name="hpa">hPa</string>
-    <string name="wind_speed">Скорость ветра</string>
+    <string name="wind_speed">Ветер</string>
     <string name="meter_sec">meter/sec</string>
     <string name="humidity">Влажность</string>
     <string name="persent">%</string>
@@ -38,6 +38,7 @@
     <string name="snow">Снег</string>
     <string name="delete_widget">удалить виджет</string>
     <string name="mm_day">mm/day</string>
+    <string name="discriprion_rl_info">*указаны средние значения за сутки</string>
     <string-array name="spinner">
         <item>выбрать…</item>
     </string-array>

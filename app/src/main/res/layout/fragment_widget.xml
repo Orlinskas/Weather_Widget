@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_widget_sv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+<RelativeLayout
+    android:id="@+id/fragment_widget_rl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/colorBackground">
 
     <RelativeLayout
@@ -63,7 +69,7 @@
         <RelativeLayout
             android:id="@+id/fragment_widget_rl_chart_case"
             android:layout_width="match_parent"
-            android:layout_height="130dp"
+            android:layout_height="150dp"
             android:layout_below="@+id/fragment_widget_rl_icons_case" />
         <RelativeLayout
             android:id="@+id/fragment_widget_rl_icons_case"
@@ -122,10 +128,13 @@
             android:id="@+id/fragment_widget_rl_info_help_iv"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
+            android:layout_below="@id/fragment_widget_rl_info_snow_rl"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentEnd="false"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             android:contentDescription="@string/help"
             app:srcCompat="@drawable/ic_help_2" />
 
@@ -140,7 +149,7 @@
                 android:id="@+id/fragment_widget_rl_info_pressure_iv"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:contentDescription="@string/icon_info"
                 app:srcCompat="@drawable/ic_pressure" />
 
@@ -203,7 +212,7 @@
                 android:id="@+id/fragment_widget_rl_info_wind_iv"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:contentDescription="@string/icon_info"
                 app:srcCompat="@drawable/ic_wind" />
 
@@ -226,6 +235,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/fragment_widget_rl_info_wind_rl_center_tv"
+                android:maxLength="5"
                 android:text="@string/value"
                 android:textColor="@color/colorTextBlack"
                 android:textSize="14sp"
@@ -267,7 +277,7 @@
                 android:id="@+id/fragment_widget_rl_info_humidity_iv"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:contentDescription="@string/icon_info"
                 app:srcCompat="@drawable/ic_humidity_2" />
 
@@ -330,7 +340,7 @@
                 android:id="@+id/fragment_widget_rl_info_rain_iv"
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="20dp"
                 android:contentDescription="@string/icon_info"
                 app:srcCompat="@drawable/ic_rain_volume" />
 
@@ -353,6 +363,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/fragment_widget_rl_info_rain_rl_center_tv"
+                android:maxLength="5"
                 android:text="@string/value"
                 android:textColor="@color/colorTextBlack"
                 android:textSize="14sp"
@@ -393,7 +404,7 @@
                 android:id="@+id/fragment_widget_rl_info_snow_iv"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:contentDescription="@string/icon_info"
                 app:srcCompat="@drawable/ic_snow_volume" />
 
@@ -416,6 +427,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/fragment_widget_rl_info_snow_rl_center_tv"
+                android:maxLength="5"
                 android:text="@string/value"
                 android:textColor="@color/colorTextBlack"
                 android:textSize="14sp"
@@ -445,6 +457,18 @@
                 android:textStyle="bold|italic" />
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/fragment_widget_rl_info_bottom_discription_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fragment_widget_rl_info_snow_rl"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/discriprion_rl_info"
+            android:textSize="12sp" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -461,8 +485,8 @@
             android:id="@+id/fragment_widget_rl_menu_delete_btn"
             android:layout_width="135dp"
             android:layout_height="27dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="40dp"
+            android:layout_alignParentStart="false"
+            android:layout_centerInParent="true"
             android:layout_marginTop="5dp"
             android:background="@drawable/secondary_button"
             android:text="@string/delete_widget"
@@ -473,3 +497,5 @@
     </RelativeLayout>
 
 </RelativeLayout>
+
+</ScrollView>
