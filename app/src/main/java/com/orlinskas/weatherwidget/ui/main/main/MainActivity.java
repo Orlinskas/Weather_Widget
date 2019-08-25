@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.activities;
+package com.orlinskas.weatherwidget.ui.main.main;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import com.orlinskas.weatherwidget.FirstRunner;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.preferences.FirstRunVerifier;
-import com.orlinskas.weatherwidget.ui.main.SectionsPagerAdapter;
+import com.orlinskas.weatherwidget.ui.main.other.WidgetCreatorActivity;
 
 public class MainActivity extends AppCompatActivity {
     private int backPressCount = 0;

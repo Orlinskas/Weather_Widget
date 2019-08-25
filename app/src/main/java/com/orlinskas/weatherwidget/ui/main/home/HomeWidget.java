@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main;
+package com.orlinskas.weatherwidget.ui.main.home;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -18,13 +18,13 @@ import com.orlinskas.weatherwidget.specification.WidgetEmptySpecification;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
-public class WidgetActivity extends AppWidgetProvider {
+public class HomeWidget extends AppWidgetProvider {
     private Widget widget;
     private RelativeLayout relativeLayout;
     private Context context;
     private Parcel in;
 
-    protected WidgetActivity() {
+    protected HomeWidget() {
         super();
 
     }
@@ -33,8 +33,6 @@ public class WidgetActivity extends AppWidgetProvider {
     public void onEnabled(Context context) {
         super.onEnabled(context);
         this.context = context;
-
-
 
     }
 

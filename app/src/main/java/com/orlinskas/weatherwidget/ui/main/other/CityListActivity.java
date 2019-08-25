@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.activities;
+package com.orlinskas.weatherwidget.ui.main.other;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

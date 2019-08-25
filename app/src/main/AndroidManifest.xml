@@ -32,7 +32,7 @@
             android:required="false" />
 
         <activity
-            android:name=".ui.main.activities.MainActivity"
+            android:name=".ui.main.main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
@@ -44,17 +44,17 @@
         </activity>
 
         <activity
-            android:name=".ui.main.activities.WidgetCreatorActivity"
+            android:name=".ui.main.other.WidgetCreatorActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.main.activities.CountryListActivity"
+            android:name=".ui.main.other.CountryListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.main.activities.CityListActivity"
+            android:name=".ui.main.other.CityListActivity"
             android:screenOrientation="portrait"/>
 
         <receiver
-            android:name=".ui.main.WidgetActivity"
+            android:name=".ui.main.home.HomeWidget"
             android:icon="@android:drawable/star_big_on"
             android:label="WeatherWidget">
             <intent-filter>

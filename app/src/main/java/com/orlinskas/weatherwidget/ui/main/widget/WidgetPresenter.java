@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.mvp;
+package com.orlinskas.weatherwidget.ui.main.widget;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
