@@ -1,5 +1,7 @@
 package com.orlinskas.weatherwidget.widget;
 
+import android.support.annotation.NonNull;
+
 import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.request.Request;
@@ -32,6 +34,12 @@ public class Widget implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getCity());
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getCity().getName();
     }
 
     public void setCity(City city) {

@@ -77,7 +77,8 @@
         android:textSize="12sp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:text="@string/btn_config" />
+        android:text="@string/btn_config"
+        android:onClick="onClickCreate"/>
 
     <TextView
         android:id="@+id/config_layout_desc_tv_bottom"
