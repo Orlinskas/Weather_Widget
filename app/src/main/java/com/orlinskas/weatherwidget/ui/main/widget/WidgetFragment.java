@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
     private Button deleteBtn;
     private TextView currentDateTV, chartDescriptionTV, pressureValTV, humidityValTV, windSpeedValTV, rainValTV, snowValTV;
     private WidgetContract.Presenter presenter;
+    private final String TAG = this.getClass().getSimpleName();
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,6 +95,8 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
                 presenter.removeWidget(widgetID);
             }
         });
+
+        Log.d(TAG, "fragmentRun");
 
         return root;
     }

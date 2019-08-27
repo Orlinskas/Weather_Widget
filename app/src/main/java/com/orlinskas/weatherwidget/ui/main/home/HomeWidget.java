@@ -6,33 +6,54 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.view.ViewGroup;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
-import com.github.mikephil.charting.charts.LineChart;
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.specification.WidgetEmptySpecification;
-import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
-public class HomeWidget extends AppWidgetProvider {
-    private Widget widget;
-    private RelativeLayout relativeLayout;
-    private Context context;
-    private Parcel in;
+public class HomeWidget extends AppWidgetProvider implements HomeWidgetContract.View {
+    private final String TAG = this.getClass().getSimpleName();
 
-    protected HomeWidget() {
+    private int widgetID;
+    private RelativeLayout parrentLayout;
+    private ImageView lefnBtn, rightBtn;
+    private HomeWidgetContract.Presenter presenter;
+
+    public HomeWidget() {
         super();
+        Log.d(TAG,"конструктор");
 
     }
 
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        this.context = context;
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        remoteViews.setTextViewText(R.id.layout_widget_tv_description, "test");
+
+        Log.d(TAG,"enabled");
+        WidgetRepository repository = new WidgetRepository(context);
+        try {
+            widgetID = repository.query(new WidgetEmptySpecification()).get(0).getId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG,e.getMessage());
+        }
+
+
+        presenter = new HomeWidgetPresenter(this, widgetID, context);
+        try {
+            setForecast(presenter.getForecast(widgetID), context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG,e.getMessage());
+        }
+
 
     }
 
@@ -44,6 +65,15 @@ public class HomeWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        remoteViews.setTextViewText(R.id.layout_widget_tv_description, "test");
+
+        try {
+            setForecast(presenter.getForecast(widgetID), context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG,e.getMessage());
+        }
     }
 
     @Override
@@ -69,5 +99,23 @@ public class HomeWidget extends AppWidgetProvider {
     @Override
     public IBinder peekService(Context myContext, Intent service) {
         return super.peekService(myContext, service);
+    }
+
+    @Override
+    public void setForecast(Forecast forecast, Context context) {
+        String date = forecast.getDayDate();
+
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        remoteViews.setTextViewText(R.id.layout_widget_tv_description, "test");
+    }
+
+    @Override
+    public void setAlpha(String item, int mode) {
+
+    }
+
+    @Override
+    public void updateUI() {
+
     }
 }

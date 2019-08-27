@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/config_layout_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <TextView
+        android:id="@+id/config_layout_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="monospace"
+        android:text="@string/config_head"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorText"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/config_layout_spn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/config_layout_tv"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/colorText" />
+
+    <TextView
+        android:id="@+id/config_layout_tv_desc_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/config_layout_spn"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/config_body_descr_1"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/config_layout_desc_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/config_layout_tv_desc_1"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/config_body_descr_2"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/config_layout_desc_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/config_layout_desc_2"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/config_body_descr_3"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/config_layout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/config_layout_desc_3"
+        android:background="@drawable/secondary_button"
+        android:textColor="@color/colorTextButton"
+        android:textSize="12sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="@string/btn_config" />
+
+    <TextView
+        android:id="@+id/config_layout_desc_tv_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/autor_group" />
+</RelativeLayout>

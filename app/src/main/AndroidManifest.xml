@@ -38,7 +38,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -67,6 +66,13 @@
                 android:resource="@xml/widget_metadata">
             </meta-data>
         </receiver>
+
+        <activity
+            android:name=".ui.main.home.ConfigurationWidgetActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
 
 
     </application>

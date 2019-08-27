@@ -39,6 +39,12 @@
     <string name="delete_widget">удалить виджет</string>
     <string name="mm_day">mm/day</string>
     <string name="discriprion_rl_info">*указаны средние значения за сутки</string>
+    <string name="config_head">Выберите ваш виджет из списка</string>
+    <string name="config_body_descr_1">* возможно вы еще не создали виджет, сделайте это в приложении</string>
+    <string name="config_body_descr_2">* виджеты обновляются автоматически</string>
+    <string name="config_body_descr_3"><![CDATA[* пожалуйста не запрещайте приложению доступ к сети, приложение работает в экономном режиме и обновляет данные с интервалами >6 часов]]></string>
+    <string name="btn_config">Выбрать</string>
+    <string name="autor_group">2019 Orlinskas Development</string>
     <string-array name="spinner">
         <item>выбрать…</item>
     </string-array>
