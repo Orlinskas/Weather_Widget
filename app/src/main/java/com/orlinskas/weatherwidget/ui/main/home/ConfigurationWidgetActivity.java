@@ -40,6 +40,7 @@ public class ConfigurationWidgetActivity extends Activity {
 
         resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetInternalID);
+        //resultValue.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);//запустить первое обновление баг андроида
         setResult(RESULT_CANCELED, resultValue); //сформировал негативный ответ на случай выхода
 
         setContentView(R.layout.config_layout);
@@ -71,7 +72,7 @@ public class ConfigurationWidgetActivity extends Activity {
         view.startAnimation(buttonClickAnim);
 
         Widget widget = (Widget) spinnerWidgetList.getSelectedItem();
-        Preferences preferences = Preferences.getInstance(this,Preferences.SETTINGS);
+        Preferences preferences = Preferences.getInstance(this, Preferences.SETTINGS);
         //запомнил соотношение - ID который дал андроид/ID моего объекта виджета
         preferences.saveData("Widget" + widgetInternalID, widget.getId());
 
