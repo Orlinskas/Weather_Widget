@@ -13,6 +13,8 @@ public class Preferences {
     public static final String APP_STATUS = "appStatus";
     public static final String APP_TEST = "test";
     public static final String WIDGET_UPDATE_DATES = "dates";
+    public static final String WIDGET_DAY_NUMBER = "day";
+    public static final String WIDGET_ID_DEPENDENCE = "dependence";
 
     public static Preferences getInstance(Context context, String preferencesName) {
         if (preferences == null) {

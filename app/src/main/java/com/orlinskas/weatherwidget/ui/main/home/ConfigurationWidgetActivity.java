@@ -21,7 +21,7 @@ import com.orlinskas.weatherwidget.widget.WidgetRepository;
 import java.util.ArrayList;
 
 public class ConfigurationWidgetActivity extends Activity {
-    private int widgetInternalID = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private int id = AppWidgetManager.INVALID_APPWIDGET_ID;
     private Intent resultValue;
     private Spinner spinnerWidgetList;
 
@@ -31,16 +31,15 @@ public class ConfigurationWidgetActivity extends Activity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            widgetInternalID = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+            id = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
         }
-        if (widgetInternalID == AppWidgetManager.INVALID_APPWIDGET_ID) {
+        if (id == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
 
         resultValue = new Intent();
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetInternalID);
-        //resultValue.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);//запустить первое обновление баг андроида
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id);
         setResult(RESULT_CANCELED, resultValue); //сформировал негативный ответ на случай выхода
 
         setContentView(R.layout.config_layout);
@@ -54,7 +53,6 @@ public class ConfigurationWidgetActivity extends Activity {
             finish();
         }
     }
-
 
     private ArrayList<Widget> findWidgetsInRepository() throws Exception {
         WidgetRepository repository = new WidgetRepository(this);
@@ -74,7 +72,7 @@ public class ConfigurationWidgetActivity extends Activity {
         Widget widget = (Widget) spinnerWidgetList.getSelectedItem();
         Preferences preferences = Preferences.getInstance(this, Preferences.SETTINGS);
         //запомнил соотношение - ID который дал андроид/ID моего объекта виджета
-        preferences.saveData("Widget" + widgetInternalID, widget.getId());
+        preferences.saveData(Preferences.WIDGET_ID_DEPENDENCE + id, widget.getId());
 
         setResult(RESULT_OK, resultValue); //отправил положительный ответ
         finish();
