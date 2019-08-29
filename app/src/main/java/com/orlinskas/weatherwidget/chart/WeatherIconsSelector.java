@@ -20,7 +20,7 @@ public class WeatherIconsSelector {
         return iconsID;
     }
 
-    private int findIcon(Weather weather) {
+    public int findIcon(Weather weather) {
         switch (weather.getWeatherID()) {
             case 200:
                 return IC_001_ID;

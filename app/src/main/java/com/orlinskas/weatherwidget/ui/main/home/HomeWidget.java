@@ -5,22 +5,36 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.chart.WeatherIconsSelector;
+import com.orlinskas.weatherwidget.forecast.Forecast;
+import com.orlinskas.weatherwidget.forecast.Weather;
 import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class HomeWidget extends AppWidgetProvider {
     private final String TAG = this.getClass().getSimpleName();
-    private int widgetID;
-    private RelativeLayout parrentLayout;
-    private ImageView lefnBtn, rightBtn;
+    private final int[] imageViewIDsIcons = new int[]
+            {R.id.layout_widget_ll_chart_case_icon_1, R.id.layout_widget_ll_chart_case_icon_2,
+                    R.id.layout_widget_ll_chart_case_icon_3, R.id.layout_widget_ll_chart_case_icon_4,
+                    R.id.layout_widget_ll_chart_case_icon_5, R.id.layout_widget_ll_chart_case_icon_6,
+                    R.id.layout_widget_ll_chart_case_icon_7, R.id.layout_widget_ll_chart_case_icon_8};
+    private final int[] textViewIDsTemperatures = new int[]
+            {R.id.layout_widget_ll_chart_case_temp_1, R.id.layout_widget_ll_chart_case_temp_2,
+             R.id.layout_widget_ll_chart_case_temp_3, R.id.layout_widget_ll_chart_case_temp_4,
+             R.id.layout_widget_ll_chart_case_temp_5, R.id.layout_widget_ll_chart_case_temp_6,
+             R.id.layout_widget_ll_chart_case_temp_7, R.id.layout_widget_ll_chart_case_temp_8};
+    private final int[] textViewIDsDates = new int[]
+            {R.id.layout_widget_ll_chart_case_date_1, R.id.layout_widget_ll_chart_case_date_2,
+                    R.id.layout_widget_ll_chart_case_date_3, R.id.layout_widget_ll_chart_case_date_4,
+                    R.id.layout_widget_ll_chart_case_date_5, R.id.layout_widget_ll_chart_case_date_6,
+                    R.id.layout_widget_ll_chart_case_date_7, R.id.layout_widget_ll_chart_case_date_8};
 
     public HomeWidget() {
         super();
@@ -64,16 +78,52 @@ public class HomeWidget extends AppWidgetProvider {
         RemoteViews widgetView = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 
         if(widget != null){
-           widgetView = updateUI(widgetView, widget);
+            Forecast forecast = widget.getDaysForecast().get(0);
+            widgetView = updateUI(widgetView, forecast);
         }
 
         appWidgetManager.updateAppWidget(id, widgetView);
     }
 
-    private RemoteViews updateUI(RemoteViews widgetView, Widget widget) {
-        String description = widget.getCity().getName();
+    private RemoteViews updateUI(RemoteViews widgetView, Forecast forecast) {
+        String cityName = forecast.getDayWeathers().get(0).getCityName();
 
+        String timezoneUTC;
+        int timezone = forecast.getDayWeathers().get(0).getTimezone();
+
+        if(timezone > 0) {
+            timezoneUTC = "UTC +" + timezone;
+        }
+        else {
+            timezoneUTC = "UTC " + timezone;
+        }
+
+        String description = cityName + "  " + timezoneUTC;
+        String todayDate = forecast.getDayDate();
         widgetView.setTextViewText(R.id.layout_widget_tv_description, description);
+        widgetView.setTextViewText(R.id.layout_widget_tv_date, todayDate);
+
+        ArrayList<Weather> weathers = forecast.getDayWeathers();
+
+            int indexView = 7;
+            for(int i = weathers.size(); i > 0; i--) {
+                try {
+                    WeatherIconsSelector selector = new WeatherIconsSelector();
+                    int ID = selector.findIcon(weathers.get(i - 1));
+                    String temperature = weathers.get(i - 1).getCurrentTemperature() + "°C";
+                    String dateTime = weathers.get(i - 1).getTimeOfDataForecast().substring(11);
+
+                    widgetView.setImageViewResource(imageViewIDsIcons[indexView], ID);
+                    widgetView.setTextViewText(textViewIDsTemperatures[indexView], temperature);
+                    widgetView.setTextViewText(textViewIDsDates[indexView], dateTime);
+
+                    widgetView.setImageViewResource(R.id.layout_widget_iv_left,R.drawable.ic_left_4);
+                    widgetView.setImageViewResource(R.id.layout_widget_iv_right,R.drawable.ic_right_4);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                indexView--;
+            }
 
         return widgetView;
     }
