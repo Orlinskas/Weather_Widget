@@ -21,6 +21,7 @@ public class HomeWidget extends AppWidgetProvider {
     public static final String ACTION = "action";
     public static final String ACTION_CREATE = "create";
     public static final String ACTION_DEFAULT = "default";
+    public static final String ACTION_UPDATE = "update";
     private final String ACTION_CLICK_LEFT = "leftAreaClick";
     private final String ACTION_CLICK_RIGHT = "rightAreaClick";
 
@@ -63,7 +64,11 @@ public class HomeWidget extends AppWidgetProvider {
 
             switch (actionExtra) {
                 case ACTION_CREATE:
+                case ACTION_DEFAULT:
                     createWidget(id, context);
+                    break;
+                case ACTION_UPDATE:
+                    updateWidget(id,context);
                     break;
                 case ACTION_CLICK_LEFT:
                     writeDayNumber(dayNumber - 1, id, context);
@@ -71,9 +76,6 @@ public class HomeWidget extends AppWidgetProvider {
                     break;
                 case ACTION_CLICK_RIGHT:
                     writeDayNumber(dayNumber + 1, id, context);
-                    updateWidget(id, context);
-                    break;
-                case ACTION_DEFAULT:
                     updateWidget(id, context);
                     break;
             }
@@ -100,6 +102,7 @@ public class HomeWidget extends AppWidgetProvider {
         widgetView.setImageViewResource(R.id.layout_widget_iv_left, R.drawable.ic_left_4);
         widgetView.setImageViewResource(R.id.layout_widget_iv_right, R.drawable.ic_right_4);
 
+        AppWidgetManager.getInstance(context).updateAppWidget(id, widgetView);
         updateWidget(id, context);
     }
 
@@ -165,22 +168,25 @@ public class HomeWidget extends AppWidgetProvider {
         widgetView.setTextViewText(R.id.layout_widget_tv_date, todayDate);
 
         ArrayList<Weather> weathers = forecast.getDayWeathers();
+        int indexWeather = weathers.size() - 1;
 
-        int indexView = 7;
-        for(int i = weathers.size(); i > 0; i--) {
+        for(int indexView = 7; indexView >= 0; indexView--) {
+            int ID = R.drawable.ic_na_icon;
+            String temperature = "—";
+            String dateTime = "—:—";
             try {
                 WeatherIconsSelector selector = new WeatherIconsSelector();
-                int ID = selector.findIcon(weathers.get(i - 1));
-                String temperature = weathers.get(i - 1).getCurrentTemperature() + "°C";
-                String dateTime = weathers.get(i - 1).getTimeOfDataForecast().substring(11);
-
-                widgetView.setImageViewResource(imageViewIDsIcons[indexView], ID);
-                widgetView.setTextViewText(textViewIDsTemperatures[indexView], temperature);
-                widgetView.setTextViewText(textViewIDsDates[indexView], dateTime);
+                ID = selector.findIcon(weathers.get(indexWeather));
+                temperature = weathers.get(indexWeather).getCurrentTemperature() + "°C";
+                dateTime = weathers.get(indexWeather).getTimeOfDataForecast().substring(11);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            indexView--;
+            indexWeather--;
+
+            widgetView.setImageViewResource(imageViewIDsIcons[indexView], ID);
+            widgetView.setTextViewText(textViewIDsTemperatures[indexView], temperature);
+            widgetView.setTextViewText(textViewIDsDates[indexView], dateTime);
         }
         AppWidgetManager.getInstance(context).updateAppWidget(id, widgetView);
     }
