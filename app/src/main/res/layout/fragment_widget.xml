@@ -70,7 +70,7 @@
             android:id="@+id/fragment_widget_rl_icons_case"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:background="@color/colorPrimary" />
+            android:background="@drawable/rounded_background" />
 
         <RelativeLayout
             android:id="@+id/fragment_widget_rl_control_bar_bot"
