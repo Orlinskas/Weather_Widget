@@ -95,13 +95,13 @@ public class HomeWidget extends AppWidgetProvider {
             leftClickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             leftClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id);
             leftClickIntent.putExtra(ACTION_NAME, ACTION_CLICK_LEFT);
-            PendingIntent pLeftIntent = PendingIntent.getBroadcast(context, 1, leftClickIntent, 0);
+            PendingIntent pLeftIntent = PendingIntent.getBroadcast(context, id + 100, leftClickIntent, 0);
 
             Intent rightClickIntent = new Intent(context, HomeWidget.class);
             rightClickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             rightClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id);
             rightClickIntent.putExtra(ACTION_NAME, ACTION_CLICK_RIGHT);
-            PendingIntent pRightIntent = PendingIntent.getBroadcast(context, 2, rightClickIntent, 0);
+            PendingIntent pRightIntent = PendingIntent.getBroadcast(context, id + 200, rightClickIntent, 0);
 
             widgetView.setOnClickPendingIntent(R.id.layout_widget_btn_left_click_area, pLeftIntent);
             widgetView.setOnClickPendingIntent(R.id.layout_widget_btn_right_click_area, pRightIntent);
