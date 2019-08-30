@@ -16,14 +16,61 @@
     android:background="@color/colorBackground">
 
     <RelativeLayout
-        android:id="@+id/fragment_widget_rl"
+        android:id="@+id/fragment_widget_rl_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/rounded_background">
+
+        <TextView
+            android:id="@+id/fragment_widget_tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:maxLines="1"
+            android:text="@string/loading"
+            android:textColor="@color/colorTextLabel"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/fragment_widget_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_widget_rl_head"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/rounded_background">
+
+        <ProgressBar
+            android:id="@+id/fragment_widget_pb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="invisible" />
+
+        <RelativeLayout
+            android:id="@+id/fragment_widget_rl_chart_case"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@+id/fragment_widget_rl_icons_case" />
+
+        <RelativeLayout
+            android:id="@+id/fragment_widget_rl_icons_case"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/colorPrimary" />
 
         <RelativeLayout
             android:id="@+id/fragment_widget_rl_control_bar_bot"
@@ -39,8 +86,18 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="5dp"
                 android:alpha="0.8"
-                app:srcCompat="@drawable/ic_left_arrow_2"
-                android:contentDescription="@string/left_button" />
+                android:contentDescription="@string/left_button"
+                app:srcCompat="@drawable/ic_left_arrow_2" />
+
+            <ImageView
+                android:id="@+id/fragment_widget_iv_right"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="5dp"
+                android:alpha="0.8"
+                android:contentDescription="@string/right_button"
+                app:srcCompat="@drawable/ic_right_arrow_2" />
 
             <TextView
                 android:id="@+id/fragment_widget_tv_date"
@@ -54,50 +111,8 @@
                 android:textStyle="bold"
                 tools:ignore="RelativeOverlap" />
 
-            <ImageView
-                android:id="@+id/fragment_widget_iv_right"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="5dp"
-                android:alpha="0.8"
-                app:srcCompat="@drawable/ic_right_arrow_2"
-                android:contentDescription="@string/right_button" />
-
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/fragment_widget_rl_chart_case"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_below="@+id/fragment_widget_rl_icons_case" />
-        <RelativeLayout
-            android:id="@+id/fragment_widget_rl_icons_case"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/colorPrimary" />
-
-        <ProgressBar
-            android:id="@+id/fragment_widget_pb"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:visibility="invisible" />
-
-        <TextView
-            android:id="@+id/fragment_widget_tv_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/fragment_widget_rl_chart_case"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="20dp"
-            android:maxLines="1"
-            android:text="@string/loading"
-            android:textColor="@color/colorTextLabel"
-            android:textSize="16sp"
-            android:textStyle="bold" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -108,21 +123,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@color/colorPrimary">
-
-        <TextView
-            android:id="@+id/fragment_widget_rl_info_head_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentEnd="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:text="@string/priboru"
-            android:textColor="@color/colorTextBlack"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:ignore="RelativeOverlap" />
+        android:background="@drawable/rounded_background">
 
         <ImageView
             android:id="@+id/fragment_widget_rl_info_help_iv"
@@ -458,6 +459,20 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/fragment_widget_rl_info_head_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="@string/priboru"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
             android:id="@+id/fragment_widget_rl_info_bottom_discription_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -479,7 +494,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/rounded_background">
 
         <Button
             android:id="@+id/fragment_widget_rl_menu_delete_btn"
