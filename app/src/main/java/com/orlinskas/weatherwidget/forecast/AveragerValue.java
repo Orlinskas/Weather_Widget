@@ -18,4 +18,14 @@ class AveragerValue {
         }
     }
 
+    static double sum(ArrayList<Double> values) {
+        double valueSum = 0;
+
+        for(Double value : values) {
+            valueSum = valueSum + value;
+        }
+
+        return valueSum;
+    }
+
 }
