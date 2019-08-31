@@ -2,10 +2,9 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorHeadBackground</item>
+        <item name="colorAccent">@color/colorHeadAccent</item>
+        <item name="android:spinnerItemStyle">@style/mySpinnerItemSelectedStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -14,7 +13,12 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="mySpinnerItemSelectedStyle" parent="@android:style/Widget.Holo.TextView.SpinnerItem">
+        <item name="android:textColor">@color/colorWidgetTextDescription</item>
+
+        <item name="android:textAlignment">center</item>
+    </style>
 
 </resources>

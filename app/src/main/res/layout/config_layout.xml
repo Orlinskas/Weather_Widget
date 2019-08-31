@@ -28,8 +28,7 @@
         android:layout_below="@+id/config_layout_tv"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:textColor="@color/colorText" />
+        android:layout_marginEnd="10dp" />
 
     <TextView
         android:id="@+id/config_layout_tv_desc_1"

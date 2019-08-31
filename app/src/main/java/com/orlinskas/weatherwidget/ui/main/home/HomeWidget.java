@@ -65,8 +65,6 @@ public class HomeWidget extends AppWidgetProvider {
             switch (actionExtra) {
                 case ACTION_CREATE:
                 case ACTION_DEFAULT:
-                    createWidget(id, context);
-                    break;
                 case ACTION_UPDATE:
                     updateWidget(id,context);
                     break;
@@ -82,7 +80,20 @@ public class HomeWidget extends AppWidgetProvider {
         }
     }
 
-    private void createWidget(int id, Context context) {
+    @Override
+    public void onRestored(Context context, int[] oldWidgetIds, int[] newWidgetIds) {
+        super.onRestored(context, oldWidgetIds, newWidgetIds);
+        Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
+
+        for(int i = 0; i < oldWidgetIds.length; i++) {
+            Widget widget = findWidget(oldWidgetIds[i], context);
+            if (widget != null) {
+                preferences.saveData(Preferences.WIDGET_ID_DEPENDENCE + newWidgetIds[i], widget.getId());
+            }
+        }
+    }
+
+    public void updateWidget(int id, Context context) {
         RemoteViews widgetView = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 
         Intent leftClickIntent = new Intent(context, HomeWidget.class);
@@ -103,10 +114,7 @@ public class HomeWidget extends AppWidgetProvider {
         widgetView.setImageViewResource(R.id.layout_widget_iv_right, R.drawable.ic_right_4);
 
         AppWidgetManager.getInstance(context).updateAppWidget(id, widgetView);
-        updateWidget(id, context);
-    }
 
-    public void updateWidget(int id, Context context) {
         Widget widget = findWidget(id, context);
 
         if(widget != null){
@@ -177,7 +185,7 @@ public class HomeWidget extends AppWidgetProvider {
             try {
                 WeatherIconsSelector selector = new WeatherIconsSelector();
                 ID = selector.findIcon(weathers.get(indexWeather));
-                temperature = weathers.get(indexWeather).getCurrentTemperature() + "°C";
+                temperature = weathers.get(indexWeather).getCurrentTemperature() + "°";
                 dateTime = weathers.get(indexWeather).getTimeOfDataForecast().substring(11);
             } catch (Exception e) {
                 e.printStackTrace();

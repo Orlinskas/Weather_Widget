@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#363540</color>
 
-    <color name="colorAccent">#65839D</color>
+    <color name="colorHeadBackground">#2B2B2B</color>
+    <color name="colorHeadAccent">#FFFFFF</color>
+
+    <color name="colorEmpty">#00FFFFFF</color>
+    <color name="colorAlphaBackground">#71000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorChartTemperature">#FFFFFF</color>
+    <color name="colorChartTimeX">#FFFFFF</color>
+    <color name="colorChartLine">#FFFFFF</color>
+    <color name="colorChartCircle">#FFFFFF</color>
+    <color name="colorChartCircleSmall">#010101</color>
+
+    <color name="colorChartDate">#FFFFFF</color>
+
+    <color name="colorPrimary">#FFFFFF</color>
+
+    <color name="colorAccent">#727273</color>
     <color name="colorAccentLow">#3A444C</color>
-    <color name="colorAccentDuo">#634D64</color>
+
+    <color name="colorAccentDuo">#727273</color>
     <color name="colorAccentDuoLow">#2A212A</color>
     <color name="colorAccentTrio">#2A234B</color>
 
-    <color name="colorBackground">#262626</color>
+    <color name="colorBackground">#C9C9C9</color>
 
     <color name="colorText">#F6F3F3</color>
-    <color name="colorTextBlack">#ACABAB</color>
+    <color name="colorTextBlack">#141414</color>
     <color name="colorTextButton">#D0CCCC</color>
-    <color name="colorTextLabel">#F3B03C</color>
+    <color name="colorTextLabel">#FFB819</color>
 
     <color name="colorRowHigh">#2F2E36</color>
     <color name="colorRowLight">#34333D</color>

@@ -41,7 +41,6 @@ public class ChartBuilder {
 
         chart.setDragEnabled(false);
         chart.setScaleEnabled(false);
-        chart.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         LineDataSet dataSet = createLineDataSet();
@@ -68,25 +67,25 @@ public class ChartBuilder {
 
         dataSet.setMode(LineDataSet.Mode.LINEAR);
         dataSet.setFillAlpha(100);
-        dataSet.setLineWidth(3f);
-        dataSet.setCircleRadius(5f);
-        dataSet.setValueTextSize(15f);
-        dataSet.setCubicIntensity(3f);
+        dataSet.setLineWidth(1f);
+        dataSet.setCircleRadius(4f);
+        dataSet.setValueTextSize(12f);
+        dataSet.setCubicIntensity(2f);
 
-        Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
+        Typeface typeface = Typeface.defaultFromStyle(Typeface.NORMAL);
         dataSet.setValueTypeface(typeface);
 
-        dataSet.setColor(context.getResources().getColor(R.color.colorAccentDuo));
-        dataSet.setCircleColor(context.getResources().getColor(R.color.colorAccent));
-        dataSet.setCircleHoleColor(context.getResources().getColor(R.color.colorTextBlack));
-        dataSet.setValueTextColor(context.getResources().getColor(R.color.colorTextBlack));
+        dataSet.setColor(context.getResources().getColor(R.color.colorChartLine));
+        dataSet.setCircleColor(context.getResources().getColor(R.color.colorChartCircle));
+        dataSet.setCircleHoleColor(context.getResources().getColor(R.color.colorChartCircleSmall));
+        dataSet.setValueTextColor(context.getResources().getColor(R.color.colorChartTemperature));
 
         dataSet.setValueFormatter(new IValueFormatter() {
             @Override
             public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
                 String result = Float.toString(value);
                 if(result.contains(".")) {
-                    result = result.substring(0, result.indexOf("."));
+                    result = " " + result.substring(0, result.indexOf(".")) + "°";
                 }
                 return result;
             }
@@ -112,11 +111,11 @@ public class ChartBuilder {
 
     private LineChart buildXAxis(LineChart chart) {
         XAxis xAxis = chart.getXAxis();
-        Typeface typeface = Typeface.defaultFromStyle(Typeface.BOLD);
+        Typeface typeface = Typeface.defaultFromStyle(Typeface.NORMAL);
         xAxis.setTypeface(typeface);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(12f);
-        xAxis.setTextColor(context.getResources().getColor(R.color.colorTextBlack));
+        xAxis.setTextColor(context.getResources().getColor(R.color.colorChartTimeX));
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(true);
 
