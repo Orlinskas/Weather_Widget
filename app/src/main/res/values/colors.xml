@@ -28,11 +28,8 @@
 
     <color name="colorTextListActivity">#F6F3F3</color>
     <color name="colorBackgroundListActivity">#C9C9C9</color>
-
-
-
-    <color name="colorRowHigh">#2F2E36</color>
-    <color name="colorRowLight">#34333D</color>
+    <color name="colorRowHigh">#EFECEC</color>
+    <color name="colorRowLight">#F6F3F3</color>
 
     <color name="colorWidgetTextDescription">#F3B03C</color>
     <color name="colorWidgetTextDate">#ACABAB</color>
