@@ -7,41 +7,56 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundListActivity">
 
-    <TextView
-        android:id="@+id/activity_city_list_tv"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/activity_city_list_rl_head"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:text="@string/fragment_city_list_tv"
-        android:textColor="@color/colorTextBlack"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/rounded_background">
+
+        <TextView
+            android:id="@+id/activity_city_list_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/fragment_city_list_tv"
+            android:layout_margin="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="20sp" />
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/activity_city_list_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/activity_city_list_et"
-        android:layout_below="@+id/activity_city_list_tv"
-        android:layout_margin="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@color/colorPrimary" />
+        android:layout_below="@id/activity_city_list_rl_head"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_background" />
 
     <EditText
         android:id="@+id/activity_city_list_et"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@color/colorPrimary"
-        android:hint="@string/fragment_city_list_et"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_background"
+        android:hint="@string/fragment_country_list_et"
         android:inputType="textCapWords"
-        android:shadowColor="@color/colorBackgroundListActivity"
-        android:textColor="@color/colorTextListActivity"
-        android:textColorHint="@color/colorTextListActivity"
+        android:padding="5dp"
+        android:textColor="@color/colorTextBlack"
+        android:textColorHint="@color/colorInfoText"
         tools:ignore="Autofill,LabelFor" />
 
     <ProgressBar
