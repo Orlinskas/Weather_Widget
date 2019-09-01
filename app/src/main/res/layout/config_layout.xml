@@ -5,7 +5,7 @@
     android:id="@+id/config_layout_rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="@color/colorBackgroundListActivity">
 
     <TextView
         android:id="@+id/config_layout_tv"
@@ -18,7 +18,7 @@
         android:text="@string/config_head"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/colorText"
+        android:textColor="@color/colorTextListActivity"
         android:textStyle="bold" />
 
     <Spinner

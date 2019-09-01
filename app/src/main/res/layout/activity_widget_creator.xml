@@ -1,19 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_city_data_generator_sv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="@color/colorEmpty">
 
     <RelativeLayout
         android:id="@+id/activity_city_data_generator_rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/rounded_background">
+
+        <Button
+            android:id="@+id/activity_city_data_generator_btn_gps"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/activity_city_data_generator_tv_city_name"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/secondary_button"
+            android:text="@string/fragment_city_data_generator_spn_country"
+            android:textColor="@color/colorTextButton"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/activity_city_data_generator_btn_open_list"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_below="@+id/activity_city_data_generator_btn_gps"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/secondary_button"
+            android:text="@string/fragment_city_data_generator_spn_city"
+            android:textColor="@color/colorTextButton"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/activity_city_data_generator_btn_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_city_data_generator_btn_open_list"
+            android:layout_alignParentBottom="false"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/main_button"
+            android:text="@string/fragment_city_data_generator_btn_start"
+            android:textColor="@color/colorTextButton"
+            android:textSize="18sp" />
 
         <ProgressBar
             android:id="@+id/activity_city_data_generator_pb"
@@ -33,7 +73,7 @@
             android:text="@string/fragment_city_data_generator_tv_head"
             android:textAlignment="viewStart"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorTextListActivity"
             android:textStyle="bold"
             tools:ignore="RelativeOverlap" />
 
@@ -114,22 +154,9 @@
             android:layout_marginTop="5dp"
             android:text="@string/fragment_city_data_generator_tv_country_name"
             android:textAlignment="center"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorTextListActivity"
             android:textSize="18sp"
             android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/activity_city_data_generator_btn_gps"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/activity_city_data_generator_tv_city_name"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/secondary_button"
-            android:text="@string/fragment_city_data_generator_spn_country"
-            android:textColor="@color/colorTextButton"
-            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/activity_city_data_generator_tv_city"
@@ -150,38 +177,9 @@
             android:layout_marginTop="5dp"
             android:text="@string/fragment_city_data_generator_tv_country_name"
             android:textAlignment="center"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorTextListActivity"
             android:textSize="18sp"
             android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/activity_city_data_generator_btn_open_list"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@+id/activity_city_data_generator_btn_gps"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/secondary_button"
-            android:textColor="@color/colorTextButton"
-            android:textSize="12sp"
-            android:text="@string/fragment_city_data_generator_spn_city"
-            />
-
-        <Button
-            android:id="@+id/activity_city_data_generator_btn_start"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/activity_city_data_generator_btn_open_list"
-            android:layout_alignParentBottom="false"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/main_button"
-            android:text="@string/fragment_city_data_generator_btn_start"
-            android:textColor="@color/colorTextButton"
-            android:textSize="18sp" />
     </RelativeLayout>
 </ScrollView>
 

@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -37,7 +38,6 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
     private WidgetContract.Presenter presenter;
     private final String TAG = this.getClass().getSimpleName();
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_widget, container, false);
@@ -61,11 +61,14 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
         widgetID = getWidgetIDArgument();
 
         final Animation buttonClickAnim = AnimationUtils.loadAnimation(getContext(), R.anim.animation_button);
+        final Animation chartOpenAnim = AnimationUtils.loadAnimation(getContext(), R.anim.animation_open_chart);
 
         leftBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(presenter.prevDay()){
+                    chartLayoutCase.startAnimation(chartOpenAnim);
+                    iconsLayoutCase.startAnimation(chartOpenAnim);
                     v.startAnimation(buttonClickAnim);
                 }
             }
@@ -75,6 +78,8 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
             @Override
             public void onClick(View v) {
                 if(presenter.nextDay()) {
+                    chartLayoutCase.startAnimation(chartOpenAnim);
+                    iconsLayoutCase.startAnimation(chartOpenAnim);
                     v.startAnimation(buttonClickAnim);
                 }
             }
@@ -100,6 +105,8 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
 
         return root;
     }
+
+
 
     private int getWidgetIDArgument() {
         int id = 0;

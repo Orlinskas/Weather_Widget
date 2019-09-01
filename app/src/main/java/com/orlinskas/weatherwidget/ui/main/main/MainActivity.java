@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.orlinskas.weatherwidget.ActivityOpener;
 import com.orlinskas.weatherwidget.FirstRunner;
@@ -14,6 +15,7 @@ import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.preferences.FirstRunVerifier;
 import com.orlinskas.weatherwidget.ui.main.other.WidgetCreatorActivity;
+import com.orlinskas.weatherwidget.ui.main.widget.AnimatedBackgroundView;
 
 public class MainActivity extends AppCompatActivity {
     private int backPressCount = 0;
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         processFirstRun(getApplicationContext());
+
+        RelativeLayout relativeLayout = findViewById(R.id.activity_main_rl_background_anim);
+        relativeLayout.addView(new AnimatedBackgroundView(this));
     }
 
     @Override

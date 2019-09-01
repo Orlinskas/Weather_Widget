@@ -9,6 +9,7 @@
     tools:viewContext=".activities.MainActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/activity_main_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -28,14 +29,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary" />
+
     </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/activity_main_rl_background_anim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/back_2"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+    </android.support.v4.view.ViewPager>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -44,4 +52,5 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_plus_to_fab_btn" />
+
 </android.support.design.widget.CoordinatorLayout>

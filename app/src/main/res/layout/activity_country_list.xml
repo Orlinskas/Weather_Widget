@@ -6,7 +6,7 @@
     android:id="@+id/activity_country_list_rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground">
+    android:background="@color/colorBackgroundListActivity">
 
     <TextView
         android:id="@+id/activity_country_list_tv"
@@ -52,9 +52,9 @@
         android:background="@color/colorPrimary"
         android:hint="@string/fragment_country_list_et"
         android:inputType="textCapWords"
-        android:shadowColor="@color/colorBackground"
-        android:textColor="@color/colorText"
-        android:textColorHint="@color/colorText"
+        android:shadowColor="@color/colorBackgroundListActivity"
+        android:textColor="@color/colorTextListActivity"
+        android:textColorHint="@color/colorTextListActivity"
         tools:ignore="Autofill,LabelFor" />
 
     <ProgressBar

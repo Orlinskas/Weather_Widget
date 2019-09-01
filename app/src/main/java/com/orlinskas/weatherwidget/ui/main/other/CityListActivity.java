@@ -72,7 +72,7 @@ public class CityListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                view.setBackgroundColor(getResources().getColor(R.color.colorBackground));
+                view.setBackgroundColor(getResources().getColor(R.color.colorBackgroundListActivity));
                 City city = cities.get(position);
                 resumeMainWidgetCreator(city);
             }
