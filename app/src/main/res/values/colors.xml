@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
 
-    <color name="colorHeadBackground">#2B2B2B</color>
-    <color name="colorHeadAccent">#FFFFFF</color>
+<resources>
+    <color name="colorHeadBackground">#262626</color>
+    <color name="colorHeadAccent">#59343E</color>
 
     <color name="colorEmpty">#00FFFFFF</color>
-    <color name="colorAlphaBackground">#552E2E2E</color>
-    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorAlphaBackground">#793C3C3C</color>
+    <color name="colorRoundedBackground">#FFFFFF</color>
 
     <color name="colorChartTemperature">#FFFFFF</color>
     <color name="colorChartTimeX">#FFFFFF</color>
     <color name="colorChartLine">#FFFFFF</color>
     <color name="colorChartCircle">#FFFFFF</color>
-    <color name="colorChartCircleSmall">#010101</color>
+    <color name="colorChartCircleSmall">#000000</color>
     <color name="colorChartDate">#FFFFFF</color>
 
     <color name="colorControlBarTintButton">#FFFFFF</color>
     <color name="colorControlBarTextScroll">#FFFFFF</color>
 
+    <color name="colorPrimary">#262626</color>
+    <color name="colorAccent">#59343E</color>
     <color name="colorTextLabel">#FFB819</color>
     <color name="colorTextBlack">#141414</color>
     <color name="colorInfoText">#474747</color>
-    <color name="colorTextButton">#D0CCCC</color>
+    <color name="colorSecondaryButton">#A69F9B</color>
+    <color name="colorTextButton">#FFFFFF</color>
 
     <color name="colorTextListActivity">#F6F3F3</color>
     <color name="colorBackgroundListActivity">#C9C9C9</color>
 
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorAccent">#727273</color>
-    <color name="colorSecondaryButton">#727273</color>
+
 
     <color name="colorRowHigh">#2F2E36</color>
     <color name="colorRowLight">#34333D</color>

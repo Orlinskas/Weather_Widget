@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_widget_sv"
@@ -105,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-medium"
+                    android:fontFamily="sans-serif-condensed-medium"
                     android:maxLines="1"
                     android:text="@string/tv_date"
                     android:textColor="@color/colorChartDate"
@@ -123,6 +124,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:maxLines="1"
                 android:shadowColor="@color/colorWidgetShadow"
                 android:shadowDx="2"
@@ -131,8 +133,7 @@
                 android:text="@string/loading"
                 android:textAlignment="center"
                 android:textColor="@color/colorTextLabel"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:textSize="18sp"
                 tools:layout_centerHorizontal="true" />
 
 
@@ -149,31 +150,31 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/rounded_background">
 
-            <Button
-                android:id="@+id/fragment_widget_rl_menu_delete_btn"
-                android:layout_width="135dp"
-                android:layout_height="27dp"
-                android:layout_below="@+id/fragment_widget_rl_info_help_iv"
-                android:layout_alignParentBottom="false"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/secondary_button"
-                android:text="@string/delete_widget"
-                android:textColor="@color/colorTextButton"
-                android:textSize="12sp" />
-
-            <ImageView
-                android:id="@+id/fragment_widget_rl_info_help_iv"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_below="@+id/fragment_widget_rl_info_bottom_discription_tv"
+            <TextView
+                android:id="@+id/fragment_widget_rl_info_head_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="false"
+                android:layout_centerHorizontal="false"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:contentDescription="@string/help"
-                app:srcCompat="@drawable/ic_help_2" />
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-light"
+                android:text="@string/priboru"
+                android:textColor="@color/colorTextBlack"
+                android:textSize="18sp"
+                tools:ignore="RelativeOverlap" />
+
+            <View
+                android:id="@+id/fragmen_widget_view_line"
+                style="@style/Divider"
+                android:layout_below="@+id/fragment_widget_rl_info_head_tv"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp" />
 
             <RelativeLayout
                 android:id="@+id/fragment_widget_rl_info_pressure_rl"
@@ -484,21 +485,15 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/fragment_widget_rl_info_head_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="false"
-                android:layout_centerHorizontal="false"
+            <View
+                android:id="@+id/fragmen_widget_view_line_bot"
+                style="@style/Divider"
+                android:layout_below="@+id/fragment_widget_rl_info_snow_rl"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-light"
-                android:text="@string/priboru"
-                android:textColor="@color/colorTextBlack"
-                android:textSize="18sp"
-                tools:ignore="RelativeOverlap" />
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp" />
 
             <TextView
                 android:id="@+id/fragment_widget_rl_info_bottom_discription_tv"
@@ -513,25 +508,31 @@
                 android:textSize="12sp"
                 android:textStyle="italic" />
 
-            <View
-                android:id="@+id/fragmen_widget_view_line"
-                style="@style/Divider"
-                android:layout_below="@+id/fragment_widget_rl_info_head_tv"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
+            <ImageView
+                android:id="@+id/fragment_widget_rl_info_help_iv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_below="@+id/fragment_widget_rl_info_bottom_discription_tv"
+                android:layout_alignParentEnd="false"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp" />
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:contentDescription="@string/help"
+                app:srcCompat="@drawable/ic_help_2" />
 
-            <View
-                android:id="@+id/fragmen_widget_view_line_bot"
-                style="@style/Divider"
-                android:layout_below="@+id/fragment_widget_rl_info_snow_rl"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp" />
+            <Button
+                android:id="@+id/fragment_widget_rl_menu_delete_btn"
+                android:layout_width="135dp"
+                android:layout_height="27dp"
+                android:layout_below="@+id/fragment_widget_rl_info_help_iv"
+                android:layout_alignParentBottom="false"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/secondary_button"
+                android:text="@string/delete_widget"
+                android:textColor="@color/colorTextButton"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 

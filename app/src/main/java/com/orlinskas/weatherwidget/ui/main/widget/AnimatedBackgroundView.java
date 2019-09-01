@@ -21,7 +21,7 @@ public class AnimatedBackgroundView extends View {
     public AnimatedBackgroundView(Context context) {
         super(context);
         try {
-            is = context.getResources().openRawResource(R.drawable.gif_sky_2);
+            is = context.getResources().openRawResource(R.drawable.gif_clouds_blur);
             movie = Movie.decodeStream(is);
         } catch (Exception e) {
             e.printStackTrace();
