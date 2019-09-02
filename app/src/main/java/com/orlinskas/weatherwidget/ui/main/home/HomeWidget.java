@@ -185,7 +185,13 @@ public class HomeWidget extends AppWidgetProvider {
             try {
                 WeatherIconsSelector selector = new WeatherIconsSelector();
                 ID = selector.findIcon(weathers.get(indexWeather));
-                temperature = weathers.get(indexWeather).getCurrentTemperature() + "°";
+                int temp = weathers.get(indexWeather).getCurrentTemperature();
+                if(temp < 0) {
+                    temperature = "-" + temp + "°";
+                }
+                else {
+                    temperature = " " + temp + "°";
+                }
                 dateTime = weathers.get(indexWeather).getTimeOfDataForecast().substring(11);
             } catch (Exception e) {
                 e.printStackTrace();
