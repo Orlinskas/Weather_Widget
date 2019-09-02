@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class JSONSteamReader {
-    public String read(InputStream is) {
+class JSONSteamReader {
+    String read(InputStream is) {
         StringBuilder json = new StringBuilder();
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));

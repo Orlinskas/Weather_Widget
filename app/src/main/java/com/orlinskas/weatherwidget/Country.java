@@ -12,10 +12,6 @@ public class Country implements Serializable {
         this.name = name;
     }
 
-    public Country(String code) {
-        this.code = code;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,15 +30,8 @@ public class Country implements Serializable {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

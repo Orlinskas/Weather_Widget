@@ -27,6 +27,7 @@ import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.repository.CityListPresenter;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CityListActivity extends AppCompatActivity {
     private ListView listView;
@@ -104,7 +105,7 @@ public class CityListActivity extends AppCompatActivity {
     }
 
     private void showLoadingAndHideUI() {
-        String message = "Загрузка городов для - " + country.getName();
+        String message = String.format("%s %s", getString(R.string.load_cities_for), country.getName());
         headText.setText(message);
         progressBar.setVisibility(View.VISIBLE);
         listView.setVisibility(View.INVISIBLE);
@@ -117,11 +118,11 @@ public class CityListActivity extends AppCompatActivity {
     }
 
     private void hideLoadingAndShowUI() {
-        headText.setText("Город");
+        headText.setText(getString(R.string.city_2));
         progressBar.setVisibility(View.INVISIBLE);
         listView.setVisibility(View.VISIBLE);
         searchCityField.setVisibility(View.VISIBLE);
-        ToastBuilder.create(getApplicationContext(), "Доступно - " + cities.size() + " городов.");
+        ToastBuilder.createSnackBar(listView, String.format(Locale.US, "%s %d %s", getString(R.string.have), cities.size(), getString(R.string.cities)));
     }
 
     private class CityListAdapter extends ArrayAdapter<City> {

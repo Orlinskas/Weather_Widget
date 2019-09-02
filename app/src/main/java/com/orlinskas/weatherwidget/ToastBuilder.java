@@ -1,6 +1,8 @@
 package com.orlinskas.weatherwidget;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 import android.widget.Toast;
 
 public class ToastBuilder {
@@ -10,9 +12,11 @@ public class ToastBuilder {
         toast.show();
     }
 
-    public static void createLong (Context context, String text){
-        Toast toast = Toast.makeText(context,
-                text, Toast.LENGTH_LONG);
-        toast.show();
+    public static void createSnackBar (View view, String message) {
+        try {
+            Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

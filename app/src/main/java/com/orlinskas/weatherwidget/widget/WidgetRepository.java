@@ -13,7 +13,7 @@ public class WidgetRepository {
         serializer = new WidgetSerializer(context);
     }
 
-    public boolean add(Widget widget) throws Exception {
+    public boolean add(Widget widget) {
         try {
             WidgetsList widgetsList = serializer.loadList();
             ArrayList<Widget> widgets = widgetsList.getWidgets();
@@ -37,7 +37,7 @@ public class WidgetRepository {
         serializer.saveList(widgetsList);
     }
 
-    public boolean remote(Widget widget) throws Exception {
+    public boolean remote(Widget widget) {
         try {
             WidgetsList widgetsList = serializer.loadList();
             ArrayList<Widget> widgets = widgetsList.getWidgets();

@@ -18,14 +18,14 @@ import com.orlinskas.weatherwidget.ui.main.other.WidgetCreatorActivity;
 import com.orlinskas.weatherwidget.ui.main.widget.AnimatedBackgroundView;
 
 public class MainActivity extends AppCompatActivity {
-    private int backPressCount = 0;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
@@ -53,22 +53,17 @@ public class MainActivity extends AppCompatActivity {
         FirstRunVerifier firstRunVerifier = new FirstRunVerifier(applicationContext);
 
         if(!firstRunVerifier.check()) {
-            ToastBuilder.create(applicationContext, "Открытие базы данных...");
+            ToastBuilder.createSnackBar(viewPager, getString(R.string.open_data));
 
             FirstRunner firstRunner = new FirstRunner(applicationContext);
             firstRunner.doFirstRun();
 
             firstRunVerifier.setFirstRun(true);
-
-            ToastBuilder.create(applicationContext, "Готово!");
         }
     }
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        backPressCount++;
-        if(backPressCount == 1) ToastBuilder.create(this, "Нажмите еще раз для выхода");
-        else if(backPressCount == 2) this.finish();
+        this.finish();
     }
 }

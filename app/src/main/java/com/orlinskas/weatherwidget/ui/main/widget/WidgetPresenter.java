@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.chart.ChartBuilder;
 import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
 import com.orlinskas.weatherwidget.forecast.Forecast;
@@ -82,14 +83,12 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
 
     private void startUpdate() {
         int sendWidgetID = widget.getId();
-        String cityName = widget.getCity().getName();
 
         if(isInternetConnection(viewContext)) {
-            view.doSnackBar(cityName + " - обновляется...");
             model.doUpdate(sendWidgetID, appContext);
         }
         else {
-            view.doToast("Выключен интернет");
+            view.doToast(viewContext.getString(R.string.internet_is_off));
         }
     }
 
@@ -183,30 +182,30 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
         try {
             return String.format(
                     "%1$s %2$s %3$s %4$s.",
-                    "Доступно с",
+                    viewContext.getString(R.string.avialable_from),
                     widget.getDaysForecast().get(0).getDayDate(),
-                    "до",
+                    viewContext.getString(R.string.to),
                     widget.getDaysForecast().get(dayCount).getDayDate()
             );
         } catch (Exception e) {
             e.printStackTrace();
-            return "Пока нет данных";
+            return viewContext.getString(R.string.empty_data);
         }
     }
 
     @Override
-    public void onUpdateFinished() {
+    public void onUpdateFinished(String name) {
         this.widget = findWidgetInRepo(widgetID);
         view.stopProgressDialog();
-        view.doSnackBar("Обновлено");
+        view.doSnackBar(String.format("%s %s", name, viewContext.getString(R.string.update)));
         dayNumber = 0;
         dayCount = this.widget.getDaysForecast().size() - 1;
         showViewElements();
     }
 
     @Override
-    public void onUpdateFailed() {
-        view.doSnackBar("Ошибка получения данных");
+    public void onUpdateFailed(String message) {
+        view.doSnackBar(viewContext.getString(R.string.error_get_data));
     }
 
     @Override

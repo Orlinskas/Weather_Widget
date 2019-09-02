@@ -19,7 +19,7 @@ public class CountryRepository implements Repository<Country> {
     private SQLiteDatabase database;
     private CountryDatabaseAdapter countryDatabaseAdapter;
 
-    public CountryRepository(Context context) {
+    CountryRepository(Context context) {
         countryDatabaseAdapter = new CountryDatabaseAdapter(context);
     }
 
@@ -70,11 +70,7 @@ public class CountryRepository implements Repository<Country> {
                     String code = cursor.getString(cursor.getColumnIndex(COLUMN_COUNTRY_CODE));
                     String name = cursor.getString(cursor.getColumnIndex(COLUMN_COUNTRY_NAME));
 
-                    if (name != null) {
-                        countries.add(new Country(code, name));
-                    } else {
-                        countries.add(new Country(code));
-                    }
+                    countries.add(new Country(code, name));
                 }while (cursor.moveToNext());
             }
             cursor.close();

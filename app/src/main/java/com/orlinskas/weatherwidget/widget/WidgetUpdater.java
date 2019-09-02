@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.widget;
+package com.orlinskas.weatherwidget.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,19 +9,11 @@ import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.forecast.ForecastListBuilder;
 import com.orlinskas.weatherwidget.forecast.WeatherReceiver;
 import com.orlinskas.weatherwidget.preferences.Preferences;
-import com.orlinskas.weatherwidget.widget.Widget;
-import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
-public class WidgetModel implements WidgetContract.WidgetModel {
-    private WidgetUpdateListener presenter;
+public class WidgetUpdater {
 
-    WidgetModel(WidgetUpdateListener presenter) {
-        this.presenter = presenter;
-    }
-
-    @Override
     public void doUpdate(int widgetID, Context appContext) {
-        UpdateWidgetTask task = new UpdateWidgetTask(appContext, widgetID, presenter);
+        UpdateWidgetTask task = new UpdateWidgetTask(appContext, widgetID);
         task.execute();
     }
 
@@ -29,18 +21,15 @@ public class WidgetModel implements WidgetContract.WidgetModel {
     private class UpdateWidgetTask extends AsyncTask<Void, Void, Void> {
         private Context context;
         private int widgetID;
-        private WidgetUpdateListener presenter;
-        private Throwable error;
-        private Widget widget;
 
-        UpdateWidgetTask(Context context, int widgetID, WidgetUpdateListener presenter) {
+        UpdateWidgetTask(Context context, int widgetID) {
             this.context = context;
             this.widgetID = widgetID;
-            this.presenter = presenter;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Widget widget;
             try {
                 widget = findWidgetInRepo(widgetID);
                 sendRequest(widget);
@@ -49,7 +38,6 @@ public class WidgetModel implements WidgetContract.WidgetModel {
                 saveWidgetUpdateDate(widget);
             } catch (Exception e) {
                 e.printStackTrace();
-                error = e;
             }
             return null;
         }
@@ -57,16 +45,6 @@ public class WidgetModel implements WidgetContract.WidgetModel {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            generateCallBack();
-        }
-
-        private void generateCallBack() {
-            if(error == null) {
-                presenter.onUpdateFinished(widget.getCity().getName());
-            }
-            else {
-                presenter.onUpdateFailed(error.getMessage());
-            }
         }
 
         private Widget findWidgetInRepo(int widgetID) {
@@ -78,14 +56,6 @@ public class WidgetModel implements WidgetContract.WidgetModel {
                 e.printStackTrace();
             }
             return widget;
-        }
-
-        private void saveWidgetUpdateDate(Widget widget) {
-            String key = String.valueOf(widget.getId());
-            String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
-
-            Preferences preferences = Preferences.getInstance(context,Preferences.WIDGET_UPDATE_DATES);
-            preferences.saveData(key, currentDate);
         }
 
         private void sendRequest(Widget widget) throws Exception {
@@ -101,6 +71,14 @@ public class WidgetModel implements WidgetContract.WidgetModel {
         private void updateWidgetInRepository(Widget widget) throws Exception {
             WidgetRepository repository = new WidgetRepository(context);
             repository.update(widget);
+        }
+
+        private void saveWidgetUpdateDate(Widget widget) {
+            String key = String.valueOf(widget.getId());
+            String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
+
+            Preferences preferences = Preferences.getInstance(context,Preferences.WIDGET_UPDATE_DATES);
+            preferences.saveData(key, currentDate);
         }
     }
 }

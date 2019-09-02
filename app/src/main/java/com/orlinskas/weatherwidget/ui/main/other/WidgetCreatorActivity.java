@@ -37,7 +37,6 @@ import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 @SuppressLint("MissingPermission")
 public class WidgetCreatorActivity extends AppCompatActivity {
-    private Button searchLocationBtn, openListLocationsBtn, createWidgetButton;
     private TextView countryName, cityName;
     private TextView indicatorGpsOn, indicatorNetworkOn, indicatorGpsOff, indicatorNetworkOff;
     private ProgressBar progressBar;
@@ -54,9 +53,9 @@ public class WidgetCreatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_widget_creator);
         progressBar = findViewById(R.id.activity_city_data_generator_pb);
-        searchLocationBtn = findViewById(R.id.activity_city_data_generator_btn_gps);
-        openListLocationsBtn = findViewById(R.id.activity_city_data_generator_btn_open_list);
-        createWidgetButton = findViewById(R.id.activity_city_data_generator_btn_start);
+        Button searchLocationBtn = findViewById(R.id.activity_city_data_generator_btn_gps);
+        Button openListLocationsBtn = findViewById(R.id.activity_city_data_generator_btn_open_list);
+        Button createWidgetButton = findViewById(R.id.activity_city_data_generator_btn_start);
 
         countryName = findViewById(R.id.activity_city_data_generator_tv_country_name);
         cityName = findViewById(R.id.activity_city_data_generator_tv_city_name);
@@ -76,7 +75,7 @@ public class WidgetCreatorActivity extends AppCompatActivity {
             public void onClick(View v) {
                 v.startAnimation(buttonClickAnim);
                 if(isSearchTaskRunning()){
-                    ToastBuilder.create(getApplicationContext(), "Поиск уже начат, пожождите..");
+                    ToastBuilder.create(getApplicationContext(), getString(R.string.search_working));
                 }
                 else {
                     permissionGPS = checkPermissionGPSLocation();
@@ -92,7 +91,7 @@ public class WidgetCreatorActivity extends AppCompatActivity {
                     String provider = chooseAvailableProvider();
 
                     if (provider == null) {
-                        ToastBuilder.create(getApplicationContext(), "Разрешите доступ или включите GPS");
+                        ToastBuilder.create(getApplicationContext(), getString(R.string.acces_permission));
                     } else {
                         runSearchLocationTask(provider);
                     }
@@ -281,7 +280,7 @@ public class WidgetCreatorActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
-            ToastBuilder.create(getApplicationContext(), "Поиск..");
+            ToastBuilder.create(getApplicationContext(), getString(R.string.search));
 
             locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
             LocationListener locationListener = new LocationListener() {
@@ -340,7 +339,7 @@ public class WidgetCreatorActivity extends AppCompatActivity {
 
     private void showResultSearchTask(City city) {
         if(city == null) {
-            ToastBuilder.create(getApplicationContext(), "Не найдено");
+            ToastBuilder.create(getApplicationContext(), getString(R.string.not_found));
         }
         else {
             this.city = city;
@@ -386,7 +385,7 @@ public class WidgetCreatorActivity extends AppCompatActivity {
 
                 WidgetCopyChecker checker = new WidgetCopyChecker(this, widget);
                 if(checker.check()){
-                    ToastBuilder.create(getApplicationContext(),"Уже создан");
+                    ToastBuilder.create(getApplicationContext(),getString(R.string.almost_have));
                 }
                 else {
                     widgetRepository.add(widget);
@@ -395,7 +394,7 @@ public class WidgetCreatorActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                ToastBuilder.create(getApplicationContext(),"Ошибка создания виджета");
+                ToastBuilder.create(getApplicationContext(),getString(R.string.error_widget_create));
             }
         }
     }
@@ -406,12 +405,12 @@ public class WidgetCreatorActivity extends AppCompatActivity {
                 return true;
             }
             else {
-                ToastBuilder.create(getApplicationContext(), "Не корректное местоположение");
+                ToastBuilder.create(getApplicationContext(), getString(R.string.uncorrect_place));
                 return false;
             }
         }
         else {
-            ToastBuilder.create(getApplicationContext(), "Не указано местоположение");
+            ToastBuilder.create(getApplicationContext(), getString(R.string.not_writed_plase));
             return false;
         }
 

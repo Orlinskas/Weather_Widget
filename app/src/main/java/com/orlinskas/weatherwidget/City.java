@@ -10,9 +10,6 @@ public class City implements Serializable {
     private double coordLon;
     private double coordLat;
 
-    public City() {
-    }
-
     public City(int id, String name, String countryCode, double coordLon, double coordLat) {
         this.id = id;
         this.name = name;
@@ -42,39 +39,20 @@ public class City implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getCountryCode() {
         return countryCode;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
-
     public double getCoordLon() {
         return coordLon;
-    }
-
-    public void setCoordLon(double coordLon) {
-        this.coordLon = coordLon;
     }
 
     public double getCoordLat() {
         return coordLat;
     }
 
-    public void setCoordLat(double coordLat) {
-        this.coordLat = coordLat;
-    }
 }

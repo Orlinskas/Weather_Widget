@@ -54,10 +54,6 @@ public class Widget implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public Request getRequest() {
         return request;
     }

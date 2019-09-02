@@ -3,7 +3,6 @@ package com.orlinskas.weatherwidget.ui.main.widget;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -32,8 +30,8 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
     private ProgressBar progressBar;
     private RelativeLayout iconsLayoutCase;
     private RelativeLayout chartLayoutCase;
-    private ImageView leftBtn, rightBtn, helpBtn;
-    private Button deleteBtn;
+    private ImageView leftBtn;
+    private ImageView rightBtn;
     private TextView currentDateTV, chartDescriptionTV, pressureValTV, humidityValTV, windSpeedValTV, rainValTV, snowValTV;
     private WidgetContract.Presenter presenter;
     private final String TAG = this.getClass().getSimpleName();
@@ -55,8 +53,8 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
         rainValTV  = root.findViewById(R.id.fragment_widget_rl_info_rain_tv_value);
         snowValTV = root.findViewById(R.id.fragment_widget_rl_info_snow_tv_value);
 
-        deleteBtn = root.findViewById(R.id.fragment_widget_rl_menu_delete_btn);
-        helpBtn = root.findViewById(R.id.fragment_widget_rl_info_help_iv);
+        Button deleteBtn = root.findViewById(R.id.fragment_widget_rl_menu_delete_btn);
+        ImageView helpBtn = root.findViewById(R.id.fragment_widget_rl_info_help_iv);
 
         widgetID = getWidgetIDArgument();
 
@@ -105,8 +103,6 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
 
         return root;
     }
-
-
 
     private int getWidgetIDArgument() {
         int id = 0;
@@ -169,7 +165,7 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
 
     @Override
     public void doSnackBar(String message) {
-        Snackbar.make(Objects.requireNonNull(getView()), message, Snackbar.LENGTH_LONG).show();
+        ToastBuilder.createSnackBar(getView(), message);
     }
 
     @Override

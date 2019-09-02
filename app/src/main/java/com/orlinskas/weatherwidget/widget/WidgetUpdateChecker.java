@@ -43,7 +43,7 @@ public class WidgetUpdateChecker {
         DateCalculator calculator = new DateCalculator();
         int hours = calculator.calculateDifferencesInHours(lastUpdateDate, currentDate);
 
-        return hours > 12;
+        return hours > 6;
     }
 
     private Widget findWidgetInRepo(int widgetID) {

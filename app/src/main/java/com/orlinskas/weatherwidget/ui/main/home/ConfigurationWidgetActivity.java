@@ -50,7 +50,7 @@ public class ConfigurationWidgetActivity extends Activity {
             setSpinnerAdapter(widgets);
         } catch (Exception e) {
             e.printStackTrace();
-            ToastBuilder.create(getBaseContext(),"Создайте виджет в приложении");
+            ToastBuilder.create(getBaseContext(),getString(R.string.greate_widget_in_app));
             finish();
         }
     }
