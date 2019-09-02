@@ -19,6 +19,8 @@ import com.orlinskas.weatherwidget.ui.main.widget.AnimatedBackgroundView;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
+    private boolean haveFirstRun;
+    private FirstRunVerifier firstRunVerifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,14 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
 
+        firstRunVerifier = new FirstRunVerifier(getApplicationContext());
+        haveFirstRun = firstRunVerifier.check();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!haveFirstRun) {
+                    finish();
+                }
                 ActivityOpener.openActivity(getApplicationContext(), WidgetCreatorActivity.class);
             }
         });
@@ -44,15 +51,8 @@ public class MainActivity extends AppCompatActivity {
         relativeLayout.addView(new AnimatedBackgroundView(this));
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     private void processFirstRun(Context applicationContext) {
-        FirstRunVerifier firstRunVerifier = new FirstRunVerifier(applicationContext);
-
-        if(!firstRunVerifier.check()) {
+        if(!haveFirstRun) {
             ToastBuilder.createSnackBar(viewPager, getString(R.string.open_data));
 
             FirstRunner firstRunner = new FirstRunner(applicationContext);
