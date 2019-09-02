@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherWidget</string>
+    <string name="app_name">Weather</string>
     <string name="tab_text_1">Виджет</string>
     <string name="tab_text_2">Создать</string>
     <string name="fragment_city_data_generator_tv_head">Создание виджета</string>
