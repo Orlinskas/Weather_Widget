@@ -416,4 +416,9 @@ public class WidgetCreatorActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        ActivityOpener.openActivity(getApplicationContext(),MainActivity.class);
+    }
 }

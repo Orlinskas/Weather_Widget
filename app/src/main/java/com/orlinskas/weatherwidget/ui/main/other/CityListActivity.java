@@ -122,7 +122,7 @@ public class CityListActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
         listView.setVisibility(View.VISIBLE);
         searchCityField.setVisibility(View.VISIBLE);
-        ToastBuilder.createSnackBar(listView, String.format(Locale.US, "%s %d %s", getString(R.string.have), cities.size(), getString(R.string.cities)));
+        ToastBuilder.create(this, String.format(Locale.US, "%s %d %s", getString(R.string.have), cities.size(), getString(R.string.cities)));
     }
 
     private class CityListAdapter extends ArrayAdapter<City> {

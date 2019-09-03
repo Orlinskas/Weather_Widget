@@ -16,6 +16,7 @@ import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.preferences.FirstRunVerifier;
 import com.orlinskas.weatherwidget.ui.main.other.WidgetCreatorActivity;
 import com.orlinskas.weatherwidget.ui.main.widget.AnimatedBackgroundView;
+import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
-        TabLayout tabs = findViewById(R.id.tabs);
+        final TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
 
@@ -38,10 +39,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!haveFirstRun) {
-                    finish();
-                }
                 ActivityOpener.openActivity(getApplicationContext(), WidgetCreatorActivity.class);
+                finish();
             }
         });
 
