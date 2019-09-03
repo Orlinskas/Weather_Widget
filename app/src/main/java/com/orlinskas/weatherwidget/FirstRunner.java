@@ -15,6 +15,7 @@ public class FirstRunner {
     public void doFirstRun() {
         createCityDatabase();
         createCountryDatabase();
+        setAlarmManager();
     }
 
     private void createCountryDatabase() {
@@ -27,5 +28,10 @@ public class FirstRunner {
         CityDatabaseAdapter cityDatabaseAdapter = new CityDatabaseAdapter(context);
         cityDatabaseAdapter.createDatabase();
         cityDatabaseAdapter.getDatabase().close();
+    }
+
+    private void setAlarmManager() {
+        AlarmManagerSetter managerSetter = new AlarmManagerSetter();
+        managerSetter.setAlarm(context);
     }
 }

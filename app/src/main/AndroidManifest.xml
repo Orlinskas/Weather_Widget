@@ -47,9 +47,12 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.main.other.CountryListActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.main.other.CityListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.main.other.HelpActivity"
             android:screenOrientation="portrait"/>
 
         <receiver
@@ -73,8 +76,8 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.other.HelpActivity" />
 
+        <receiver android:name=".UpdateReceiver" />
 
     </application>
 

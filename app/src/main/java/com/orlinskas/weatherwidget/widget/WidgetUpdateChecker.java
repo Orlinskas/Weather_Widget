@@ -13,6 +13,7 @@ public class WidgetUpdateChecker {
     private int widgetID;
     private Context context;
     private Preferences preferences;
+    private final int NEED_TIME_TO_UPDATE = 1;
 
     public WidgetUpdateChecker(int widgetID, Context context) {
         this.context = context;
@@ -43,7 +44,7 @@ public class WidgetUpdateChecker {
         DateCalculator calculator = new DateCalculator();
         int hours = calculator.calculateDifferencesInHours(lastUpdateDate, currentDate);
 
-        return hours > 6;
+        return hours > NEED_TIME_TO_UPDATE;
     }
 
     private Widget findWidgetInRepo(int widgetID) {

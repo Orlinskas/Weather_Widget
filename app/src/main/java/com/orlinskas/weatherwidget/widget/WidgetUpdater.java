@@ -10,9 +10,9 @@ import com.orlinskas.weatherwidget.forecast.ForecastListBuilder;
 import com.orlinskas.weatherwidget.forecast.WeatherReceiver;
 import com.orlinskas.weatherwidget.preferences.Preferences;
 
-public class WidgetUpdater {
+class WidgetUpdater {
 
-    public void doUpdate(int widgetID, Context appContext) {
+    void doUpdate(int widgetID, Context appContext) {
         UpdateWidgetTask task = new UpdateWidgetTask(appContext, widgetID);
         task.execute();
     }
