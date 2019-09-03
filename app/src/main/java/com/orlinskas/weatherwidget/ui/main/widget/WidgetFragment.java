@@ -1,9 +1,10 @@
 package com.orlinskas.weatherwidget.ui.main.widget;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,6 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
     private ImageView rightBtn;
     private TextView currentDateTV, chartDescriptionTV, pressureValTV, humidityValTV, windSpeedValTV, rainValTV, snowValTV;
     private WidgetContract.Presenter presenter;
-    private final String TAG = this.getClass().getSimpleName();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,11 +95,9 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
             @Override
             public void onClick(View v) {
                 v.startAnimation(buttonClickAnim);
-                presenter.removeWidget(widgetID);
+                showDeleteDialog();
             }
         });
-
-        Log.d(TAG, "fragmentRun");
 
         return root;
     }
@@ -201,6 +199,25 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
     public void stopProgressDialog() {
         iconsLayoutCase.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public void showDeleteDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+
+        dialog.setTitle(getString(R.string.warning));
+        dialog.setMessage(getString(R.string.delete_widget) + "?");
+        dialog.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                presenter.removeWidget(widgetID);
+            }
+        });
+        dialog.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 
     @Override

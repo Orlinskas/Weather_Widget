@@ -35,7 +35,7 @@
     <string name="persent">%</string>
     <string name="rain_name">Дождь</string>
     <string name="snow">Снег</string>
-    <string name="delete_widget">удалить виджет</string>
+    <string name="delete_widget">Удалить виджет</string>
     <string name="mm_day">mm/day</string>
     <string name="discriprion_rl_info">*указаны средние значения за сутки</string>
     <string name="config_head">Выберите ваш виджет из списка</string>
@@ -67,6 +67,9 @@
     <string name="error_widget_create">Ошибка создания виджета</string>
     <string name="uncorrect_place">Не корректное местоположение</string>
     <string name="not_writed_plase">Не указано местоположение</string>
+    <string name="warning">Подтверждение</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
     <string-array name="spinner">
         <item>выбрать…</item>
     </string-array>

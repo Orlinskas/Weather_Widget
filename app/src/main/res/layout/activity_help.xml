@@ -2,20 +2,20 @@
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/config_layout_sv"
+    android:id="@+id/activity_help_sv"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundListActivity">
 
     <RelativeLayout
-        android:id="@+id/config_layout_rl"
+        android:id="@+id/activity_help_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/rounded_background">
 
         <TextView
-            android:id="@+id/config_layout_tv"
+            android:id="@+id/activity_help_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -28,39 +28,21 @@
             android:textColor="@color/colorTextBlack" />
 
         <View
-            android:id="@+id/config_layout_view_line_top"
+            android:id="@+id/activity_help_view_line_top"
             style="@style/Divider"
-            android:layout_below="@id/config_layout_tv"
+            android:layout_below="@id/activity_help_tv"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp" />
 
-        <Spinner
-            android:id="@+id/config_layout_spn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/config_layout_view_line_top"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp" />
-
-        <View
-            android:id="@+id/config_layout_view_line_bot"
-            style="@style/Divider"
-            android:layout_below="@id/config_layout_spn"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp" />
 
         <TextView
-            android:id="@+id/config_layout_desc_2"
+            android:id="@+id/activity_help_desc_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/config_layout_view_line_bot"
+            android:layout_below="@id/activity_help_tv"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="5dp"
@@ -71,10 +53,10 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/config_layout_desc_3"
+            android:id="@+id/activity_help_desc_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/config_layout_desc_2"
+            android:layout_below="@+id/activity_help_desc_2"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="5dp"
@@ -85,37 +67,25 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/config_layout_desc_4"
+            android:id="@+id/activity_help_desc_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/config_layout_desc_3"
+            android:layout_below="@+id/activity_help_desc_3"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="5dp"
+            android:layout_marginBottom="50dp"
             android:fontFamily="sans-serif-light"
             android:text="@string/config_body_descr_4"
             android:textAlignment="viewStart"
             android:textColor="@color/colorInfoText"
             android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/config_layout_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/config_layout_desc_4"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/main_button"
-            android:onClick="onClickCreate"
-            android:text="@string/btn_config"
-            android:textColor="@color/colorTextButton"
-            android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/config_layout_desc_tv_bottom"
+            android:id="@+id/activity_help_desc_tv_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/config_layout_btn"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
