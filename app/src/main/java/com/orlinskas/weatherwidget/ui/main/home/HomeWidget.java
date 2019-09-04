@@ -14,6 +14,7 @@ import com.orlinskas.weatherwidget.forecast.Weather;
 import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
+import com.orlinskas.weatherwidget.widget.WidgetsUpdater;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class HomeWidget extends AppWidgetProvider {
     public static final String ACTION_UPDATE = "update";
     private final String ACTION_CLICK_LEFT = "leftAreaClick";
     private final String ACTION_CLICK_RIGHT = "rightAreaClick";
+    private final String ACTION_CLICK_CENTER = "centerAreaClick";
 
     private final int[] imageViewIDsIcons = new int[]
             {R.id.layout_widget_ll_chart_case_icon_1, R.id.layout_widget_ll_chart_case_icon_2,
@@ -67,6 +69,10 @@ public class HomeWidget extends AppWidgetProvider {
                 case ACTION_DEFAULT:
                 case ACTION_UPDATE:
                     updateWidget(id,context);
+                case ACTION_CLICK_CENTER:
+                    WidgetsUpdater widgetsUpdater = new WidgetsUpdater(context);
+                    widgetsUpdater.update();
+                    updateWidget(id,context);
                     break;
                 case ACTION_CLICK_LEFT:
                     writeDayNumber(dayNumber - 1, id, context);
@@ -108,8 +114,16 @@ public class HomeWidget extends AppWidgetProvider {
         rightClickIntent.putExtra(ACTION, ACTION_CLICK_RIGHT);
         PendingIntent pRightIntent = PendingIntent.getBroadcast(context, id + 200, rightClickIntent, 0);
 
+        Intent centerClickIntent = new Intent(context, HomeWidget.class);
+        centerClickIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        centerClickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id);
+        centerClickIntent.putExtra(ACTION, ACTION_CLICK_CENTER);
+        PendingIntent pCenterIntent = PendingIntent.getBroadcast(context, id + 300, centerClickIntent, 0);
+
         widgetView.setOnClickPendingIntent(R.id.layout_widget_btn_left_click_area, pLeftIntent);
         widgetView.setOnClickPendingIntent(R.id.layout_widget_btn_right_click_area, pRightIntent);
+        widgetView.setOnClickPendingIntent(R.id.layout_widget_btn_center_click_area, pCenterIntent);
+
         widgetView.setImageViewResource(R.id.layout_widget_iv_left, R.drawable.ic_left_4);
         widgetView.setImageViewResource(R.id.layout_widget_iv_right, R.drawable.ic_right_4);
 
@@ -117,7 +131,7 @@ public class HomeWidget extends AppWidgetProvider {
 
         Widget widget = findWidget(id, context);
 
-        if(widget != null){
+        if(widget != null && widget.getDaysForecast() != null){
             int dayNumber = readDayNumber(id, context);
 
             if(dayNumber < 0 | dayNumber > widget.getDaysForecast().size() - 1) {
@@ -185,13 +199,10 @@ public class HomeWidget extends AppWidgetProvider {
             try {
                 WeatherIconsSelector selector = new WeatherIconsSelector();
                 ID = selector.findIcon(weathers.get(indexWeather));
+
                 int temp = weathers.get(indexWeather).getCurrentTemperature();
-                if(temp < 0) {
-                    temperature = "-" + temp + "°";
-                }
-                else {
-                    temperature = " " + temp + "°";
-                }
+                temperature = temp + "°";
+
                 dateTime = weathers.get(indexWeather).getTimeOfDataForecast().substring(11);
             } catch (Exception e) {
                 e.printStackTrace();

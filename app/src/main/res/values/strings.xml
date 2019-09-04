@@ -20,7 +20,7 @@
     <string name="left_button">left button</string>
     <string name="tv_date">-</string>
     <string name="right_button">right button</string>
-    <string name="loading">Loading…</string>
+    <string name="loading">click to update</string>
     <string name="pressure">Давление</string>
     <string name="value">Значение</string>
     <string name="priboru">Приборы</string>

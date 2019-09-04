@@ -4,17 +4,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.widget.WidgetsUpdater;
 
 public class UpdateReceiver extends BroadcastReceiver {
+    public static final String UPDATE = "update";
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        WidgetsUpdater updater = new WidgetsUpdater();
-        updater.update(context);
+        WidgetsUpdater updater = new WidgetsUpdater(context);
 
-        Preferences preferences = Preferences.getInstance(context, Preferences.UPDATES_COUNT);
-        int count = preferences.getData("Count",0);
-        preferences.saveData("Count", count + 1);
+        if (intent != null && intent.getAction() != null) {
+            switch (intent.getAction()) {
+                case UPDATE:
+                case Intent.ACTION_BOOT_COMPLETED:
+                    updater.update();
+                    break;
+            }
+        }
     }
 }

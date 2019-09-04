@@ -1,14 +1,16 @@
 package com.orlinskas.weatherwidget.widget;
 
 import android.annotation.SuppressLint;
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 
-import com.orlinskas.weatherwidget.date.DateFormat;
-import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.forecast.ForecastListBuilder;
 import com.orlinskas.weatherwidget.forecast.WeatherReceiver;
 import com.orlinskas.weatherwidget.preferences.Preferences;
+import com.orlinskas.weatherwidget.ui.main.home.HomeWidget;
 
 class WidgetUpdater {
 
@@ -35,7 +37,7 @@ class WidgetUpdater {
                 sendRequest(widget);
                 updateForecastInWidget(widget);
                 updateWidgetInRepository(widget);
-                saveWidgetUpdateDate(widget);
+                sendIntentToUpdate(widgetID);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -73,12 +75,19 @@ class WidgetUpdater {
             repository.update(widget);
         }
 
-        private void saveWidgetUpdateDate(Widget widget) {
-            String key = String.valueOf(widget.getId());
-            String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
+        private void sendIntentToUpdate(int id) {
+            Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
+            int ID = preferences.getData(Preferences.WIDGET_ID_DEPENDENCE + id, AppWidgetManager.INVALID_APPWIDGET_ID);
 
-            Preferences preferences = Preferences.getInstance(context,Preferences.WIDGET_UPDATE_DATES);
-            preferences.saveData(key, currentDate);
+            Intent update = new Intent(context, HomeWidget.class);
+            update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, ID);
+            update.putExtra(HomeWidget.ACTION, HomeWidget.ACTION_UPDATE);
+            PendingIntent pRightIntent = PendingIntent.getBroadcast(context, id + 400, update, 0);
+            try {
+                pRightIntent.send();
+            } catch (PendingIntent.CanceledException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

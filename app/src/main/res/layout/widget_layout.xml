@@ -355,19 +355,19 @@
 
         <ImageView
             android:id="@+id/layout_widget_iv_left"
-            android:layout_width="15dp"
+            android:layout_width="10dp"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:contentDescription="@string/left_button"
             app:srcCompat="@drawable/ic_left_4" />
 
         <ImageView
             android:id="@+id/layout_widget_iv_right"
-            android:layout_width="15dp"
+            android:layout_width="10dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="15dp"
             android:contentDescription="@string/right_button"
             app:srcCompat="@drawable/ic_right_4" />
 
@@ -396,6 +396,14 @@
 
         <Button
             android:id="@+id/layout_widget_btn_left_click_area"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:alpha="0"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/layout_widget_btn_center_click_area"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"

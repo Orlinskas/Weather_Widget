@@ -46,7 +46,7 @@ public class WidgetModel implements WidgetContract.WidgetModel {
                 sendRequest(widget);
                 updateForecastInWidget(widget);
                 updateWidgetInRepository(widget);
-                saveWidgetUpdateDate(widget);
+                //saveWidgetUpdateDate(widget);
             } catch (Exception e) {
                 e.printStackTrace();
                 error = e;
@@ -80,14 +80,6 @@ public class WidgetModel implements WidgetContract.WidgetModel {
             return widget;
         }
 
-        private void saveWidgetUpdateDate(Widget widget) {
-            String key = String.valueOf(widget.getId());
-            String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
-
-            Preferences preferences = Preferences.getInstance(context,Preferences.WIDGET_UPDATE_DATES);
-            preferences.saveData(key, currentDate);
-        }
-
         private void sendRequest(Widget widget) throws Exception {
             WeatherReceiver receiver = new WeatherReceiver(context, widget.getRequest());
             receiver.receive();
@@ -101,6 +93,14 @@ public class WidgetModel implements WidgetContract.WidgetModel {
         private void updateWidgetInRepository(Widget widget) throws Exception {
             WidgetRepository repository = new WidgetRepository(context);
             repository.update(widget);
+        }
+
+        private void saveWidgetUpdateDate(Widget widget) {
+            String key = String.valueOf(widget.getId());
+            String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
+
+            Preferences preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
+            preferences.saveData(key, currentDate);
         }
     }
 }

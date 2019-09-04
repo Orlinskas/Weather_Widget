@@ -2,12 +2,19 @@ package com.orlinskas.weatherwidget.widget;
 
 import android.content.Context;
 
+import com.orlinskas.weatherwidget.AlarmManagerSetter;
 import com.orlinskas.weatherwidget.specification.WidgetEmptySpecification;
 
 import java.util.ArrayList;
 
 public class WidgetsUpdater {
-    public void update(Context context) {
+    private Context context;
+
+    public WidgetsUpdater(Context context) {
+        this.context = context;
+    }
+
+    public void update() {
         WidgetRepository widgetRepository = new WidgetRepository(context);
         ArrayList<Widget> widgets = new ArrayList<>();
         try {
@@ -24,5 +31,12 @@ public class WidgetsUpdater {
                 updater.doUpdate(widgetID, context);
             }
         }
+
+        setAlarmToNewUpdate();
+    }
+
+    private void setAlarmToNewUpdate() {
+        AlarmManagerSetter managerSetter = new AlarmManagerSetter();
+        managerSetter.setAlarm(context);
     }
 }

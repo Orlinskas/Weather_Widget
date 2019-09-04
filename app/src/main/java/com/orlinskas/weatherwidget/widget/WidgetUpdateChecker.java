@@ -5,15 +5,13 @@ import android.content.Context;
 import com.orlinskas.weatherwidget.date.DateCalculator;
 import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.date.DateHelper;
-import com.orlinskas.weatherwidget.preferences.Preferences;
 
 import java.util.Date;
 
 public class WidgetUpdateChecker {
     private int widgetID;
     private Context context;
-    private Preferences preferences;
-    private final int NEED_TIME_TO_UPDATE = 1;
+    private final int NEED_TIME_TO_UPDATE = 3;
 
     public WidgetUpdateChecker(int widgetID, Context context) {
         this.context = context;
@@ -23,16 +21,10 @@ public class WidgetUpdateChecker {
     public boolean check() {
         Widget widget = findWidgetInRepo(widgetID);
 
-        try {
-            preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         String lastUpdate;
 
-        if(widget != null & preferences != null) {
-            lastUpdate = preferences.getData(String.valueOf(widget.getId()) ,"1996.01.22 15:00");
+        if(widget != null) {
+            lastUpdate = getLastUpdate(widget);
         }
         else {
             return false;
@@ -56,5 +48,12 @@ public class WidgetUpdateChecker {
             e.printStackTrace();
         }
         return widget;
+    }
+
+    private String getLastUpdate(Widget widget) {
+        if(widget.getDaysForecast() != null && widget.getDaysForecast().size() > 0) {
+            return  widget.getDaysForecast().get(0).getDayWeathers().get(0).getTimeOfDataForecast();
+        }
+        return "1996-01-22 15:00";
     }
 }
