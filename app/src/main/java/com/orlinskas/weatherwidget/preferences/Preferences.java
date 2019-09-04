@@ -15,6 +15,7 @@ public class Preferences {
     public static final String WIDGET_UPDATE_DATES = "dates";
     public static final String WIDGET_DAY_NUMBER = "day";
     public static final String WIDGET_ID_DEPENDENCE = "dependence";
+    public static final String UPDATES_COUNT = "updates";
 
     public static Preferences getInstance(Context context, String preferencesName) {
         if (preferences == null) {

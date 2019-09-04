@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        processFirstRun(getApplicationContext());
+        processFirstRun(getBaseContext());
 
         RelativeLayout relativeLayout = findViewById(R.id.activity_main_rl_background_anim);
         relativeLayout.addView(new AnimatedBackgroundView(this));

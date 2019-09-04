@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import com.orlinskas.weatherwidget.preferences.Preferences;
+
 import java.util.Calendar;
 
 public class AlarmManagerSetter {
@@ -18,8 +20,10 @@ public class AlarmManagerSetter {
                 PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar timeToRepeat = Calendar.getInstance();
         timeToRepeat.setTimeInMillis(System.currentTimeMillis());
-        timeToRepeat.add(Calendar.HOUR, 1);
+        timeToRepeat.add(Calendar.MINUTE, 1);
 
-        alarm.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), timeToRepeat.getTimeInMillis(), pendingIntent);
+        alarm.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), 60000, pendingIntent);
+
+
     }
 }

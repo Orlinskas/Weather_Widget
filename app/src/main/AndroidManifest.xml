@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name="com.orlinskas.weatherwidget.ApplicationContext"
@@ -73,11 +74,15 @@
         <activity
             android:name=".ui.main.home.ConfigurationWidgetActivity">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+                <action
+                    android:name="android.appwidget.action.APPWIDGET_CONFIGURE">
+                </action>
             </intent-filter>
         </activity>
 
-        <receiver android:name=".UpdateReceiver" />
+        <receiver
+            android:name=".UpdateReceiver"
+            />
 
     </application>
 
