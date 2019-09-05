@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.net.URL;
 
 import static org.junit.Assert.*;
@@ -28,7 +29,12 @@ public class RequestURLSenderTest {
     @Test
     public void send() {
         RequestURLSender urlSender = new RequestURLSender();
-        String response = urlSender.send(url);
+        String response = null;
+        try {
+            response = urlSender.send(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         assertNotNull(response);
     }
 }
