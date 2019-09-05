@@ -79,6 +79,7 @@
                 </action>
             </intent-filter>
         </activity>
+        <activity android:name=".ui.main.other.MessageToAuthorActivity" />
 
         <receiver
             android:name=".UpdateReceiver">

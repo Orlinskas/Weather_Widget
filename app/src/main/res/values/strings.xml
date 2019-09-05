@@ -84,6 +84,13 @@
     <string name="repost">Поделиться</string>
     <string name="help_pls">Помощь</string>
     <string name="message">Связь с разработчиком</string>
+    <string name="question">Технические вопросы, баги</string>
+    <string name="gmail">orlinskas.development@gmai.com</string>
+    <string name="my_gmail">orlinskaslove@gmai.com</string>
+    <string name="mail">Личная почта</string>
+    <string name="inst">http://www.instagram.com/orlinskas</string>
+    <string name="gmail_im">gmail_im</string>
+    <string name="inst_im">inst_im</string>
 
     <string-array name="spinner">
         <item>выбрать…</item>

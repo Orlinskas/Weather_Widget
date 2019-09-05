@@ -1,11 +1,14 @@
 package com.orlinskas.weatherwidget.ui.main.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -14,9 +17,10 @@ import com.orlinskas.weatherwidget.FirstRunner;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.preferences.FirstRunVerifier;
+import com.orlinskas.weatherwidget.ui.main.other.HelpActivity;
+import com.orlinskas.weatherwidget.ui.main.other.MessageToAuthorActivity;
 import com.orlinskas.weatherwidget.ui.main.other.WidgetCreatorActivity;
 import com.orlinskas.weatherwidget.ui.main.widget.AnimatedBackgroundView;
-import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -64,5 +68,34 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         this.finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_repost:
+                Intent sendIntent = new Intent();
+                sendIntent.setType("text/plain");
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,  "\"Weather\" - удобный виджет погоды. Присоединяйся https://play.google.com/store/apps/developer?id=Orlinskas.Development");
+                startActivity(Intent.createChooser(sendIntent,"Поделиться"));
+                return true;
+            case R.id.action_help_pls:
+                ActivityOpener.openActivity(getApplicationContext(), HelpActivity.class);
+                return true;
+            case R.id.action_message:
+                ActivityOpener.openActivity(getApplicationContext(), MessageToAuthorActivity.class);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
