@@ -46,7 +46,7 @@ public class WidgetModel implements WidgetContract.WidgetModel {
                 sendRequest(widget);
                 updateForecastInWidget(widget);
                 updateWidgetInRepository(widget);
-                //saveWidgetUpdateDate(widget);
+                saveWidgetUpdateDate(widget);
             } catch (Exception e) {
                 e.printStackTrace();
                 error = e;

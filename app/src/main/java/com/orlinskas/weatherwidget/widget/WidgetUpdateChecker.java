@@ -5,6 +5,7 @@ import android.content.Context;
 import com.orlinskas.weatherwidget.date.DateCalculator;
 import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.date.DateHelper;
+import com.orlinskas.weatherwidget.preferences.Preferences;
 
 import java.util.Date;
 
@@ -51,9 +52,9 @@ public class WidgetUpdateChecker {
     }
 
     private String getLastUpdate(Widget widget) {
-        if(widget.getDaysForecast() != null && widget.getDaysForecast().size() > 0) {
-            return  widget.getDaysForecast().get(0).getDayWeathers().get(0).getResponseDate();
-        }
-        return "1996-01-22 15:00";
+        String key = String.valueOf(widget.getId());
+        Preferences preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
+
+        return preferences.getData(key,"1996-01-22 15:00");
     }
 }

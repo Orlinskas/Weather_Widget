@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import com.orlinskas.weatherwidget.date.DateFormat;
+import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.forecast.ForecastListBuilder;
 import com.orlinskas.weatherwidget.forecast.WeatherReceiver;
 import com.orlinskas.weatherwidget.preferences.Preferences;
@@ -37,6 +39,7 @@ class WidgetUpdater {
                 sendRequest(widget);
                 updateForecastInWidget(widget);
                 updateWidgetInRepository(widget);
+                saveWidgetUpdateDate(widget);
                 sendIntentToUpdate(widgetID);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -88,6 +91,14 @@ class WidgetUpdater {
             } catch (PendingIntent.CanceledException e) {
                 e.printStackTrace();
             }
+        }
+
+        private void saveWidgetUpdateDate(Widget widget) {
+            String key = String.valueOf(widget.getId());
+            String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
+
+            Preferences preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
+            preferences.saveData(key, currentDate);
         }
     }
 }
