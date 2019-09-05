@@ -39,15 +39,14 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="0dp"
+            android:fontFamily="sans-serif-light"
             android:gravity="center_horizontal"
-            android:shadowColor="@color/colorAccent"
             android:shadowDy="2"
             android:shadowRadius="4"
             android:text="@string/question"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp"
-            android:typeface="serif" />
+            android:textColor="@color/colorTextBlack"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView16"
@@ -62,9 +61,10 @@
             android:autoLink="email"
             android:clickable="true"
             android:focusable="true"
+            android:fontFamily="sans-serif-light"
             android:text="@string/gmail"
             android:textColor="@color/colorTextBlack"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -82,12 +82,12 @@
             android:id="@+id/imageView51"
             android:layout_width="72dp"
             android:layout_height="59dp"
+            android:layout_below="@id/imageView511"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/gmail"
-            tools:layout_below="@id/imageView511"
-            android:contentDescription="@string/inst_im" />
+            android:contentDescription="@string/inst_im"
+            app:srcCompat="@drawable/inst" />
 
         <ImageView
             android:id="@+id/imageView511"
@@ -96,8 +96,8 @@
             android:layout_below="@id/textView81"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/inst"
-            android:contentDescription="@string/gmail_im" />
+            android:contentDescription="@string/gmail_im"
+            app:srcCompat="@drawable/gmail" />
 
         <TextView
             android:id="@+id/textView161"
@@ -110,9 +110,10 @@
             android:autoLink="email"
             android:clickable="true"
             android:focusable="true"
+            android:fontFamily="sans-serif-light"
             android:text="@string/my_gmail"
             android:textColor="@color/colorTextBlack"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textView81"
@@ -122,15 +123,14 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif-light"
             android:gravity="center_horizontal"
-            android:shadowColor="@color/colorAccent"
             android:shadowDy="2"
             android:shadowRadius="4"
             android:text="@string/mail"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp"
-            android:typeface="serif" />
+            android:textColor="@color/colorTextBlack"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView1611"
@@ -138,15 +138,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView81"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="110dp"
             android:layout_toEndOf="@+id/imageView511"
             android:autoLink="web"
             android:clickable="true"
             android:focusable="true"
+            android:fontFamily="sans-serif-light"
             android:text="@string/inst"
             android:textColor="@color/colorTextBlack"
-            android:textSize="16sp"
-            tools:layout_marginTop="100dp" />
+            android:textSize="14sp" />
     </RelativeLayout>
 
 </RelativeLayout>
