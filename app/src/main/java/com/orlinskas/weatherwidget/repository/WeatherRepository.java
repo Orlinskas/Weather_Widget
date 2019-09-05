@@ -31,7 +31,7 @@ public class WeatherRepository implements Repository<Weather> {
             cv.put(COLUMN_CITY_NAME, object.getCityName());
             cv.put(COLUMN_COUNTRY_CODE, object.getCountryCode());
             cv.put(COLUMN_TIME_OF_DATA_FORECAST, object.getTimeOfDataForecast());
-            cv.put(COLUMN_FORECAST_DATE, object.getForecastDate());
+            cv.put(COLUMN_FORECAST_DATE, object.getResponseDate());
             cv.put(COLUMN_CURRENT_TEMPERATURE, object.getCurrentTemperature());
             cv.put(COLUMN_PRESSURE, object.getPressure());
             cv.put(COLUMN_HUMIDITY_PERCENT, object.getTimezone());

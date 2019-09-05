@@ -27,7 +27,7 @@ public class ForecastListBuilder {
         ArrayList<String> dates = list.build();
         ArrayList<Forecast> forecasts = new ArrayList<>();
 
-        int todayIndex = findToday(dates);
+        int todayIndex = findTodayIndex(dates);
 
         forecasts.add(createForecast(dates.get(todayIndex)));
         forecasts.add(createForecast(dates.get(todayIndex + 1)));
@@ -42,16 +42,20 @@ public class ForecastListBuilder {
         return forecasts;
     }
 
-    private int findToday(ArrayList<String> dates) {
+    private int findTodayIndex(ArrayList<String> dates) {
         String todayDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD);
+        Date today = DateHelper.parse(todayDate, DateFormat.YYYY_MM_DD);
+
+        int index = dates.size() - 4;
 
         for (String date : dates) {
-            if(date.equals(todayDate)){
+            Date current = DateHelper.parse(date, DateFormat.YYYY_MM_DD);
+            if(today.equals(current)){
                 return dates.indexOf(date);
             }
         }
 
-        return dates.size() - 4;
+        return index;
     }
 
     private Forecast createForecast(String date) {
@@ -95,8 +99,8 @@ public class ForecastListBuilder {
             latestWeather = timeWeathers.get(0);
 
             for(Weather weather : timeWeathers) {
-                Date current = DateHelper.parse(latestWeather.getForecastDate(), DateFormat.YYYY_MM_DD);
-                Date verifiable = DateHelper.parse(weather.getForecastDate(), DateFormat.YYYY_MM_DD);
+                Date current = DateHelper.parse(latestWeather.getResponseDate(), DateFormat.YYYY_MM_DD_HH_MM);
+                Date verifiable = DateHelper.parse(weather.getResponseDate(), DateFormat.YYYY_MM_DD_HH_MM);
                 if(current.before(verifiable)) {
                     latestWeather = weather;
                 }

@@ -8,7 +8,7 @@ public class Weather implements Serializable {
     private String cityName;
     private String countryCode;
     private String timeOfDataForecast;
-    private String forecastDate;
+    private String responseDate;
     private int currentTemperature;
     private int pressure;
     private int timezone;
@@ -21,19 +21,15 @@ public class Weather implements Serializable {
     private double rainVolume;
     private double snowVolume;
 
-    public Weather(String timeOfDataForecast) {
-        this.timeOfDataForecast = timeOfDataForecast;
-    }
-
     public Weather(int cityID, String cityName, String countryCode, String timeOfDataForecast,
-                   String forecastDate, int currentTemperature, int pressure, int timezone,
+                   String responseDate, int currentTemperature, int pressure, int timezone,
                    int weatherID, String weatherGroup, String weatherGroupDescription, String weatherIconID,
                    int humidity, double windSpeed, double rainVolume, double snowVolume) {
         this.cityID = cityID;
         this.cityName = cityName;
         this.countryCode = countryCode;
         this.timeOfDataForecast = timeOfDataForecast;
-        this.forecastDate = forecastDate;
+        this.responseDate = responseDate;
         this.currentTemperature = currentTemperature;
         this.pressure = pressure;
         this.timezone = timezone;
@@ -64,7 +60,7 @@ public class Weather implements Serializable {
                 Objects.equals(getCityName(), that.getCityName()) &&
                 getCountryCode().equals(that.getCountryCode()) &&
                 getTimeOfDataForecast().equals(that.getTimeOfDataForecast()) &&
-                getForecastDate().equals(that.getForecastDate()) &&
+                getResponseDate().equals(that.getResponseDate()) &&
                 Objects.equals(getWeatherGroup(), that.getWeatherGroup()) &&
                 Objects.equals(getWeatherGroupDescription(), that.getWeatherGroupDescription()) &&
                 Objects.equals(getWeatherIconID(), that.getWeatherIconID());
@@ -73,7 +69,7 @@ public class Weather implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getCityID(), getCityName(), getCountryCode(), getTimeOfDataForecast(),
-                getForecastDate(), getCurrentTemperature(), getPressure(), getTimezone(), getWeatherID(),
+                getResponseDate(), getCurrentTemperature(), getPressure(), getTimezone(), getWeatherID(),
                 getWeatherGroup(), getWeatherGroupDescription(), getWeatherIconID(), getHumidity(),
                 getWindSpeed(), getRainVolume(), getSnowVolume());
     }
@@ -102,8 +98,8 @@ public class Weather implements Serializable {
         return timeOfDataForecast;
     }
 
-    public String getForecastDate() {
-        return forecastDate;
+    public String getResponseDate() {
+        return responseDate;
     }
 
     public int getCurrentTemperature() {

@@ -16,7 +16,7 @@ public class JSONResponseParserToWeather {
     private String cityName;
     private String countryCode;
     private String timeOfDataForecast;
-    private String forecastDate;
+    private String responseDate;
     private int currentTemperature;
     private int pressure;
     private int timezone;
@@ -67,7 +67,7 @@ public class JSONResponseParserToWeather {
     }
 
     private void writeCurrentDate() {
-        forecastDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD);
+        responseDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
     }
 
     private void checkPrecipitation(JSONObject dayForecast) {
@@ -137,7 +137,7 @@ public class JSONResponseParserToWeather {
     }
 
     private Weather createWeatherObject() {
-        return new Weather(cityID, cityName, countryCode, timeOfDataForecast, forecastDate,
+        return new Weather(cityID, cityName, countryCode, timeOfDataForecast, responseDate,
                 currentTemperature, pressure, timezone, weatherID, weatherGroup,
                 weatherGroupDescription, weatherIconID, humidity, windSpeed, rainVolume,
                 snowVolume);

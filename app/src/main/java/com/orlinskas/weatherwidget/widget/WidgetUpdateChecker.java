@@ -52,7 +52,7 @@ public class WidgetUpdateChecker {
 
     private String getLastUpdate(Widget widget) {
         if(widget.getDaysForecast() != null && widget.getDaysForecast().size() > 0) {
-            return  widget.getDaysForecast().get(0).getDayWeathers().get(0).getTimeOfDataForecast();
+            return  widget.getDaysForecast().get(0).getDayWeathers().get(0).getResponseDate();
         }
         return "1996-01-22 15:00";
     }
