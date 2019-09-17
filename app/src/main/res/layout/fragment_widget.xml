@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+<android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_widget_sv"
+    android:id="@+id/fragment_widget_sr"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAlphaBackground">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_widget_sv">
 
     <RelativeLayout
         android:id="@+id/fragment_widget_rl_parent"
@@ -520,22 +525,46 @@
                 android:contentDescription="@string/help"
                 app:srcCompat="@drawable/ic_help_2" />
 
-            <Button
-                android:id="@+id/fragment_widget_rl_menu_delete_btn"
-                android:layout_width="135dp"
-                android:layout_height="27dp"
+            <LinearLayout
+                android:id="@+id/fragment_widget_ll_buttons_bot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/fragment_widget_rl_info_help_iv"
-                android:layout_alignParentBottom="false"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/secondary_button"
-                android:text="@string/delete_widget"
-                android:textColor="@color/colorTextButton"
-                android:textSize="12sp" />
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/fragment_widget_rl_menu_refresh_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/secondary_button"
+                    android:text="@string/refresh"
+                    android:textColor="@color/colorTextButton"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/fragment_widget_rl_menu_delete_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/secondary_button"
+                    android:text="@string/delete_widget"
+                    android:textColor="@color/colorTextButton"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
     </RelativeLayout>
 
-</ScrollView>
+    </ScrollView>
+
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -91,6 +91,8 @@
     <string name="inst">http://www.instagram.com/orlinskas</string>
     <string name="gmail_im">gmail_im</string>
     <string name="inst_im">inst_im</string>
+    <string name="refresh">Обновить</string>
+    <string name="almost_refresh">Уже обновлено</string>
 
     <string-array name="spinner">
         <item>выбрать…</item>

@@ -218,6 +218,16 @@ public class WidgetPresenter implements WidgetContract.Presenter, WidgetUpdateLi
     }
 
     @Override
+    public void refreshWidget(int widgetID) {
+        if(checkAvailableUpdate(widgetID)) {
+            startUpdate();
+        }
+        else {
+            view.doSnackBar(viewContext.getString(R.string.almost_refresh));
+        }
+    }
+
+    @Override
     public void help() {
         ActivityOpener.openActivity(viewContext, HelpActivity.class);
     }

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,10 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
         snowValTV = root.findViewById(R.id.fragment_widget_rl_info_snow_tv_value);
 
         Button deleteBtn = root.findViewById(R.id.fragment_widget_rl_menu_delete_btn);
+        Button refreshBtn = root.findViewById(R.id.fragment_widget_rl_menu_refresh_btn);
         ImageView helpBtn = root.findViewById(R.id.fragment_widget_rl_info_help_iv);
+        final SwipeRefreshLayout swipeRefreshLayout = root.findViewById(R.id.fragment_widget_sr);
+
 
         widgetID = getWidgetIDArgument();
 
@@ -96,6 +100,27 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
             public void onClick(View v) {
                 v.startAnimation(buttonClickAnim);
                 showDeleteDialog();
+            }
+        });
+
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(buttonClickAnim);
+                presenter.refreshWidget(widgetID);
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                       swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 3000);
+                presenter.refreshWidget(widgetID);
             }
         });
 

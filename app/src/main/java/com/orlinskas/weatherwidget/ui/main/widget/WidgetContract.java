@@ -36,6 +36,7 @@ public interface WidgetContract {
         boolean prevDay();
         void help();
         void removeWidget(int widgetID);
+        void refreshWidget(int widgetID);
         void destroy();
     }
 
