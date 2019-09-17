@@ -12,7 +12,7 @@ import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.forecast.ForecastListBuilder;
 import com.orlinskas.weatherwidget.forecast.WeatherReceiver;
 import com.orlinskas.weatherwidget.preferences.Preferences;
-import com.orlinskas.weatherwidget.ui.main.home.HomeWidget;
+import com.orlinskas.weatherwidget.ui.home.HomeWidget;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 

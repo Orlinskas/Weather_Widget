@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.other;
+package com.orlinskas.weatherwidget.ui.other;
 
 import android.content.Intent;
 import android.os.Bundle;

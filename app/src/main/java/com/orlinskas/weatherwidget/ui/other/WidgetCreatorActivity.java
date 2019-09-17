@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.other;
+package com.orlinskas.weatherwidget.ui.other;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -29,7 +29,7 @@ import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.location.CityFinder;
 import com.orlinskas.weatherwidget.post.CountryNameWriter;
-import com.orlinskas.weatherwidget.ui.main.main.MainActivity;
+import com.orlinskas.weatherwidget.ui.main.MainActivity;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetCopyChecker;
 import com.orlinskas.weatherwidget.widget.WidgetCreator;

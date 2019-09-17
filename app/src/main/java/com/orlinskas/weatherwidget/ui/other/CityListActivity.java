@@ -1,9 +1,8 @@
-package com.orlinskas.weatherwidget.ui.main.other;
+package com.orlinskas.weatherwidget.ui.other;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,37 +23,42 @@ import android.widget.TextView;
 import com.orlinskas.weatherwidget.City;
 import com.orlinskas.weatherwidget.Country;
 import com.orlinskas.weatherwidget.R;
-import com.orlinskas.weatherwidget.repository.CountryListPresenter;
+import com.orlinskas.weatherwidget.ToastBuilder;
+import com.orlinskas.weatherwidget.repository.CityListPresenter;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class CountryListActivity extends AppCompatActivity {
+public class CityListActivity extends AppCompatActivity {
     private ListView listView;
-    private ArrayList<Country> countries;
-    private EditText searchCountryField;
+    private ArrayList<City> cities;
+    private EditText searchCityField;
+    private TextView headText;
     private ProgressBar progressBar;
-    private LoadTask loadTask = new LoadTask();
     private Country country;
-    private City city;
+    private LoadTask loadTask = new LoadTask();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_country_list);
+        setContentView(R.layout.activity_city_list);
 
-        listView = findViewById(R.id.activity_country_list_lv);
-        searchCountryField = findViewById(R.id.activity_country_list_et);
-        progressBar = findViewById(R.id.activity_country_list_pb);
+        listView = findViewById(R.id.activity_city_list_lv);
+        searchCityField = findViewById(R.id.activity_city_list_et);
+        progressBar = findViewById(R.id.activity_city_list_pb);
+        headText = findViewById(R.id.activity_city_list_tv);
+
+        country = (Country) getIntent().getSerializableExtra("country");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        searchCountryField.addTextChangedListener(new TextWatcher(){
+        searchCityField.addTextChangedListener(new TextWatcher(){
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    scrollListTo(searchCountryField.getText().toString());
+                    scrollListTo(searchCityField.getText().toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -70,8 +74,8 @@ public class CountryListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setBackgroundColor(getResources().getColor(R.color.colorBackgroundListActivity));
-                country = countries.get(position);
-                openCityListActivity();
+                City city = cities.get(position);
+                resumeMainWidgetCreator(city);
             }
         });
         loadTask.execute();
@@ -87,66 +91,63 @@ public class CountryListActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            findCountries();
+            findCities();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            ArrayAdapter<Country> adapter = new CountryListAdapter(getApplicationContext(), R.layout.country_row, countries);
+            ArrayAdapter<City> adapter = new CityListAdapter(getApplicationContext(), R.layout.city_row, cities);
             listView.setAdapter(adapter);
             hideLoadingAndShowUI();
         }
     }
 
     private void showLoadingAndHideUI() {
+        String message = String.format("%s %s", getString(R.string.load_cities_for), country.getName());
+        headText.setText(message);
         progressBar.setVisibility(View.VISIBLE);
         listView.setVisibility(View.INVISIBLE);
-        searchCountryField.setVisibility(View.INVISIBLE);
+        searchCityField.setVisibility(View.INVISIBLE);
     }
 
-    private void findCountries() {
-        CountryListPresenter presenter = new CountryListPresenter(getApplicationContext());
-        countries = presenter.present();
+    private void findCities() {
+        CityListPresenter presenter = new CityListPresenter(getApplicationContext());
+        cities = presenter.present(country);
     }
 
     private void hideLoadingAndShowUI() {
+        headText.setText(getString(R.string.city_2));
         progressBar.setVisibility(View.INVISIBLE);
         listView.setVisibility(View.VISIBLE);
-        searchCountryField.setVisibility(View.VISIBLE);
+        searchCityField.setVisibility(View.VISIBLE);
+        ToastBuilder.create(this, String.format(Locale.US, "%s %d %s", getString(R.string.have), cities.size(), getString(R.string.cities)));
     }
 
-    private class CountryListAdapter extends ArrayAdapter<Country> {
-        ArrayList<Country> countries;
+    private class CityListAdapter extends ArrayAdapter<City> {
+        ArrayList<City> cities;
 
-        CountryListAdapter(Context context, int textViewResourceId, ArrayList<Country> countries) {
-            super(context, textViewResourceId, countries);
-            this.countries = countries;
+        CityListAdapter(Context context, int textViewResourceId, ArrayList<City> cities) {
+            super(context, textViewResourceId, cities);
+            this.cities = cities;
         }
 
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater inflater = getLayoutInflater();
-            @SuppressLint("ViewHolder") View row = inflater.inflate(R.layout.country_row, parent, false);
-            TextView countryName = row.findViewById(R.id.country_row_tv_name);
-            TextView countryCode = row.findViewById(R.id.county_row_tv_code);
+            @SuppressLint("ViewHolder")
+            View row = inflater.inflate(R.layout.city_row, parent, false);
 
-            String name = countries.get(position).getName();
-            String code = countries.get(position).getCode();
-
-            countryName.setText(name);
-            countryCode.setText(code);
+            TextView cityName = row.findViewById(R.id.city_row_tv_name);
+            String name = cities.get(position).getName();
+            cityName.setText(name);
 
             if (position%2 == 0) {
-                try {
-                    row.setBackgroundColor(getResources().getColor(R.color.colorRowHigh));
-                } catch (Resources.NotFoundException e) {
-                    e.printStackTrace();
-                }
+                row.setBackgroundColor(getResources().getColor(R.color.colorRowHigh));
             }
-            else{
+            else {
                 row.setBackgroundColor(getResources().getColor(R.color.colorRowLight));
             }
 
@@ -154,20 +155,20 @@ public class CountryListActivity extends AppCompatActivity {
         }
     }
 
-    private void scrollListTo(String desiredCountryNamePart) {
+    private void scrollListTo(String desiredCityNamePart) {
         int position = 0;
 
-        for(Country country : countries) {
+        for(City city : cities) {
 
-            String currentCountryNamePart = null;
+            String currentCityNamePart = null;
             try {
-                currentCountryNamePart = country.getName().substring(0, desiredCountryNamePart.length());
+                currentCityNamePart = city.getName().substring(0, desiredCityNamePart.length());
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            if (currentCountryNamePart != null ) {
-                if(currentCountryNamePart.equals(desiredCountryNamePart)) {
+            if (currentCityNamePart != null ) {
+                if(currentCityNamePart.equals(desiredCityNamePart)) {
                     try {
                         listView.setSelection(position);
                     } catch (Exception e) {
@@ -182,23 +183,16 @@ public class CountryListActivity extends AppCompatActivity {
 
     }
 
-    private void openCityListActivity() {
-        Intent intent = new Intent(getApplicationContext(), CityListActivity.class);
-        intent.putExtra("country", country);
-        startActivityForResult(intent, 2);
+    private void resumeMainWidgetCreator(City city) {
+        Intent intent = new Intent();
+        intent.putExtra("city", city);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-            city = (City) data.getSerializableExtra("city");
-        }
+    public void onBackPressed() {
+        super.onBackPressed();
 
-        Intent intent = new Intent();
-        intent.putExtra("city", city);
-        intent.putExtra("country", country);
-        setResult(RESULT_OK, intent);
-        finish();
     }
 }

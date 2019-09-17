@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.home;
+package com.orlinskas.weatherwidget.ui.home;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;

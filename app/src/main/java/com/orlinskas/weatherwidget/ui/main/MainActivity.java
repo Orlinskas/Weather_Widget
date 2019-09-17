@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.main;
+package com.orlinskas.weatherwidget.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +17,10 @@ import com.orlinskas.weatherwidget.FirstRunner;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.preferences.FirstRunVerifier;
-import com.orlinskas.weatherwidget.ui.main.other.HelpActivity;
-import com.orlinskas.weatherwidget.ui.main.other.MessageToAuthorActivity;
-import com.orlinskas.weatherwidget.ui.main.other.WidgetCreatorActivity;
-import com.orlinskas.weatherwidget.ui.main.widget.AnimatedBackgroundView;
+import com.orlinskas.weatherwidget.ui.other.HelpActivity;
+import com.orlinskas.weatherwidget.ui.other.MessageToAuthorActivity;
+import com.orlinskas.weatherwidget.ui.other.WidgetCreatorActivity;
+import com.orlinskas.weatherwidget.ui.widget.AnimatedBackgroundView;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;

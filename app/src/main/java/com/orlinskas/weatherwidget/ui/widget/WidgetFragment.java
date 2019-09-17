@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.widget;
+package com.orlinskas.weatherwidget.ui.widget;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

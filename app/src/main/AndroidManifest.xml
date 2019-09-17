@@ -22,7 +22,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.main.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -33,22 +33,22 @@
         </activity>
 
         <activity
-            android:name=".ui.main.other.WidgetCreatorActivity"
+            android:name=".ui.other.WidgetCreatorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.main.other.CountryListActivity"
+            android:name=".ui.other.CountryListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.main.other.CityListActivity"
+            android:name=".ui.other.CityListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.main.other.HelpActivity"
+            android:name=".ui.other.HelpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.main.other.MessageToAuthorActivity"
+            android:name=".ui.other.MessageToAuthorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.main.home.ConfigurationWidgetActivity"
+            android:name=".ui.home.ConfigurationWidgetActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -56,7 +56,7 @@
         </activity>
 
         <receiver
-            android:name=".ui.main.home.HomeWidget"
+            android:name=".ui.home.HomeWidget"
             android:icon="@drawable/logo_primary"
             android:label="Weather">
             <intent-filter>

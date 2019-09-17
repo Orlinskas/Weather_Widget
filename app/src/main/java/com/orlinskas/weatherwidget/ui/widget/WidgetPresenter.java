@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.widget;
+package com.orlinskas.weatherwidget.ui.widget;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -13,7 +13,7 @@ import com.orlinskas.weatherwidget.chart.WeatherIconsLayoutBuilder;
 import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.forecast.InstrumentPerformance;
 import com.orlinskas.weatherwidget.forecast.InstrumentPerformanceBuilder;
-import com.orlinskas.weatherwidget.ui.main.other.HelpActivity;
+import com.orlinskas.weatherwidget.ui.other.HelpActivity;
 import com.orlinskas.weatherwidget.widget.WidgetRemover;
 import com.orlinskas.weatherwidget.background.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.widget.Widget;

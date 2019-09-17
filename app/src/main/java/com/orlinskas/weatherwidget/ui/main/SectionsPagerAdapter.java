@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.main;
+package com.orlinskas.weatherwidget.ui.main;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.orlinskas.weatherwidget.specification.WidgetEmptySpecification;
-import com.orlinskas.weatherwidget.ui.main.widget.WidgetFragment;
+import com.orlinskas.weatherwidget.ui.widget.WidgetFragment;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
@@ -18,7 +18,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private ArrayList<Widget> widgets;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+    SectionsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         WidgetRepository widgetRepository = new WidgetRepository(context);
         try {

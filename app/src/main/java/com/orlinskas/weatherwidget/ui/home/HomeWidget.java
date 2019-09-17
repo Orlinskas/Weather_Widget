@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.home;
+package com.orlinskas.weatherwidget.ui.home;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;

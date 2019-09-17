@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.ui.main.widget;
+package com.orlinskas.weatherwidget.ui.widget;
 
 import android.content.Context;
 import android.widget.LinearLayout;
