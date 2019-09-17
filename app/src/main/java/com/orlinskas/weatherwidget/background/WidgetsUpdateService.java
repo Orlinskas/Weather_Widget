@@ -15,7 +15,7 @@ public class WidgetsUpdateService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        WidgetsUpdater updater = new WidgetsUpdater(this);
+        WidgetsUpdater updater = new WidgetsUpdater(getBaseContext());
         updater.update();
 
         return super.onStartCommand(intent, flags, startId);

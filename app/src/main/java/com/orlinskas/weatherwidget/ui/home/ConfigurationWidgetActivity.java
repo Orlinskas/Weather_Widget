@@ -20,6 +20,9 @@ import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 import java.util.ArrayList;
 
+import static com.orlinskas.weatherwidget.preferences.Preferences.SETTINGS;
+import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_ID_DEPENDENCE;
+
 public class ConfigurationWidgetActivity extends Activity {
     private int id = AppWidgetManager.INVALID_APPWIDGET_ID;
     private Intent resultValue;
@@ -71,9 +74,9 @@ public class ConfigurationWidgetActivity extends Activity {
         view.startAnimation(buttonClickAnim);
 
         Widget widget = (Widget) spinnerWidgetList.getSelectedItem();
-        Preferences preferences = Preferences.getInstance(this, Preferences.SETTINGS);
+        Preferences preferences = Preferences.getInstance(this, SETTINGS);
         //запомнил соотношение - ID который дал андроид/ID моего объекта виджета
-        preferences.saveData(Preferences.WIDGET_ID_DEPENDENCE + id, widget.getId());
+        preferences.saveData(WIDGET_ID_DEPENDENCE + id, widget.getId());
 
         setResult(RESULT_OK, resultValue); //отправил положительный ответ
         finish();

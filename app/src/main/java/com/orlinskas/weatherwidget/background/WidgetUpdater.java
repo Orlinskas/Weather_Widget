@@ -16,6 +16,9 @@ import com.orlinskas.weatherwidget.ui.home.HomeWidget;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
+import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_ID_DEPENDENCE;
+import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_LAST_UPDATE;
+
 class WidgetUpdater {
 
     void doUpdate(int widgetID, Context appContext) {
@@ -82,7 +85,7 @@ class WidgetUpdater {
 
         private void sendIntentToUpdate(int id) {
             Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
-            int ID = preferences.getData(Preferences.WIDGET_ID_DEPENDENCE + id, AppWidgetManager.INVALID_APPWIDGET_ID);
+            int ID = preferences.getData(WIDGET_ID_DEPENDENCE + id, AppWidgetManager.INVALID_APPWIDGET_ID);
 
             Intent update = new Intent(context, HomeWidget.class);
             update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, ID);
@@ -96,11 +99,11 @@ class WidgetUpdater {
         }
 
         private void saveWidgetUpdateDate(Widget widget) {
-            String key = String.valueOf(widget.getId());
+            String id = String.valueOf(widget.getId());
             String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
 
-            Preferences preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
-            preferences.saveData(key, currentDate);
+            Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
+            preferences.saveData(WIDGET_LAST_UPDATE + id, currentDate);
         }
     }
 }

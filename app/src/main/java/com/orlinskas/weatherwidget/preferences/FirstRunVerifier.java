@@ -2,6 +2,8 @@ package com.orlinskas.weatherwidget.preferences;
 
 import android.content.Context;
 
+import static com.orlinskas.weatherwidget.preferences.Preferences.SETTINGS;
+
 public class FirstRunVerifier {
     private Context context;
     private Preferences preferences;
@@ -12,12 +14,12 @@ public class FirstRunVerifier {
     }
 
     public boolean check() {
-        preferences = Preferences.getInstance(context, Preferences.APP_STATUS);
+        preferences = Preferences.getInstance(context, SETTINGS);
         return preferences.getData(FIRST_RUN, false);
     }
 
     public void setFirstRun(boolean value) {
-        preferences = Preferences.getInstance(context, Preferences.APP_STATUS);
+        preferences = Preferences.getInstance(context, SETTINGS);
         preferences.saveData(FIRST_RUN, value);
     }
 }

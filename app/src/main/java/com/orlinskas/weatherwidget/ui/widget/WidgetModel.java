@@ -12,6 +12,9 @@ import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
+import static com.orlinskas.weatherwidget.preferences.Preferences.SETTINGS;
+import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_LAST_UPDATE;
+
 public class WidgetModel implements WidgetContract.WidgetModel {
     private WidgetUpdateListener presenter;
 
@@ -96,11 +99,11 @@ public class WidgetModel implements WidgetContract.WidgetModel {
         }
 
         private void saveWidgetUpdateDate(Widget widget) {
-            String key = String.valueOf(widget.getId());
+            String id = String.valueOf(widget.getId());
             String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
 
-            Preferences preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
-            preferences.saveData(key, currentDate);
+            Preferences preferences = Preferences.getInstance(context, SETTINGS);
+            preferences.saveData(WIDGET_LAST_UPDATE + id, currentDate);
         }
     }
 }

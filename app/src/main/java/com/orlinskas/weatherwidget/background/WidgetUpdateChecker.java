@@ -12,6 +12,7 @@ import com.orlinskas.weatherwidget.widget.WidgetRepository;
 import java.util.Date;
 
 import static com.orlinskas.weatherwidget.background.Settings.NEED_HOURS_TO_UPDATE;
+import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_LAST_UPDATE;
 
 public class WidgetUpdateChecker {
     private int widgetID;
@@ -56,9 +57,9 @@ public class WidgetUpdateChecker {
     }
 
     private String getLastUpdate(Widget widget) {
-        String key = String.valueOf(widget.getId());
-        Preferences preferences = Preferences.getInstance(context, Preferences.WIDGET_UPDATE_DATES);
+        String id = String.valueOf(widget.getId());
+        Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
 
-        return preferences.getData(key,"1996-01-22 15:00");
+        return preferences.getData(WIDGET_LAST_UPDATE + id,"1996-01-22 15:00");
     }
 }

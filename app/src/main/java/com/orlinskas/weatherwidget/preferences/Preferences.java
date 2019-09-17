@@ -3,19 +3,14 @@ package com.orlinskas.weatherwidget.preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.Date;
-
 public class Preferences {
     private static Preferences preferences;
     private SharedPreferences sharedPreferences;
     public static final String SETTINGS = "settings";
-    public static final String JSON_LINE = "jsonLine";
-    public static final String APP_STATUS = "appStatus";
-    public static final String APP_TEST = "test";
-    public static final String WIDGET_UPDATE_DATES = "dates";
-    public static final String WIDGET_DAY_NUMBER = "day";
-    public static final String WIDGET_ID_DEPENDENCE = "dependence";
-    public static final String UPDATES_COUNT = "updates";
+    static final String APP_TEST = "test";
+    public static final String WIDGET_ID_DEPENDENCE = "dependenceID-";
+    public static final String WIDGET_LAST_UPDATE = "lastUpdateID-";
+    public static final String WIDGET_DAY_NUMBER = "dayNumberID-";
 
     public static Preferences getInstance(Context context, String preferencesName) {
         if (preferences == null) {

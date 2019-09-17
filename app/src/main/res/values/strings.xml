@@ -41,7 +41,7 @@
     <string name="discriprion_rl_info">*указаны средние значения за сутки</string>
     <string name="config_head">Выберите ваш виджет из списка</string>
     <string name="config_body_descr_1">* возможно вы еще не создали виджет, сделайте это в приложении</string>
-    <string name="config_body_descr_2">* обновления автоматические</string>
+    <string name="config_body_descr_2">* обновления автоматические (нужно разрешить на некоторых устройствах)</string>
     <string name="config_body_descr_3">* пожалуйста не запрещайте доступ к сети, приложение работает в экономном режиме</string>
     <string name="config_body_descr_4">* виджет предоставляет прогноз на несколько дней, просто тапайте по краям виджета</string>
     <string name="btn_config">Выбрать</string>

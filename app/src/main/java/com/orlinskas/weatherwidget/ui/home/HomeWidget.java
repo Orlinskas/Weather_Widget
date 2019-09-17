@@ -1,22 +1,29 @@
 package com.orlinskas.weatherwidget.ui.home;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.background.WidgetsUpdateService;
 import com.orlinskas.weatherwidget.chart.WeatherIconsSelector;
 import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.forecast.Weather;
 import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
-import com.orlinskas.weatherwidget.background.WidgetsUpdater;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_DAY_NUMBER;
+import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_ID_DEPENDENCE;
 
 public class HomeWidget extends AppWidgetProvider {
     public static final String ACTION = "action";
@@ -68,19 +75,17 @@ public class HomeWidget extends AppWidgetProvider {
                 case ACTION_CREATE:
                 case ACTION_DEFAULT:
                 case ACTION_UPDATE:
-                    updateWidget(id,context);
                 case ACTION_CLICK_CENTER:
-                    WidgetsUpdater widgetsUpdater = new WidgetsUpdater(context);
-                    widgetsUpdater.update();
-                    updateWidget(id,context);
+                    UpdateWidgetTask task = new UpdateWidgetTask(context, id);
+                    task.execute();
                     break;
                 case ACTION_CLICK_LEFT:
-                    writeDayNumber(dayNumber - 1, id, context);
-                    updateWidget(id, context);
+                    PrevDayTask prevDayTask = new PrevDayTask(context, id, dayNumber);
+                    prevDayTask.execute();
                     break;
                 case ACTION_CLICK_RIGHT:
-                    writeDayNumber(dayNumber + 1, id, context);
-                    updateWidget(id, context);
+                    NextDayTask nextDayTask = new NextDayTask(context, id, dayNumber);
+                    nextDayTask.execute();
                     break;
             }
         }
@@ -94,7 +99,7 @@ public class HomeWidget extends AppWidgetProvider {
         for(int i = 0; i < oldWidgetIds.length; i++) {
             Widget widget = findWidget(oldWidgetIds[i], context);
             if (widget != null) {
-                preferences.saveData(Preferences.WIDGET_ID_DEPENDENCE + newWidgetIds[i], widget.getId());
+                preferences.saveData(WIDGET_ID_DEPENDENCE + newWidgetIds[i], widget.getId());
             }
         }
     }
@@ -126,6 +131,7 @@ public class HomeWidget extends AppWidgetProvider {
 
         widgetView.setImageViewResource(R.id.layout_widget_iv_left, R.drawable.ic_left_4);
         widgetView.setImageViewResource(R.id.layout_widget_iv_right, R.drawable.ic_right_4);
+        widgetView.setViewVisibility(R.id.widget_layout_pb, View.INVISIBLE);
 
         AppWidgetManager.getInstance(context).updateAppWidget(id, widgetView);
 
@@ -145,7 +151,7 @@ public class HomeWidget extends AppWidgetProvider {
 
     private Widget findWidget(int id, Context context) {
         Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
-        int widgetID = preferences.getData(Preferences.WIDGET_ID_DEPENDENCE + id, 0);
+        int widgetID = preferences.getData(WIDGET_ID_DEPENDENCE + id, 0);
 
         WidgetRepository repository = new WidgetRepository(context);
         try {
@@ -158,7 +164,7 @@ public class HomeWidget extends AppWidgetProvider {
 
     private int readDayNumber(int id, Context context) {
         Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
-        return preferences.getData(Preferences.WIDGET_DAY_NUMBER + id, 0);
+        return preferences.getData(WIDGET_DAY_NUMBER + id, 0);
     }
 
     private void writeDayNumber(int value, int id, Context context) {
@@ -166,7 +172,7 @@ public class HomeWidget extends AppWidgetProvider {
         if(value < 0) {
             value = 0;
         }
-        preferences.saveData(Preferences.WIDGET_DAY_NUMBER + id, value);
+        preferences.saveData(WIDGET_DAY_NUMBER + id, value);
     }
 
     private void updateUI(int id, Forecast forecast, Context context) {
@@ -196,16 +202,18 @@ public class HomeWidget extends AppWidgetProvider {
             int ID = R.drawable.ic_na_icon;
             String temperature = "—";
             String dateTime = "—:—";
-            try {
-                WeatherIconsSelector selector = new WeatherIconsSelector();
-                ID = selector.findIcon(weathers.get(indexWeather));
+            if(indexWeather >= 0) {
+                try {
+                    WeatherIconsSelector selector = new WeatherIconsSelector();
+                    ID = selector.findIcon(weathers.get(indexWeather));
 
-                int temp = weathers.get(indexWeather).getCurrentTemperature();
-                temperature = temp + "°";
+                    int temp = weathers.get(indexWeather).getCurrentTemperature();
+                    temperature = temp + "°";
 
-                dateTime = weathers.get(indexWeather).getTimeOfDataForecast().substring(11);
-            } catch (Exception e) {
-                e.printStackTrace();
+                    dateTime = weathers.get(indexWeather).getTimeOfDataForecast().substring(11);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             indexWeather--;
 
@@ -214,5 +222,85 @@ public class HomeWidget extends AppWidgetProvider {
             widgetView.setTextViewText(textViewIDsDates[indexView], dateTime);
         }
         AppWidgetManager.getInstance(context).updateAppWidget(id, widgetView);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class UpdateWidgetTask extends AsyncTask<Void, Void, Void> {
+        private Context context;
+        private int widgetID;
+        private RemoteViews widgetView;
+
+        UpdateWidgetTask(Context context, int widgetID) {
+            this.context = context;
+            this.widgetID = widgetID;
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            context.startService(new Intent(context, WidgetsUpdateService.class));
+            widgetView = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                widgetView.setViewVisibility(R.id.widget_layout_pb, View.VISIBLE);
+                AppWidgetManager.getInstance(context).updateAppWidget(widgetID, widgetView);
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            widgetView.setViewVisibility(R.id.widget_layout_pb, View.INVISIBLE);
+            AppWidgetManager.getInstance(context).updateAppWidget(widgetID, widgetView);
+            updateWidget(widgetID, context);
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class NextDayTask extends AsyncTask<Void, Void, Void> {
+        private Context context;
+        private int widgetID;
+        private int dayNumber;
+
+        NextDayTask(Context context, int widgetID, int dayNumber) {
+            this.context = context;
+            this.widgetID = widgetID;
+            this.dayNumber = dayNumber;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            writeDayNumber(dayNumber + 1, widgetID, context);
+            updateWidget(widgetID, context);
+            return null;
+        }
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private class PrevDayTask extends AsyncTask<Void, Void, Void> {
+        private Context context;
+        private int widgetID;
+        private int dayNumber;
+
+        PrevDayTask(Context context, int widgetID, int dayNumber) {
+            this.context = context;
+            this.widgetID = widgetID;
+            this.dayNumber = dayNumber;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            writeDayNumber(dayNumber - 1, widgetID, context);
+            updateWidget(widgetID, context);
+            return null;
+        }
     }
 }
