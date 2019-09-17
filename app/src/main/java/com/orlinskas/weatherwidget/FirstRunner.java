@@ -2,6 +2,7 @@ package com.orlinskas.weatherwidget;
 
 import android.content.Context;
 
+import com.orlinskas.weatherwidget.background.AlarmManagerSetter;
 import com.orlinskas.weatherwidget.data.CityDatabaseAdapter;
 import com.orlinskas.weatherwidget.data.CountryDatabaseAdapter;
 

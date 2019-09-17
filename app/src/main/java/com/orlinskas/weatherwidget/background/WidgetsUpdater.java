@@ -1,9 +1,10 @@
-package com.orlinskas.weatherwidget.widget;
+package com.orlinskas.weatherwidget.background;
 
 import android.content.Context;
 
-import com.orlinskas.weatherwidget.AlarmManagerSetter;
 import com.orlinskas.weatherwidget.specification.WidgetEmptySpecification;
+import com.orlinskas.weatherwidget.widget.Widget;
+import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 import java.util.ArrayList;
 

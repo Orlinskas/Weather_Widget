@@ -15,7 +15,7 @@ import com.orlinskas.weatherwidget.forecast.InstrumentPerformance;
 import com.orlinskas.weatherwidget.forecast.InstrumentPerformanceBuilder;
 import com.orlinskas.weatherwidget.ui.main.other.HelpActivity;
 import com.orlinskas.weatherwidget.widget.WidgetRemover;
-import com.orlinskas.weatherwidget.widget.WidgetUpdateChecker;
+import com.orlinskas.weatherwidget.background.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 

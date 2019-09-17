@@ -14,7 +14,7 @@ import com.orlinskas.weatherwidget.forecast.Weather;
 import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
-import com.orlinskas.weatherwidget.widget.WidgetsUpdater;
+import com.orlinskas.weatherwidget.background.WidgetsUpdater;
 
 import java.util.ArrayList;
 

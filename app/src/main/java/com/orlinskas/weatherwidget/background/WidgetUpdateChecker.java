@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.widget;
+package com.orlinskas.weatherwidget.background;
 
 import android.content.Context;
 
@@ -6,13 +6,17 @@ import com.orlinskas.weatherwidget.date.DateCalculator;
 import com.orlinskas.weatherwidget.date.DateFormat;
 import com.orlinskas.weatherwidget.date.DateHelper;
 import com.orlinskas.weatherwidget.preferences.Preferences;
+import com.orlinskas.weatherwidget.widget.Widget;
+import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 import java.util.Date;
+
+import static com.orlinskas.weatherwidget.background.Settings.NEED_HOURS_TO_UPDATE;
 
 public class WidgetUpdateChecker {
     private int widgetID;
     private Context context;
-    private final int NEED_TIME_TO_UPDATE = 3;
+
 
     public WidgetUpdateChecker(int widgetID, Context context) {
         this.context = context;
@@ -37,7 +41,7 @@ public class WidgetUpdateChecker {
         DateCalculator calculator = new DateCalculator();
         int hours = calculator.calculateDifferencesInHours(lastUpdateDate, currentDate);
 
-        return hours > NEED_TIME_TO_UPDATE;
+        return hours > NEED_HOURS_TO_UPDATE;
     }
 
     private Widget findWidgetInRepo(int widgetID) {

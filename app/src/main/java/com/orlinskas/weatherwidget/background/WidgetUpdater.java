@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget.widget;
+package com.orlinskas.weatherwidget.background;
 
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
@@ -13,6 +13,8 @@ import com.orlinskas.weatherwidget.forecast.ForecastListBuilder;
 import com.orlinskas.weatherwidget.forecast.WeatherReceiver;
 import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.ui.main.home.HomeWidget;
+import com.orlinskas.weatherwidget.widget.Widget;
+import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 class WidgetUpdater {
 

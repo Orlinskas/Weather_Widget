@@ -1,4 +1,4 @@
-package com.orlinskas.weatherwidget;
+package com.orlinskas.weatherwidget.background;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -8,7 +8,8 @@ import android.os.Build;
 
 import java.util.Calendar;
 
-import static com.orlinskas.weatherwidget.UpdateReceiver.UPDATE;
+import static com.orlinskas.weatherwidget.background.Settings.ALARM_INTERVAL;
+import static com.orlinskas.weatherwidget.background.UpdateReceiver.UPDATE;
 
 public class AlarmManagerSetter {
     public void setAlarm(Context context) {
@@ -20,7 +21,7 @@ public class AlarmManagerSetter {
                 PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar timeToRepeat = Calendar.getInstance();
         timeToRepeat.setTimeInMillis(System.currentTimeMillis());
-        timeToRepeat.add(Calendar.HOUR, 1);
+        timeToRepeat.add(Calendar.HOUR, ALARM_INTERVAL);
 
         if (Build.VERSION.SDK_INT >= 23) {
             alarm.setExactAndAllowWhileIdle(AlarmManager.RTC, timeToRepeat.getTimeInMillis(), pendingIntent);

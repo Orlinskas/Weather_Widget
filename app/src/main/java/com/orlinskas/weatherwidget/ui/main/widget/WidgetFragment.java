@@ -119,7 +119,7 @@ public class WidgetFragment extends Fragment implements WidgetContract.View {
                     public void run() {
                        swipeRefreshLayout.setRefreshing(false);
                     }
-                }, 3000);
+                }, 2000);
                 presenter.refreshWidget(widgetID);
             }
         });
