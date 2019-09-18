@@ -3,6 +3,7 @@ package com.orlinskas.weatherwidget.ui.home;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.orlinskas.weatherwidget.BuildConfig;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
 import com.orlinskas.weatherwidget.preferences.Preferences;
@@ -80,6 +82,11 @@ public class ConfigurationWidgetActivity extends Activity {
 
         setResult(RESULT_OK, resultValue); //отправил положительный ответ
         finish();
+    }
+
+    public void onClickSettings(View view) {
+        startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                Uri.parse("package:" + BuildConfig.APPLICATION_ID)));
     }
 }
 

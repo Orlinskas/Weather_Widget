@@ -1,6 +1,7 @@
 package com.orlinskas.weatherwidget;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.orlinskas.weatherwidget.background.AlarmManagerSetter;
 import com.orlinskas.weatherwidget.data.CityDatabaseAdapter;
@@ -17,6 +18,14 @@ public class FirstRunner {
         createCityDatabase();
         createCountryDatabase();
         setAlarmManager();
+        //showDialogBackgroundWorking();
+    }
+
+    private void showDialogBackgroundWorking() {
+        Intent intent = new Intent("com.meizu.safe.security.SHOW_APPSEC");
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.putExtra("packageName", BuildConfig.APPLICATION_ID);
+        context.startActivity(intent);
     }
 
     private void createCountryDatabase() {
