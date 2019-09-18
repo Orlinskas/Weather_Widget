@@ -258,6 +258,9 @@ public class HomeWidget extends AppWidgetProvider {
                 writeDayNumber(0, widgetID, context);
                 updateWidget(widgetID, context);
             }
+            else {
+                updateWidget(widgetID, context);
+            }
             return null;
         }
 
