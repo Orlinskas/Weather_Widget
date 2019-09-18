@@ -42,7 +42,7 @@ public class WidgetUpdateChecker {
         DateCalculator calculator = new DateCalculator();
         int hours = calculator.calculateDifferencesInHours(lastUpdateDate, currentDate);
 
-        return hours > NEED_HOURS_TO_UPDATE;
+        return hours >= NEED_HOURS_TO_UPDATE;
     }
 
     private Widget findWidgetInRepo(int widgetID) {
