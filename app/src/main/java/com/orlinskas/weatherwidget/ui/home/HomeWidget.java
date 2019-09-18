@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import com.orlinskas.weatherwidget.R;
+import com.orlinskas.weatherwidget.background.WidgetUpdateChecker;
 import com.orlinskas.weatherwidget.background.WidgetsUpdateService;
 import com.orlinskas.weatherwidget.chart.WeatherIconsSelector;
 import com.orlinskas.weatherwidget.forecast.Forecast;
@@ -239,18 +240,23 @@ public class HomeWidget extends AppWidgetProvider {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            context.startService(new Intent(context, WidgetsUpdateService.class));
             widgetView = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            try {
+            WidgetUpdateChecker updateChecker = new WidgetUpdateChecker(widgetID, context);
+            if(updateChecker.check()) {
+                context.startService(new Intent(context, WidgetsUpdateService.class));
                 widgetView.setViewVisibility(R.id.widget_layout_pb, View.VISIBLE);
                 AppWidgetManager.getInstance(context).updateAppWidget(widgetID, widgetView);
-                TimeUnit.SECONDS.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                try {
+                    TimeUnit.SECONDS.sleep(15);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                writeDayNumber(0, widgetID, context);
+                updateWidget(widgetID, context);
             }
             return null;
         }
@@ -260,7 +266,6 @@ public class HomeWidget extends AppWidgetProvider {
             super.onPostExecute(aVoid);
             widgetView.setViewVisibility(R.id.widget_layout_pb, View.INVISIBLE);
             AppWidgetManager.getInstance(context).updateAppWidget(widgetID, widgetView);
-            updateWidget(widgetID, context);
         }
     }
 
