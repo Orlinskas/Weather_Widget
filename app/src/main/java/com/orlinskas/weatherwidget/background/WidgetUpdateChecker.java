@@ -42,7 +42,12 @@ public class WidgetUpdateChecker {
         DateCalculator calculator = new DateCalculator();
         int hours = calculator.calculateDifferencesInHours(lastUpdateDate, currentDate);
 
-        return hours >= NEED_HOURS_TO_UPDATE;
+        if(widget.getDaysForecast() == null) { //значит данные пустые, из за ошибки, но дата обновления записана
+            return true;                       //нужно запустить обновление и получить данные несмотря на дату
+        }
+        else {
+            return hours >= NEED_HOURS_TO_UPDATE; //обновляем если наступило время
+        }
     }
 
     private Widget findWidgetInRepo(int widgetID) {
