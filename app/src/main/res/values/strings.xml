@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Weather</string>
+    <string name="app_name" translatable="false">Weather</string>
     <string name="tab_text_1">Виджет</string>
     <string name="tab_text_2">Создать</string>
     <string name="fragment_city_data_generator_tv_head">Создание виджета</string>
     <string name="fragment_city_data_generator_btn_start">Создать</string>
     <string name="city">Город:</string>
-    <string name="alert_image">alert_image</string>
+    <string name="alert_image" translatable="false">alert_image</string>
     <string name="country">Страна:</string>
     <string name="search">Поиск…</string>
     <string name="fragment_city_list_tv">Город</string>
@@ -14,30 +14,30 @@
     <string name="fragment_city_data_generator_spn_city">выбрать из списка</string>
     <string name="fragment_city_data_generator_tv_country_name">нужно выбрать</string>
     <string name="fragment_country_list_tv_code">Код</string>
-    <string name="on">On</string>
-    <string name="network">Network</string>
-    <string name="gps">GPS</string>
-    <string name="left_button">left button</string>
-    <string name="tv_date">-</string>
-    <string name="right_button">right button</string>
-    <string name="loading">click to update</string>
-    <string name="loading_2">Loading…</string>
+    <string name="on" translatable="false">On</string>
+    <string name="network" translatable="false">Network</string>
+    <string name="gps" translatable="false">GPS</string>
+    <string name="left_button" translatable="false">left button</string>
+    <string name="tv_date" translatable="false">-</string>
+    <string name="right_button" translatable="false">right button</string>
+    <string name="loading" translatable="false">click to update</string>
+    <string name="loading_2" translatable="false">Loading…</string>
     <string name="pressure">Давление</string>
     <string name="value">Значение</string>
     <string name="priboru">Приборы</string>
-    <string name="dimensions">meter/sec</string>
-    <string name="icon_info">icon info</string>
-    <string name="long_tire">—</string>
-    <string name="help">help</string>
-    <string name="hpa">hPa</string>
+    <string name="dimensions" translatable="false">meter/sec</string>
+    <string name="icon_info" translatable="false">icon info</string>
+    <string name="long_tire" translatable="false">—</string>
+    <string name="help" translatable="false">help</string>
+    <string name="hpa" translatable="false">hPa</string>
     <string name="wind_speed">Ветер</string>
-    <string name="meter_sec">meter/sec</string>
+    <string name="meter_sec" translatable="false">meter/sec</string>
     <string name="humidity">Влажность</string>
-    <string name="persent">%</string>
+    <string name="persent" translatable="false">%</string>
     <string name="rain_name">Дождь</string>
     <string name="snow">Снег</string>
     <string name="delete_widget">Удалить виджет</string>
-    <string name="mm_day">mm/day</string>
+    <string name="mm_day" translatable="false">mm/day</string>
     <string name="discriprion_rl_info">*указаны средние значения за сутки</string>
     <string name="config_head">Выберите ваш виджет из списка</string>
     <string name="config_body_descr_1">* возможно вы еще не создали виджет, сделайте это в приложении</string>
@@ -45,8 +45,8 @@
     <string name="config_body_descr_3">* приложение экономит заряд батареи и не делает лишних запросов</string>
     <string name="config_body_descr_4">* виджет предоставляет прогноз на несколько дней, просто тапайте по краям виджета</string>
     <string name="btn_config">Выбрать</string>
-    <string name="autor_group">2019 Orlinskas Development</string>
-    <string name="empty_row">-</string>
+    <string name="autor_group" translatable="false">2019 Orlinskas Development</string>
+    <string name="empty_row" translatable="false">-</string>
     <string name="back">вчера</string>
     <string name="next">завтра</string>
     <string name="greate_widget_in_app">Создайте виджет в приложении</string>
@@ -71,12 +71,11 @@
     <string name="warning">Подтверждение</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
-    <string name="all">Общие</string>
     <string name="all_desc_1">1. Прогноз предоставлен сервисом OpenWeatherMap.</string>
     <string name="forecast">Прогноз</string>
     <string name="desc_2">1. Приборы показывают усредненое значение по текущим данным на графике!</string>
     <string name="widget">Виджет</string>
-    <string name="widget_image">widget_image</string>
+    <string name="widget_image" translatable="false">widget_image</string>
     <string name="widget_desc_1">1. Виджет поделен на три зоны.</string>
     <string name="widget_desc_2">2. Левая зона прокручивает день назад.</string>
     <string name="widget_desc_3">3. Правая зона прокручивает день вперед.</string>
@@ -85,12 +84,12 @@
     <string name="help_pls">Помощь</string>
     <string name="message">Связь с разработчиком</string>
     <string name="question">Технические вопросы, баги</string>
-    <string name="gmail">orlinskas.development@gmai.com</string>
-    <string name="my_gmail">orlinskaslove@gmai.com</string>
+    <string name="gmail" translatable="false">orlinskas.development@gmai.com</string>
+    <string name="my_gmail" translatable="false">orlinskaslove@gmai.com</string>
     <string name="mail">Личная почта</string>
-    <string name="inst">http://www.instagram.com/orlinskas</string>
-    <string name="gmail_im">gmail_im</string>
-    <string name="inst_im">inst_im</string>
+    <string name="inst" translatable="false">http://www.instagram.com/orlinskas</string>
+    <string name="gmail_im" translatable="false">gmail_im</string>
+    <string name="inst_im" translatable="false">inst_im</string>
     <string name="refresh">Обновить</string>
     <string name="almost_refresh">Уже обновлено</string>
     <string name="open_settings">Открыть настройки</string>
@@ -99,4 +98,6 @@
     <string-array name="spinner">
         <item>выбрать…</item>
     </string-array>
+    <string name="all">Общие</string>
+    <string name="all">Общие</string>
 </resources>
