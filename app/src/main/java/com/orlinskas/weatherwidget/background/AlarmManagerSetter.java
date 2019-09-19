@@ -8,7 +8,7 @@ import android.os.Build;
 
 import java.util.Calendar;
 
-import static com.orlinskas.weatherwidget.background.Settings.ALARM_INTERVAL;
+import static com.orlinskas.weatherwidget.background.Settings.ALARM_INTERVAL_MINUTES;
 import static com.orlinskas.weatherwidget.background.UpdateReceiver.UPDATE;
 
 public class AlarmManagerSetter {
@@ -21,14 +21,14 @@ public class AlarmManagerSetter {
                 PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar timeToRepeat = Calendar.getInstance();
         timeToRepeat.setTimeInMillis(System.currentTimeMillis());
-        timeToRepeat.add(Calendar.HOUR, ALARM_INTERVAL);
+        timeToRepeat.add(Calendar.MINUTE, ALARM_INTERVAL_MINUTES);
 
         if (Build.VERSION.SDK_INT >= 23) {
-            alarm.setExactAndAllowWhileIdle(AlarmManager.RTC, timeToRepeat.getTimeInMillis(), pendingIntent);
+            alarm.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeToRepeat.getTimeInMillis(), pendingIntent);
         } else if (Build.VERSION.SDK_INT >= 19) {
-            alarm.setExact(AlarmManager.RTC, timeToRepeat.getTimeInMillis(), pendingIntent);
+            alarm.setExact(AlarmManager.RTC_WAKEUP, timeToRepeat.getTimeInMillis(), pendingIntent);
         } else {
-            alarm.set(AlarmManager.RTC, timeToRepeat.getTimeInMillis(), pendingIntent);
+            alarm.set(AlarmManager.RTC_WAKEUP, timeToRepeat.getTimeInMillis(), pendingIntent);
         }
     }
 }
