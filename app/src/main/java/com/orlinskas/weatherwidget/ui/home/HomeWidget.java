@@ -21,6 +21,7 @@ import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_DAY_NUMBER;
@@ -35,18 +36,18 @@ public class HomeWidget extends AppWidgetProvider {
     private final String ACTION_CLICK_RIGHT = "rightAreaClick";
     private final String ACTION_CLICK_CENTER = "centerAreaClick";
 
-    private final int[] imageViewIDsIcons = new int[]
-            {R.id.layout_widget_ll_chart_case_icon_1, R.id.layout_widget_ll_chart_case_icon_2,
+    private final int[] imageViewIDsIcons =
+            new int[]{R.id.layout_widget_ll_chart_case_icon_1, R.id.layout_widget_ll_chart_case_icon_2,
                     R.id.layout_widget_ll_chart_case_icon_3, R.id.layout_widget_ll_chart_case_icon_4,
                     R.id.layout_widget_ll_chart_case_icon_5, R.id.layout_widget_ll_chart_case_icon_6,
                     R.id.layout_widget_ll_chart_case_icon_7, R.id.layout_widget_ll_chart_case_icon_8};
-    private final int[] textViewIDsTemperatures = new int[]
-            {R.id.layout_widget_ll_chart_case_temp_1, R.id.layout_widget_ll_chart_case_temp_2,
-             R.id.layout_widget_ll_chart_case_temp_3, R.id.layout_widget_ll_chart_case_temp_4,
-             R.id.layout_widget_ll_chart_case_temp_5, R.id.layout_widget_ll_chart_case_temp_6,
-             R.id.layout_widget_ll_chart_case_temp_7, R.id.layout_widget_ll_chart_case_temp_8};
-    private final int[] textViewIDsDates = new int[]
-            {R.id.layout_widget_ll_chart_case_date_1, R.id.layout_widget_ll_chart_case_date_2,
+    private final int[] textViewIDsTemperatures =
+            new int[]{R.id.layout_widget_ll_chart_case_temp_1, R.id.layout_widget_ll_chart_case_temp_2,
+                    R.id.layout_widget_ll_chart_case_temp_3, R.id.layout_widget_ll_chart_case_temp_4,
+                    R.id.layout_widget_ll_chart_case_temp_5, R.id.layout_widget_ll_chart_case_temp_6,
+                    R.id.layout_widget_ll_chart_case_temp_7, R.id.layout_widget_ll_chart_case_temp_8};
+    private final int[] textViewIDsDates =
+            new int[]{R.id.layout_widget_ll_chart_case_date_1, R.id.layout_widget_ll_chart_case_date_2,
                     R.id.layout_widget_ll_chart_case_date_3, R.id.layout_widget_ll_chart_case_date_4,
                     R.id.layout_widget_ll_chart_case_date_5, R.id.layout_widget_ll_chart_case_date_6,
                     R.id.layout_widget_ll_chart_case_date_7, R.id.layout_widget_ll_chart_case_date_8};
@@ -76,6 +77,8 @@ public class HomeWidget extends AppWidgetProvider {
                 case ACTION_CREATE:
                 case ACTION_DEFAULT:
                 case ACTION_UPDATE:
+                    writeDayNumber(0, id, context);
+                    updateWidget(id, context);
                 case ACTION_CLICK_CENTER:
                     UpdateWidgetTask task = new UpdateWidgetTask(context, id);
                     task.execute();
@@ -241,24 +244,28 @@ public class HomeWidget extends AppWidgetProvider {
         protected void onPreExecute() {
             super.onPreExecute();
             widgetView = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+            widgetView.setViewVisibility(R.id.widget_layout_pb, View.VISIBLE);
+            AppWidgetManager.getInstance(context).updateAppWidget(widgetID, widgetView);
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            WidgetUpdateChecker updateChecker = new WidgetUpdateChecker(widgetID, context);
+            int id = Objects.requireNonNull(findWidget(widgetID, context)).getId();
+            WidgetUpdateChecker updateChecker = new WidgetUpdateChecker(id, context);
             if(updateChecker.check()) {
                 context.startService(new Intent(context, WidgetsUpdateService.class));
-                widgetView.setViewVisibility(R.id.widget_layout_pb, View.VISIBLE);
-                AppWidgetManager.getInstance(context).updateAppWidget(widgetID, widgetView);
                 try {
-                    TimeUnit.SECONDS.sleep(15);
+                    TimeUnit.SECONDS.sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                writeDayNumber(0, widgetID, context);
-                updateWidget(widgetID, context);
             }
             else {
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 updateWidget(widgetID, context);
             }
             return null;

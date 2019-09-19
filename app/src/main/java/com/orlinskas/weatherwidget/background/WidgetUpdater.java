@@ -52,11 +52,6 @@ class WidgetUpdater {
             return null;
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-        }
-
         private Widget findWidgetInRepo(int widgetID) {
             Widget widget = null;
             WidgetRepository repository = new WidgetRepository(context);
@@ -83,6 +78,14 @@ class WidgetUpdater {
             repository.update(widget);
         }
 
+        private void saveWidgetUpdateDate(Widget widget) {
+            String id = String.valueOf(widget.getId());
+            String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
+
+            Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
+            preferences.saveData(WIDGET_LAST_UPDATE + id, currentDate);
+        }
+
         private void sendIntentToUpdate(int id) {
             Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
             int ID = preferences.getData(WIDGET_ID_DEPENDENCE + id, AppWidgetManager.INVALID_APPWIDGET_ID);
@@ -96,14 +99,6 @@ class WidgetUpdater {
             } catch (PendingIntent.CanceledException e) {
                 e.printStackTrace();
             }
-        }
-
-        private void saveWidgetUpdateDate(Widget widget) {
-            String id = String.valueOf(widget.getId());
-            String currentDate = DateHelper.getCurrent(DateFormat.YYYY_MM_DD_HH_MM);
-
-            Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
-            preferences.saveData(WIDGET_LAST_UPDATE + id, currentDate);
         }
     }
 }

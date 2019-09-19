@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class WidgetsUpdater {
     private Context context;
 
-    public WidgetsUpdater(Context context) {
+    WidgetsUpdater(Context context) {
         this.context = context;
     }
 
