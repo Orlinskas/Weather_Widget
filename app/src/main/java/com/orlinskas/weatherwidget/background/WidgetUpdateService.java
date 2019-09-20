@@ -64,7 +64,6 @@ public class WidgetUpdateService extends Service {
                 stopSelf();
             }
         }).start();
-
     }
 
     private Widget findWidgetInRepo(int myWidgetID) {
