@@ -4,25 +4,27 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import static com.orlinskas.weatherwidget.background.Settings.MY_WIDGET_ID;
+
 public class UpdateReceiver extends BroadcastReceiver {
     public static final String UPDATE = "update";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent != null && intent.getAction() != null) {
-            int widgetID = intent.getIntExtra("widgetID",0);
+            int myWidgetID = intent.getIntExtra(MY_WIDGET_ID,0);
 
             switch (intent.getAction()) {
                 case UPDATE:
                 case Intent.ACTION_BOOT_COMPLETED:
                     Intent intentService = new Intent(context, WidgetUpdateService.class);
-                    intentService.putExtra("widgetID", widgetID);
+                    intentService.putExtra(MY_WIDGET_ID, myWidgetID);
                     context.startService(intentService);
                     break;
             }
 
             AlarmManagerSetter alarmManagerSetter = new AlarmManagerSetter();
-            alarmManagerSetter.setAlarm(context, widgetID);
+            alarmManagerSetter.setAlarm(context, myWidgetID);
         }
     }
 }

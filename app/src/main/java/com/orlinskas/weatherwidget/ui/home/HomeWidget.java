@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_DAY_NUMBER;
-import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_ID_DEPENDENCE;
+import static com.orlinskas.weatherwidget.preferences.Preferences.MY_WIDGET_ID_DEPENDS;
 
 public class HomeWidget extends AppWidgetProvider {
     public static final String ACTION = "action";
@@ -102,7 +102,7 @@ public class HomeWidget extends AppWidgetProvider {
         for(int i = 0; i < oldWidgetIds.length; i++) {
             Widget widget = findWidget(oldWidgetIds[i], context);
             if (widget != null) {
-                preferences.saveData(WIDGET_ID_DEPENDENCE + newWidgetIds[i], widget.getId());
+                preferences.saveData(MY_WIDGET_ID_DEPENDS + newWidgetIds[i], widget.getId());
             }
         }
     }
@@ -154,7 +154,7 @@ public class HomeWidget extends AppWidgetProvider {
 
     private Widget findWidget(int appWidgetID, Context context) {
         Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
-        int myWidgetID = preferences.getData(WIDGET_ID_DEPENDENCE + appWidgetID, 0);
+        int myWidgetID = preferences.getData(MY_WIDGET_ID_DEPENDS + appWidgetID, 0);
 
         WidgetRepository repository = new WidgetRepository(context);
         try {

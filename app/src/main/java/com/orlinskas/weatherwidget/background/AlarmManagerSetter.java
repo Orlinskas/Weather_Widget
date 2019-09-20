@@ -9,15 +9,16 @@ import android.os.Build;
 import java.util.Calendar;
 
 import static com.orlinskas.weatherwidget.background.Settings.ALARM_INTERVAL_MINUTES;
+import static com.orlinskas.weatherwidget.background.Settings.MY_WIDGET_ID;
 import static com.orlinskas.weatherwidget.background.UpdateReceiver.UPDATE;
 
 public class AlarmManagerSetter {
-    public void setAlarm(Context context, int widgetID) {
+    public void setAlarm(Context context, int myWidgetID) {
         AlarmManager alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, UpdateReceiver.class);
         intent.setAction(UPDATE);
-        intent.putExtra("widgetID", widgetID);
+        intent.putExtra(MY_WIDGET_ID, myWidgetID);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar timeToRepeat = Calendar.getInstance();
         timeToRepeat.setTimeInMillis(System.currentTimeMillis());

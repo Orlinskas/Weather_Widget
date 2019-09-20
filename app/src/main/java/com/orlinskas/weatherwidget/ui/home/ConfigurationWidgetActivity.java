@@ -23,11 +23,12 @@ import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
 import java.util.ArrayList;
 
+import static com.orlinskas.weatherwidget.preferences.Preferences.APP_WIDGET_ID_DEPENDS;
 import static com.orlinskas.weatherwidget.preferences.Preferences.SETTINGS;
-import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_ID_DEPENDENCE;
+import static com.orlinskas.weatherwidget.preferences.Preferences.MY_WIDGET_ID_DEPENDS;
 
 public class ConfigurationWidgetActivity extends Activity {
-    private int id = AppWidgetManager.INVALID_APPWIDGET_ID;
+    private int appWidgetID = AppWidgetManager.INVALID_APPWIDGET_ID;
     private Intent resultValue;
     private Spinner spinnerWidgetList;
 
@@ -37,15 +38,15 @@ public class ConfigurationWidgetActivity extends Activity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            id = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+            appWidgetID = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
         }
-        if (id == AppWidgetManager.INVALID_APPWIDGET_ID) {
+        if (appWidgetID == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
 
         resultValue = new Intent();
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, id);
+        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetID);
         resultValue.putExtra(HomeWidget.ACTION, HomeWidget.ACTION_CREATE);
         setResult(RESULT_CANCELED, resultValue); //сформировал негативный ответ на случай выхода
 
@@ -77,12 +78,15 @@ public class ConfigurationWidgetActivity extends Activity {
         view.startAnimation(buttonClickAnim);
 
         Widget widget = (Widget) spinnerWidgetList.getSelectedItem();
+        int myWidgetID = widget.getId();
         Preferences preferences = Preferences.getInstance(this, SETTINGS);
         //запомнил соотношение - ID который дал андроид/ID моего объекта виджета
-        preferences.saveData(WIDGET_ID_DEPENDENCE + id, widget.getId());
+        preferences.saveData(MY_WIDGET_ID_DEPENDS + appWidgetID, myWidgetID);
+        //и наоборот
+        preferences.saveData(APP_WIDGET_ID_DEPENDS + myWidgetID, appWidgetID);
 
         AlarmManagerSetter alarmManagerSetter = new AlarmManagerSetter();
-        alarmManagerSetter.setAlarm(this, widget.getId());
+        alarmManagerSetter.setAlarm(this, myWidgetID);
 
         setResult(RESULT_OK, resultValue); //отправил положительный ответ
         finish();

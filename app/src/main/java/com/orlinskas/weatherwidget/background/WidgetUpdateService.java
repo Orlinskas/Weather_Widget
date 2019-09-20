@@ -16,7 +16,8 @@ import com.orlinskas.weatherwidget.ui.home.HomeWidget;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
-import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_ID_DEPENDENCE;
+import static com.orlinskas.weatherwidget.preferences.Preferences.APP_WIDGET_ID_DEPENDS;
+import static com.orlinskas.weatherwidget.preferences.Preferences.MY_WIDGET_ID_DEPENDS;
 import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_LAST_UPDATE;
 
 public class WidgetUpdateService extends Service {
@@ -102,12 +103,12 @@ public class WidgetUpdateService extends Service {
 
     private void sendIntentToUpdate(int myWidgetID) {
         Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
-        int appWidgetID = preferences.getData(WIDGET_ID_DEPENDENCE + myWidgetID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        int appWidgetID = preferences.getData(APP_WIDGET_ID_DEPENDS + myWidgetID, AppWidgetManager.INVALID_APPWIDGET_ID);
 
         Intent update = new Intent(context, HomeWidget.class);
         update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetID);
         update.putExtra(HomeWidget.ACTION, HomeWidget.ACTION_UPDATE);
-        PendingIntent pRightIntent = PendingIntent.getBroadcast(context, myWidgetID + 400, update, 0);
+        PendingIntent pRightIntent = PendingIntent.getBroadcast(context, appWidgetID + 400, update, 0);
         try {
             pRightIntent.send();
         } catch (PendingIntent.CanceledException e) {

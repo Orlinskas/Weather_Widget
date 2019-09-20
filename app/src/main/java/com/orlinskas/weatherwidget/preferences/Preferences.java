@@ -8,7 +8,8 @@ public class Preferences {
     private SharedPreferences sharedPreferences;
     public static final String SETTINGS = "settings";
     static final String APP_TEST = "test";
-    public static final String WIDGET_ID_DEPENDENCE = "dependenceID-";
+    public static final String MY_WIDGET_ID_DEPENDS = "dependenceIDMy-";
+    public static final String APP_WIDGET_ID_DEPENDS = "dependenceIDApp-";
     public static final String WIDGET_LAST_UPDATE = "lastUpdateID-";
     public static final String WIDGET_DAY_NUMBER = "dayNumberID-";
 
