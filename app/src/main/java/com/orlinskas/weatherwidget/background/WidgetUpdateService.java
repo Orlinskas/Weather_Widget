@@ -20,7 +20,7 @@ import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_ID_DEPE
 import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_LAST_UPDATE;
 
 public class WidgetUpdateService extends Service {
-    private int widgetID;
+    private int myWidgetID;
     private Context context;
 
     public WidgetUpdateService() {
@@ -34,8 +34,8 @@ public class WidgetUpdateService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         context = getBaseContext();
-        widgetID = intent.getIntExtra("widgetID", 0);
-        if(widgetID == 0) {
+        myWidgetID = intent.getIntExtra("myWidgetID", 0);
+        if(myWidgetID == 0) {
             stopSelf();
         }
         else {
@@ -47,15 +47,15 @@ public class WidgetUpdateService extends Service {
     private void updateTask() {
         new Thread(new Runnable() {
             public void run() {
-                WidgetUpdateChecker updateChecker = new WidgetUpdateChecker(widgetID, context);
+                WidgetUpdateChecker updateChecker = new WidgetUpdateChecker(myWidgetID, context);
                 if(updateChecker.check()) {
                     try {
-                        Widget widget = findWidgetInRepo(widgetID);
+                        Widget widget = findWidgetInRepo(myWidgetID);
                         sendRequest(widget);
                         updateForecastInWidget(widget);
                         updateWidgetInRepository(widget);
                         saveWidgetUpdateDate(widget);
-                        sendIntentToUpdate(widgetID);
+                        sendIntentToUpdate(myWidgetID);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -66,11 +66,11 @@ public class WidgetUpdateService extends Service {
 
     }
 
-    private Widget findWidgetInRepo(int widgetID) {
+    private Widget findWidgetInRepo(int myWidgetID) {
         Widget widget = null;
         WidgetRepository repository = new WidgetRepository(context);
         try {
-            widget = repository.find(widgetID);
+            widget = repository.find(myWidgetID);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -100,14 +100,14 @@ public class WidgetUpdateService extends Service {
         preferences.saveData(WIDGET_LAST_UPDATE + id, currentDate);
     }
 
-    private void sendIntentToUpdate(int id) {
+    private void sendIntentToUpdate(int myWidgetID) {
         Preferences preferences = Preferences.getInstance(context, Preferences.SETTINGS);
-        int ID = preferences.getData(WIDGET_ID_DEPENDENCE + id, AppWidgetManager.INVALID_APPWIDGET_ID);
+        int appWidgetID = preferences.getData(WIDGET_ID_DEPENDENCE + myWidgetID, AppWidgetManager.INVALID_APPWIDGET_ID);
 
         Intent update = new Intent(context, HomeWidget.class);
-        update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, ID);
+        update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetID);
         update.putExtra(HomeWidget.ACTION, HomeWidget.ACTION_UPDATE);
-        PendingIntent pRightIntent = PendingIntent.getBroadcast(context, id + 400, update, 0);
+        PendingIntent pRightIntent = PendingIntent.getBroadcast(context, myWidgetID + 400, update, 0);
         try {
             pRightIntent.send();
         } catch (PendingIntent.CanceledException e) {

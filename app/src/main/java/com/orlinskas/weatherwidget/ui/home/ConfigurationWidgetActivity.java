@@ -1,7 +1,6 @@
 package com.orlinskas.weatherwidget.ui.home;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -83,7 +82,7 @@ public class ConfigurationWidgetActivity extends Activity {
         preferences.saveData(WIDGET_ID_DEPENDENCE + id, widget.getId());
 
         AlarmManagerSetter alarmManagerSetter = new AlarmManagerSetter();
-        alarmManagerSetter.setAlarm(getApplicationContext(),widget.getId());
+        alarmManagerSetter.setAlarm(this, widget.getId());
 
         setResult(RESULT_OK, resultValue); //отправил положительный ответ
         finish();
