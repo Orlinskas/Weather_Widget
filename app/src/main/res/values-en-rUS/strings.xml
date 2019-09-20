@@ -56,4 +56,18 @@
     <string name="widget">Widget</string>
     <string name="wind_speed">Wind</string>
     <string name="yes">Yes</string>
+    <string name="acces_permission">1</string>
+    <string name="all_desc_1">1</string>
+    <string name="config_body_descr_1">1</string>
+    <string name="config_body_descr_2">1</string>
+    <string name="config_body_descr_3">1</string>
+    <string name="config_body_descr_4">1</string>
+    <string name="desc_2">1</string>
+    <string name="desc_5">1</string>
+    <string name="discriprion_rl_info">1</string>
+    <string name="search_working">1</string>
+    <string name="widget_desc_1">1</string>
+    <string name="widget_desc_2">1</string>
+    <string name="widget_desc_3">1</string>
+    <string name="widget_desc_4">1</string>
 </resources>

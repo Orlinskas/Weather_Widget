@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Weather</string>
     <string name="acces_permission">Дозвольте доступ або увімкніть GPS</string>
     <string name="all">Загальні</string>
     <string name="all_desc_1">1. Прогноз надано сервісом OpenWeatherMap</string>

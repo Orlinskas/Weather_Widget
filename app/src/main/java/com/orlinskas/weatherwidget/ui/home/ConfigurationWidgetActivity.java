@@ -1,6 +1,7 @@
 package com.orlinskas.weatherwidget.ui.home;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import com.orlinskas.weatherwidget.BuildConfig;
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.ToastBuilder;
+import com.orlinskas.weatherwidget.background.AlarmManagerSetter;
 import com.orlinskas.weatherwidget.preferences.Preferences;
 import com.orlinskas.weatherwidget.specification.WidgetEmptySpecification;
 import com.orlinskas.weatherwidget.widget.Widget;
@@ -79,6 +81,9 @@ public class ConfigurationWidgetActivity extends Activity {
         Preferences preferences = Preferences.getInstance(this, SETTINGS);
         //запомнил соотношение - ID который дал андроид/ID моего объекта виджета
         preferences.saveData(WIDGET_ID_DEPENDENCE + id, widget.getId());
+
+        AlarmManagerSetter alarmManagerSetter = new AlarmManagerSetter();
+        alarmManagerSetter.setAlarm(getApplicationContext(),widget.getId());
 
         setResult(RESULT_OK, resultValue); //отправил положительный ответ
         finish();

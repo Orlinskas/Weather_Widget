@@ -75,7 +75,7 @@
         </receiver>
 
         <service
-            android:name=".background.WidgetsUpdateService"
+            android:name=".background.WidgetUpdateService"
             android:enabled="true"/>
 
         <uses-library

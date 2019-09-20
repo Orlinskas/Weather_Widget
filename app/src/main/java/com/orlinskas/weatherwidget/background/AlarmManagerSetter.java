@@ -12,13 +12,13 @@ import static com.orlinskas.weatherwidget.background.Settings.ALARM_INTERVAL_MIN
 import static com.orlinskas.weatherwidget.background.UpdateReceiver.UPDATE;
 
 public class AlarmManagerSetter {
-    public void setAlarm(Context context) {
+    public void setAlarm(Context context, int widgetID) {
         AlarmManager alarm = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, UpdateReceiver.class);
         intent.setAction(UPDATE);
-        PendingIntent pendingIntent =
-                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        intent.putExtra("widgetID", widgetID);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar timeToRepeat = Calendar.getInstance();
         timeToRepeat.setTimeInMillis(System.currentTimeMillis());
         timeToRepeat.add(Calendar.MINUTE, ALARM_INTERVAL_MINUTES);

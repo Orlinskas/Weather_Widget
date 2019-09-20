@@ -12,7 +12,7 @@ import android.widget.RemoteViews;
 
 import com.orlinskas.weatherwidget.R;
 import com.orlinskas.weatherwidget.background.WidgetUpdateChecker;
-import com.orlinskas.weatherwidget.background.WidgetsUpdateService;
+import com.orlinskas.weatherwidget.background.WidgetUpdateService;
 import com.orlinskas.weatherwidget.chart.WeatherIconsSelector;
 import com.orlinskas.weatherwidget.forecast.Forecast;
 import com.orlinskas.weatherwidget.forecast.Weather;
@@ -251,22 +251,13 @@ public class HomeWidget extends AppWidgetProvider {
         @Override
         protected Void doInBackground(Void... voids) {
             int id = Objects.requireNonNull(findWidget(widgetID, context)).getId();
-            WidgetUpdateChecker updateChecker = new WidgetUpdateChecker(id, context);
-            if(updateChecker.check()) {
-                context.startService(new Intent(context, WidgetsUpdateService.class));
-                try {
-                    TimeUnit.SECONDS.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            else {
-                try {
-                    TimeUnit.SECONDS.sleep(2);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                updateWidget(widgetID, context);
+            Intent intentService = new Intent(context, WidgetUpdateService.class);
+            intentService.putExtra("widgetID", id);
+            context.startService(intentService);
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             return null;
         }
@@ -276,6 +267,7 @@ public class HomeWidget extends AppWidgetProvider {
             super.onPostExecute(aVoid);
             widgetView.setViewVisibility(R.id.widget_layout_pb, View.INVISIBLE);
             AppWidgetManager.getInstance(context).updateAppWidget(widgetID, widgetView);
+            updateWidget(widgetID, context);
         }
     }
 
