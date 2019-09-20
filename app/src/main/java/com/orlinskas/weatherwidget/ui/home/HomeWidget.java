@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import static com.orlinskas.weatherwidget.background.Settings.MY_WIDGET_ID;
 import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_DAY_NUMBER;
 import static com.orlinskas.weatherwidget.preferences.Preferences.MY_WIDGET_ID_DEPENDS;
 
@@ -251,7 +252,7 @@ public class HomeWidget extends AppWidgetProvider {
         protected Void doInBackground(Void... voids) {
             int myWidgetID = Objects.requireNonNull(findWidget(appWidgetID, context)).getId();
             Intent intentService = new Intent(context, WidgetUpdateService.class);
-            intentService.putExtra("appWidgetID", myWidgetID);
+            intentService.putExtra(MY_WIDGET_ID, myWidgetID);
             context.startService(intentService);
             try {
                 TimeUnit.SECONDS.sleep(3);

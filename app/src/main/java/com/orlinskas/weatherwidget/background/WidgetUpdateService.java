@@ -16,8 +16,8 @@ import com.orlinskas.weatherwidget.ui.home.HomeWidget;
 import com.orlinskas.weatherwidget.widget.Widget;
 import com.orlinskas.weatherwidget.widget.WidgetRepository;
 
+import static com.orlinskas.weatherwidget.background.Settings.MY_WIDGET_ID;
 import static com.orlinskas.weatherwidget.preferences.Preferences.APP_WIDGET_ID_DEPENDS;
-import static com.orlinskas.weatherwidget.preferences.Preferences.MY_WIDGET_ID_DEPENDS;
 import static com.orlinskas.weatherwidget.preferences.Preferences.WIDGET_LAST_UPDATE;
 
 public class WidgetUpdateService extends Service {
@@ -35,7 +35,7 @@ public class WidgetUpdateService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         context = getBaseContext();
-        myWidgetID = intent.getIntExtra("myWidgetID", 0);
+        myWidgetID = intent.getIntExtra(MY_WIDGET_ID, 0);
         if(myWidgetID == 0) {
             stopSelf();
         }
