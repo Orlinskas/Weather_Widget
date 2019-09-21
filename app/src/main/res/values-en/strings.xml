@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Weather</string>
+    <string name="acces_permission">Allow access or turn on GPS</string>
     <string name="all">General</string>
+    <string name="all_desc_1">1. The forecast is provided by OpenWeatherMap service.</string>
     <string name="almost_have">Already created</string>
     <string name="almost_refresh">Already updated</string>
     <string name="avialable_from">Available from</string>
@@ -9,9 +12,16 @@
     <string name="cities">cities.</string>
     <string name="city">City:</string>
     <string name="city_2">City</string>
+    <string name="config_body_descr_1">* you may not have yet created a widget, please do it in the app</string>
+    <string name="config_body_descr_2">* the weather update is automatic (on some devices like Xiaomi, Meizu, Huawei etc. You need to allow app to work on the background)</string>
+    <string name="config_body_descr_3">* the app consumes low amount of energy resourses and makes no side/unnecessary requests</string>
+    <string name="config_body_descr_4">* the widget affords forecast for close upcoming dates, just tap on the sides of the screen</string>
     <string name="config_head">Select your widget from the list.</string>
     <string name="country">A country:</string>
     <string name="delete_widget">Delete widget</string>
+    <string name="desc_2">1. Appliances show averaged numbers on current graph data!</string>
+    <string name="desc_5">* tapping in the middle of the widget updates the forecast, if it is possible</string>
+    <string name="discriprion_rl_info">* averaged data for every day is shown</string>
     <string name="empty_data">No data yet</string>
     <string name="error_get_data">Error receiving data</string>
     <string name="error_widget_create">Error creating widget</string>
@@ -45,6 +55,7 @@
     <string name="refresh">Refresh</string>
     <string name="repost">Share</string>
     <string name="search">Search…</string>
+    <string name="search_working">The seach\'s already started, please wait..</string>
     <string name="snow">Snow</string>
     <string name="tab_text_1">Widget</string>
     <string name="tab_text_2">Create</string>
@@ -54,20 +65,10 @@
     <string name="value">Value</string>
     <string name="warning">the confirmation</string>
     <string name="widget">Widget</string>
-    <string name="wind_speed">Wind</string>
-    <string name="yes">Yes</string>
-    <string name="acces_permission">Allow access or turn on GPS</string>
-    <string name="all_desc_1">1. The forecast is provided by OpenWeatherMap service.</string>
-    <string name="config_body_descr_1">* you may not have yet created a widget, please do it in the app</string>
-    <string name="config_body_descr_2">* the weather update is automatic (on some devices like Xiaomi, Meizu, Huawei etc. You need to allow app to work on the background)</string>
-    <string name="config_body_descr_3">* the app consumes low amount of energy resourses and makes no side/unnecessary requests</string>
-    <string name="config_body_descr_4">* the widget affords forecast for close upcoming dates, just tap on the sides of the screen</string>
-    <string name="desc_2">1. Appliances show averaged numbers on current graph data!</string>
-    <string name="desc_5">* tapping in the middle of the widget updates the forecast, if it is possible</string>
-    <string name="discriprion_rl_info">* averaged data for every day is shown</string>
-    <string name="search_working">The seach\'s already started, please wait..</string>
     <string name="widget_desc_1">1. The widget is divided into 3 zones.</string>
     <string name="widget_desc_2">2. Left zone spins back one day.</string>
     <string name="widget_desc_3">3. The right zone spins one day forward.</string>
     <string name="widget_desc_4">4. The central zone updates data if it is possible.</string>
+    <string name="wind_speed">Wind</string>
+    <string name="yes">Yes</string>
 </resources>

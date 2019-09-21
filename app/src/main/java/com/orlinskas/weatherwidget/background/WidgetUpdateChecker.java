@@ -18,7 +18,6 @@ public class WidgetUpdateChecker {
     private int widgetID;
     private Context context;
 
-
     public WidgetUpdateChecker(int widgetID, Context context) {
         this.context = context;
         this.widgetID = widgetID;
