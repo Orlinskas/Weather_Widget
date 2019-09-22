@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_background">
 
         <Button
@@ -123,7 +124,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="0dp"
             android:fontFamily="sans-serif-light"
             android:text="@string/autor_group"
             android:textAlignment="center"
