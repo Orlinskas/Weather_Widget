@@ -360,7 +360,8 @@
         android:id="@+id/layout_widget_rl_control_bar_bot"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_below="@+id/layout_widget_ll_chart_case">
+        android:layout_below="@+id/layout_widget_ll_chart_case"
+        android:layout_marginTop="2dp">
 
         <ImageView
             android:id="@+id/layout_widget_iv_left"

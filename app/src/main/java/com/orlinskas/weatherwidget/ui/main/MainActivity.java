@@ -2,6 +2,7 @@ package com.orlinskas.weatherwidget.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -48,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        processFirstRun(getBaseContext());
-
         RelativeLayout relativeLayout = findViewById(R.id.activity_main_rl_background_anim);
         relativeLayout.addView(new AnimatedBackgroundView(this));
+
+        processFirstRun(getBaseContext());
     }
 
     private void processFirstRun(Context applicationContext) {
