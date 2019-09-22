@@ -19,7 +19,7 @@ public class AlarmManagerSetter {
         Intent intent = new Intent(context, UpdateReceiver.class);
         intent.setAction(UPDATE);
         intent.putExtra(MY_WIDGET_ID, myWidgetID);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, myWidgetID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar timeToRepeat = Calendar.getInstance();
         timeToRepeat.setTimeInMillis(System.currentTimeMillis());
         timeToRepeat.add(Calendar.MINUTE, ALARM_INTERVAL_MINUTES);
