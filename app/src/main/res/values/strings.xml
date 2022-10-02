@@ -45,7 +45,7 @@
     <string name="config_body_descr_3">* приложение экономит заряд батареи и не делает лишних запросов</string>
     <string name="config_body_descr_4">* виджет предоставляет прогноз на несколько дней, просто тапайте по краям виджета</string>
     <string name="btn_config">Выбрать</string>
-    <string name="autor_group" translatable="false">2019 Orlinskas Development</string>
+    <string name="autor_group" translatable="false">2018 Orlinskas Development</string>
     <string name="empty_row" translatable="false">-</string>
     <string name="back">вчера</string>
     <string name="next">завтра</string>

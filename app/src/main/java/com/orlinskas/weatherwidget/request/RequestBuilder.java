@@ -6,7 +6,7 @@ import com.orlinskas.weatherwidget.date.DateHelper;
 
 public class RequestBuilder {
     public static final String OPEN_WEATHER = "OpenWeather";
-    private final static String OPENWEATHERMAP_COM = "http://api.openweathermap.org/";
+    private final static String OPENWEATHERMAP_COM = "https://api.openweathermap.org/";
     private final static String OPENWEATHERMAP_FORECAST_5day = "data/2.5/forecast?";
     private final static String OPENWEATHERMAP_API_KEY = "a39b0e16bbd652220c6c82560e6814a6";
     private final static String OPENWEATHERMAP_UNITS = "metric";

@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/activity_city_data_generator_tv_head"
             android:layout_alignParentEnd="true"
+            android:visibility="gone"
             android:layout_marginTop="-10dp"
             android:layout_marginEnd="10dp">
 
@@ -158,6 +159,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="40dp"
+            android:visibility="gone"
             android:background="@drawable/secondary_button"
             android:text="@string/fragment_city_data_generator_spn_country"
             android:textColor="@color/colorTextButton"
@@ -169,7 +171,7 @@
             android:layout_height="30dp"
             android:layout_below="@+id/activity_city_data_generator_btn_gps"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="40dp"
             android:background="@drawable/secondary_button"
             android:text="@string/fragment_city_data_generator_spn_city"

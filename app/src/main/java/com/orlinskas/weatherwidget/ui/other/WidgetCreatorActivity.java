@@ -108,6 +108,24 @@ public class WidgetCreatorActivity extends AppCompatActivity {
             }
         });
 
+        countryName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(buttonClickAnim);
+                Intent intent = new Intent(getApplicationContext(), CountryListActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        cityName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.startAnimation(buttonClickAnim);
+                Intent intent = new Intent(getApplicationContext(), CountryListActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
         createWidgetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,28 +160,27 @@ public class WidgetCreatorActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        checkNetworkOn();
-        checkGPSOn();
+//        checkNetworkOn();
+//        checkGPSOn();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        checkNetworkOn();
-        checkGPSOn();
-        if(isSearchTaskRunning()) {
-            stopSearchLocationTask();
-        }
+//        checkNetworkOn();
+//        checkGPSOn();
+//        if(isSearchTaskRunning()) {
+//            stopSearchLocationTask();
+//        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(isSearchTaskRunning()) {
-            stopSearchLocationTask();
-        }
+//        if(isSearchTaskRunning()) {
+//            stopSearchLocationTask();
+//        }
     }
-
 
     private boolean checkGPSOn() {
         LocationManager locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);

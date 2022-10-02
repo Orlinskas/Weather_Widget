@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.orlinskas.weatherwidget">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".ApplicationContext"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/logo_primary"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_primary"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:hardwareAccelerated="false">
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".ui.main.MainActivity"
+            android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -50,6 +48,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.ConfigurationWidgetActivity"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -58,6 +57,7 @@
 
         <receiver
             android:name=".ui.home.HomeWidget"
+            android:exported="true"
             android:icon="@drawable/logo_primary"
             android:label="Weather">
             <intent-filter>
@@ -69,7 +69,9 @@
                 android:resource="@xml/widget_metadata" />
         </receiver>
 
-        <receiver android:name=".background.UpdateReceiver">
+        <receiver
+            android:name=".background.UpdateReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -77,7 +79,7 @@
 
         <service
             android:name=".background.WidgetUpdateService"
-            android:enabled="true"/>
+            android:enabled="true" />
 
         <uses-library
             android:name="android.test.runner"

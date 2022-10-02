@@ -28,8 +28,8 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/gmail"
-            android:contentDescription="@string/gmail_im" />
+            android:contentDescription="@string/gmail_im"
+            app:srcCompat="@drawable/gmail" />
 
         <TextView
             android:id="@+id/textView8"
@@ -46,7 +46,8 @@
             android:text="@string/question"
             android:textAllCaps="false"
             android:textColor="@color/colorTextBlack"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/textView16"
@@ -76,7 +77,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/rounded_background">
+        android:background="@drawable/rounded_background"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imageView51"
